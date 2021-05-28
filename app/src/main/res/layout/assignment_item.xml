@@ -1,49 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="337dp"
-        android:layout_height="265dp"
-        android:background="@drawable/shape"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="267dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_edit_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="72dp"
-        android:backgroundTint="#3AFA44"
-        android:contentDescription="add_assignment"
-        android:outlineAmbientShadowColor="#3770FF"
-        android:outlineSpotShadowColor="#3770FF"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:rippleColor="#3770FF" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="337dp"
+            android:layout_height="265dp"
+            android:background="@drawable/shape"
+            android:orientation="vertical"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_delete_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="144dp"
-        android:backgroundTint="#F90708"
-        android:contentDescription="add_assignment"
-        android:outlineAmbientShadowColor="#3770FF"
-        android:outlineSpotShadowColor="#3770FF"
-        android:src="@drawable/ic_baseline_delete_outline_24"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:rippleColor="#3770FF" />
+            <TextView
+                android:id="@+id/textView_idAssignment"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="15dp"
+                android:text="No: "
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView_moduleName"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Module Name: "
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/textView_idAssignment"
+                app:layout_constraintTop_toBottomOf="@+id/textView_idAssignment" />
+
+            <TextView
+                android:id="@+id/textView_className"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Class Name: "
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/textView_moduleName"
+                app:layout_constraintTop_toBottomOf="@+id/textView_moduleName" />
+
+            <TextView
+                android:id="@+id/textView_trainerName"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Trainer Name: "
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/textView_className"
+                app:layout_constraintTop_toBottomOf="@+id/textView_className" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="RegistrationCode:"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView_trainerName"
+                app:layout_constraintTop_toBottomOf="@+id/textView_trainerName" />
+
+            <TextView
+                android:id="@+id/textView_rCode"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="123"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/textView30"
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/btn_edit_question"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="312dp"
+            android:layout_marginTop="76dp"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            app:srcCompat="@drawable/edit40x40" />
+
+        <ImageView
+            android:id="@+id/btn_delete_question"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@+id/btn_edit_question"
+            app:layout_constraintTop_toBottomOf="@+id/btn_edit_question"
+            app:srcCompat="@drawable/delete40x40" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+

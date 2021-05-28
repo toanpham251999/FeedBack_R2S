@@ -2,6 +2,7 @@ package com.example.feedbackapp.RetrofitAPISetvice;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.LoginInfo;
 import com.example.feedbackapp.ModelClassToSendAPI.Login.LoginValue;
+import com.example.feedbackapp.UserInfo.BaseUrl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,7 +26,7 @@ public interface LoginAPIServices {
 
     //khởi tạo service
     LoginAPIServices loginAPIServices = new Retrofit.Builder()
-            .baseUrl("https://androidserverr2s.herokuapp.com/")
+            .baseUrl(BaseUrl.value())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(LoginAPIServices.class);

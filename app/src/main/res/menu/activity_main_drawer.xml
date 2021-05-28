@@ -54,5 +54,6 @@
             android:icon="@drawable/ic_outline_logout_24"
             android:title="Trainee dashboard" />
 
+
     </group>
 </menu>

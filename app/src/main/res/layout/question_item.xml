@@ -5,7 +5,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+
+        android:id="@+id/constraintLayout"
+
         android:layout_width="337dp"
         android:layout_height="265dp"
         android:background="@drawable/shape"
@@ -27,8 +29,8 @@
         android:outlineAmbientShadowColor="#3770FF"
         android:outlineSpotShadowColor="#3770FF"
         android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         app:rippleColor="#3770FF" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,8 +44,9 @@
         android:outlineAmbientShadowColor="#3770FF"
         android:outlineSpotShadowColor="#3770FF"
         android:src="@drawable/ic_baseline_delete_outline_24"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:rippleColor="#3770FF" />
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+
+        app:rippleColor="#3770FF"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,9 @@
         android:layout_width="251dp"
         android:layout_height="55dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="52dp"
+
+        android:layout_marginTop="40dp"
+
         android:text="Assignment"
         android:textAlignment="center"
         android:textColor="#000"
@@ -21,12 +23,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/questionList"
-        android:layout_width="412dp"
-        android:layout_height="273dp"
-        android:layout_marginBottom="372dp"
+
+        android:id="@+id/assignmentList"
+        android:layout_width="match_parent"
+        android:layout_height="547dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_Search"
         app:layout_constraintVertical_bias="0.0"
@@ -51,6 +55,9 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Search"
+
+        android:background="@drawable/boder_search"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_question" />
 

@@ -25,16 +25,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Module ID: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_ModuleID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="4"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -48,16 +42,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Module Name: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_ModuleName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="String MVCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -71,16 +59,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Admin ID: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_AdminID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="admin"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -94,16 +76,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Date: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_StartDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="6/10/2020"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -117,16 +93,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="End Date: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_endDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="6/10/2020"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -140,16 +110,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback Title: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_FeedbackTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Feedback 2"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -163,16 +127,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback Start Time: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_FeedbackStartTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="6/10/2020 16:19"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -186,16 +144,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback End Time: "
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_FeedbackEndTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="6/10/2020 16:21"
                 android:textSize="18sp" />
+
+
         </LinearLayout>
     </LinearLayout>
 
@@ -204,7 +156,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="-50dp"
+
+        android:layout_marginLeft="-55dp"
+
         android:orientation="vertical">
 
         <ImageButton

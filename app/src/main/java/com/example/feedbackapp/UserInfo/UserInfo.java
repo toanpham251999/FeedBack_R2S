@@ -13,23 +13,27 @@ public class UserInfo extends Application {
     SharedPreferences.Editor editor;
     //5 cái ở dưới là khai báo để khỏi viết dấu nháy kép
     String accessToken = "token";
-    //String role = "role";
+
     String username = "username";
     String loginTime = "loginTime";
     String isRemember = "isRemember";
+    String role = "role";
+
 
     //hàm khởi tạo trước khi ghi và đọc dữ liệu
     public UserInfo(Context context){
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
     }
     //hàm thay đổi giá trị lưu khi đăng nhập tài khoản mới
-    public void newInfo(String newToken, String newUsername, String newLoginTime, Boolean newIsRemember){
+
+    public void newInfo(String newToken, String newUsername, String newLoginTime, Boolean newIsRemember, String newRole){
         editor = sharedPreferences.edit();
         editor.putString(accessToken, newToken);
-        //editor.putString(role, newRole);
         editor.putString(username,newUsername);
         editor.putString(loginTime,newLoginTime);
         editor.putBoolean(isRemember, newIsRemember);
+        editor.putString(role, newRole);
+
         editor.apply();
     }
     //hàm xóa các giá trị lưu khi đăng xuất
@@ -48,6 +52,19 @@ public class UserInfo extends Application {
     public String loginTime(){
         return sharedPreferences.getString(loginTime,"none");
     }
+
+    public String role(){
+        return sharedPreferences.getString(role,"none");
+    }
+    public String isRemember(){
+        if(sharedPreferences.getBoolean(isRemember,false)){
+            return "true";
+        }
+        else{
+            return "false";
+        }
+    }
+
     //hàm kiểm tra xem đã quá thời gian duy trì đăng nhập chưa
     public boolean isExpired(){
         return true;

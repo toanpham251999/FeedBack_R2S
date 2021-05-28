@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txt_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -18,102 +18,103 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView2"
+
+            android:id="@+id/txt_LabelModuleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Module Name" />
+            android:text="Module Name"
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/txt_AddModuleName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txt_LabelStartDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Start Date"
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/txt_AddModuleStartDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/txt_ModuleEndDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="End Date"
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/txt_AddModuleEndDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/txt_LabelAdminID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Admin ID"
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/txt_AddModuleAdminID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/txt_LabelFeedbackTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Feedback Title"
+            android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName6"
+            android:id="@+id/txt_AddModuleFeedbackTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelFeedbackStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feedback Start Date"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleFeedbackStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelFeedbackEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feedback End Date"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleFeedbackEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,18 +122,20 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+
+                android:id="@+id/btn_SaveAddModule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="Save" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btn_BackAddModule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="Back" />
+
         </LinearLayout>
     </LinearLayout>
 

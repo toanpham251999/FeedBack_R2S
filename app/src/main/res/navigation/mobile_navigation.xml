@@ -121,8 +121,6 @@
     <fragment
         android:id="@+id/nav_trainee_dashboard"
         android:name="com.example.feedbackapp.ui.dashboard.TraineeDashboardFragment"
-        tools:layout="@layout/fragment_trainee_dashboard">
-    </fragment>
-
+        tools:layout="@layout/fragment_trainee_dashboard"/>
 
 </navigation>

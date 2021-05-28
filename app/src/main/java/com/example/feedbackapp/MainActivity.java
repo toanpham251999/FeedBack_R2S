@@ -1,5 +1,8 @@
 package com.example.feedbackapp;
 
+
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -9,6 +12,10 @@ import android.view.Menu;
 import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
+
+
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.Assignment;
+import com.example.feedbackapp.ui.assignment.AssignmentFragment;
 
 import com.example.feedbackapp.ui.feedback.FeedBackFragment;
 import com.example.feedbackapp.ui.feedback.FeedbackAdapter;
@@ -42,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     float mScale = 0.1f;
     private AppBarConfiguration mAppBarConfiguration;
 
+    private NavigationView navigationView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +65,22 @@ public class MainActivity extends AppCompatActivity {
 
         //
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        navigationView = findViewById(R.id.nav_view);
+        ConfigNavigationView();
+        //ẩn bớt phần tử trong slide menu
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_homepage, R.id.nav_assignment, R.id.nav_classs, R.id.nav_module,R.id.nav_enrrollment, R.id.nav_feedback,
+
                 R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
                 R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright,
                 R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
                 R.id.nav_trainee_dashboard
         )
+
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);// điều hướng đến  fragment nav_host_fragment trong layout content_main
@@ -130,13 +146,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    void ConfigNavigationView(){
+        //chưa dùng tới
+        UserInfo userInfo = new UserInfo(getApplicationContext());
+        String role = userInfo.role();
+
+        Menu nav_Menu = navigationView.getMenu();
+        if(role.equals("admin")){
+            //không ẩn đi gì cả, sau này sẽ ẩn Join đi
+//            nav_Menu.findItem(R.id.nav_join).setVisible(false);
+        }
+        else if(role.equals("trainer")){
+            nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
+            nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
+            nav_Menu.findItem(R.id.nav_question).setVisible(false);
+            //nav_Menu.findItem(R.id.nav_join).setVisible(false);
+        }
+        else{
+            nav_Menu.findItem(R.id.nav_assignment).setVisible(false);
+            nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
+            nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
+            nav_Menu.findItem(R.id.nav_result).setVisible(false);
+            nav_Menu.findItem(R.id.nav_question).setVisible(false);
+            //nav_Menu.findItem(R.id.nav_join).setVisible(false);
+        }
+    }
+
+
     //hàm này để thử xem dữ liệu như token, username, có lưu lại được không
     public void ShowUserData(){
         UserInfo userInfo = new UserInfo(getApplicationContext());
         String toastValue = "token: " + userInfo.token() +
                 "\n username: " + userInfo.username() +
                 "\n login time: " + userInfo.loginTime() +
-                "\n remember: " + userInfo.isExpired();
+
+                "\n remember: " + userInfo.isRemember() +
+                "\n role: " + userInfo.role();
+
         Toast.makeText(getApplicationContext(),toastValue,Toast.LENGTH_LONG).show();
     }
 }
