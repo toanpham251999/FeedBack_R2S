@@ -49,5 +49,11 @@
             android:icon="@drawable/ic_outline_logout_24"
             android:title="Thong Ke" />
 
+        <item
+            android:id="@+id/nav_trainee_dashboard"
+            android:icon="@drawable/ic_outline_logout_24"
+            android:title="Trainee dashboard" />
+
+
     </group>
 </menu>
