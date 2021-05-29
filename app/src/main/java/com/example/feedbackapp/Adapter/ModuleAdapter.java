@@ -23,6 +23,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ModuleReturnByID;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
+import com.example.feedbackapp.UserInfo.UserInfo;
 
 import java.util.ArrayList;
 
@@ -105,6 +106,12 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
                     Toast.makeText(context.getApplicationContext(),"nhấn Delete Module",Toast.LENGTH_LONG).show();
                 }
             });
+            //nếu không phải admin, ẩn quyền thêm xóa sửa
+            UserInfo userInfo = new UserInfo(context.getApplicationContext());
+            if(!userInfo.role().equals("admin")){
+                btnEdit.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+            }
         }
     }
 
