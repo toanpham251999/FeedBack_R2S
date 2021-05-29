@@ -11,7 +11,7 @@
         android:layout_width="251dp"
         android:layout_height="55dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:text="Question List"
         android:textAlignment="center"
         android:textColor="#000"
@@ -22,9 +22,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questionList"
-        android:layout_width="412dp"
-        android:layout_height="273dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="536dp"
+        android:layout_marginTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_Topic"
