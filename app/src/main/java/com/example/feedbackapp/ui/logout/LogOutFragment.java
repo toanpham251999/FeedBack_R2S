@@ -1,5 +1,7 @@
 package com.example.feedbackapp.ui.logout;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.feedbackapp.LoginActivity;
+import com.example.feedbackapp.MainActivity;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +68,56 @@ public class LogOutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_logout, container, false);
+        View root =  inflater.inflate(R.layout.fragment_logout, container, false);
+        showLogoutDialog(root);
+        return root;
+    }
+
+    //hàm hiển thị xác nhận đăng xuất
+    void showLogoutDialog(View root){
+        //hiện dialog login failed
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        final Button btnCancel = (Button) alertLayout.findViewById(R.id.btn_Cancel);
+        AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //thực hiện xóa dữ liệu account
+                //về trang login
+                Toast.makeText(root.getContext(),"logout confirmed!",Toast.LENGTH_LONG).show();
+                doLogout(root);
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //không làm gì cả
+                Toast.makeText(root.getContext(),"logout canceled!",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    void doLogout(View root){
+        UserInfo userInfo = new UserInfo(root.getContext());
+        userInfo.onLogoutExecute();
+        SwitchToMemuScreen(root);
+    }
+
+    void SwitchToMemuScreen(View root){
+        //chuyển đến trang menu
+        Intent loginScreen = new Intent(root.getContext(), LoginActivity.class);
+        startActivity(loginScreen);
     }
 }

@@ -1,15 +1,19 @@
 package com.example.feedbackapp;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.Menu;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -27,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
@@ -85,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);// điều hướng đến  fragment nav_host_fragment trong layout content_main
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
 
 //Code to zoom
         gestureDetector = new GestureDetector(this, new GestureListener());
@@ -146,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //hàm dùng để ẩn bớt chức năng tùy theo role user
     void ConfigNavigationView(){
-        //chưa dùng tới
         UserInfo userInfo = new UserInfo(getApplicationContext());
         String role = userInfo.role();
 
@@ -172,6 +176,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //hàm hiển thị xác nhận đăng xuất
+    void showLogoutDialog(){
+        //hiện dialog login failed
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        final Button btnCancel = (Button) alertLayout.findViewById(R.id.btn_Cancel);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //thực hiện xóa dữ liệu account
+                //về trang login
+                Toast.makeText(getApplicationContext(),"logout confirmed!",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //không làm gì cả
+                Toast.makeText(getApplicationContext(),"logout canceled!",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     //hàm này để thử xem dữ liệu như token, username, có lưu lại được không
     public void ShowUserData(){

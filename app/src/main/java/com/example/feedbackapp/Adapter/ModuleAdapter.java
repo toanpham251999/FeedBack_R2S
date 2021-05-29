@@ -93,6 +93,18 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
 
             btnEdit = itemView.findViewById(R.id.btn_EditModule);
             btnDelete = itemView.findViewById(R.id.btn_DeleteModule);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context.getApplicationContext(),"nhấn Edit Module",Toast.LENGTH_LONG).show();
+                }
+            });
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context.getApplicationContext(),"nhấn Delete Module",Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 

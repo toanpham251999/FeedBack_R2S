@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.feedbackapp.Adapter.ModuleAdapter;
@@ -38,6 +39,7 @@ public class ModuleFragment extends Fragment {
     ListModule listModuleReceived;  //giá trị API trả về, gồm cả isSuccess, message
     ArrayList<Module> moduleList;
     RecyclerView moduleListRecycler;
+    ImageButton btnAddModule;
 
     private ModuleViewModel mViewModel;
 
@@ -53,6 +55,13 @@ public class ModuleFragment extends Fragment {
         moduleListRecycler = root.findViewById(R.id.rcv_ModuleList);
         LoadAllModule(root);
         moduleListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        btnAddModule = root.findViewById(R.id.btn_AddModule);
+        btnAddModule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
+            }
+        });
         return root;
     }
 
