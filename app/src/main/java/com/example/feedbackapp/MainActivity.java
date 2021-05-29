@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     GestureDetector gestureDetector;
     float mScale = 0.1f;
     private AppBarConfiguration mAppBarConfiguration;
-
     private NavigationView navigationView;
 
 
