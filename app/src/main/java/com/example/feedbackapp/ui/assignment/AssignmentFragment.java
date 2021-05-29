@@ -24,6 +24,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.Assignment;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.AssignmentInfo;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.AssignmentAPIServices;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -43,9 +44,7 @@ public class AssignmentFragment extends Fragment {
     EditText editText_Search;
 
     //TODO: AccessToken Varible
-    String accessToken = "Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk" +
-            "1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojz" +
-            "pk1xK1O-_MX5B6a31g8u5eTp8";
+    String accessToken = "";
 
     //TODO: assignmentsList
     ArrayList<Assignment> assignmentsList;
@@ -67,6 +66,8 @@ public class AssignmentFragment extends Fragment {
             }
         });
         addEvents(root);
+
+        accessToken = "Bearer "+ new UserInfo(root.getContext()).token();
         AssignmentAPIServices.ASSIGNMENT_API_SERVICES.getAssignmentList(accessToken).enqueue(new Callback<AssignmentInfo>() {
             @Override
             public void onResponse(Call<AssignmentInfo> call, Response<AssignmentInfo> response) {
