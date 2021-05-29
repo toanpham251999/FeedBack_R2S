@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.module.AddEditModuleFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Add Module List"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/txt_LabelModuleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Module Name"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_ModuleEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelAdminID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin ID"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleAdminID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelFeedbackTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feedback Title"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleFeedbackTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelFeedbackStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feedback Start Date"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleFeedbackStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/txt_LabelFeedbackEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feedback End Date"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txt_AddModuleFeedbackEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+
+                android:id="@+id/btn_SaveAddModule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save" />
+
+            <Button
+                android:id="@+id/btn_BackAddModule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Back" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+</FrameLayout>
