@@ -1,14 +1,18 @@
 package com.example.feedbackapp.ui.assignment;
 
 import android.os.Bundle;
+
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class AssignmentFragment extends Fragment {
 
     private AssignmentViewModel assignmentViewModel;
@@ -42,6 +48,7 @@ public class AssignmentFragment extends Fragment {
     FloatingActionButton btn_Add_Assignment;
     Button btn_Search;
     EditText editText_Search;
+
 
     //TODO: AccessToken Varible
     String accessToken = "";
@@ -52,6 +59,7 @@ public class AssignmentFragment extends Fragment {
     //TODO: Define RecyclerView and Adapter variable
     RecyclerView assignmentListRecycler;
     AssignmentAdapter assignmentAdapter;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +76,7 @@ public class AssignmentFragment extends Fragment {
         addEvents(root);
 
         accessToken = "Bearer "+ new UserInfo(root.getContext()).token();
+
         AssignmentAPIServices.ASSIGNMENT_API_SERVICES.getAssignmentList(accessToken).enqueue(new Callback<AssignmentInfo>() {
             @Override
             public void onResponse(Call<AssignmentInfo> call, Response<AssignmentInfo> response) {
@@ -82,6 +91,7 @@ public class AssignmentFragment extends Fragment {
                 Log.d("TAG", "onFailure()");
             }
         });
+
         return root;
     }
 
@@ -89,7 +99,9 @@ public class AssignmentFragment extends Fragment {
         btn_Add_Assignment = root.findViewById(R.id.btn_add_question);
         btn_Search = root.findViewById(R.id.btn_Search);
         editText_Search = root.findViewById(R.id.editText_Search);
+
         assignmentListRecycler = root.findViewById(R.id.assignmentList);
+
     }
 
     private void addEvents(View root){
@@ -120,6 +132,7 @@ public class AssignmentFragment extends Fragment {
         });
     }
 
+
     //Get Assignment List for Adapter
     public void LoadAssignmentList(View root){
         assignmentAdapter = new AssignmentAdapter(root.getContext(),assignmentsList);
@@ -128,4 +141,5 @@ public class AssignmentFragment extends Fragment {
         //assignmentListRecycler.setHasFixedSize(true);
         assignmentListRecycler.setAdapter(assignmentAdapter);
     }
+
 }

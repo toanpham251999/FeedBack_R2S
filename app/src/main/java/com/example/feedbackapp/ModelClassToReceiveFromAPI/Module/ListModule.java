@@ -3,6 +3,7 @@ package com.example.feedbackapp.ModelClassToReceiveFromAPI.Module;
 public class ListModule {
     private Boolean isSuccess;
     private String message;
+
     private Module[] listModule;
 
     public ListModule(Boolean isSuccess, String message, Module[] listModule) {
@@ -34,4 +35,5 @@ public class ListModule {
     public void setListModule(Module[] listModule) {
         this.listModule = listModule;
     }
+
 }

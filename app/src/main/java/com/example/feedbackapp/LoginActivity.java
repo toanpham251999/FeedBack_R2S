@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     Spinner spnRolePicker;
     CheckBox chkRememberMe;
     Button btnLogin;
-
     LoginInfo loginInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,28 +121,36 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //tạo model lưu giá trị nhập khi login
+
         //LoginValue lv = new LoginValue("huydpqn1234","Admin123@","trainee");
+
         LoginValue lv = new LoginValue(username,password,strRole);
         //gọi API kiểm tra tài khoản đăng nhập, nếu đúng, vào trang chính, nếu sai hiển thị lỗi
         LoginAPIServices.loginAPIServices.onLoginClick(lv).enqueue(new Callback<LoginInfo>() {
             @Override
             public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
+
                 loginInfo = response.body();
                 if(loginInfo!=null){
                     if(loginInfo.isSuccess()){
                         //lưu thông tin đăng nhập lại để còn dùng tiếp
                         OnRememberAccount();
+
                         //chuyển đến trang menu
                         Intent mainMenu = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(mainMenu);
                     }
                     else{
+
                         Toast.makeText(getApplicationContext(),"sai account!",Toast.LENGTH_LONG).show();
+
                         ShowLoginFailDialog();
                     }
                 }
                 else{
+
                     Toast.makeText(getApplicationContext(),"null!",Toast.LENGTH_LONG).show();
+
                     ShowLoginFailDialog();
                 }
             }
@@ -154,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //hàm kiểm tra xử lý Remember Me
+
     void OnRememberAccount(){
         int role = spnRolePicker.getSelectedItemPosition()+1;
         String strRole = "";
@@ -171,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
         Boolean isRemember = chkRememberMe.isChecked();
         UserInfo userInfo = new UserInfo(getApplicationContext());
         userInfo.newInfo(loginInfo.getAccessToken(),loginInfo.getAccount().getUserName(), Calendar.getInstance().getTime().toString(),isRemember,strRole);
+
     }
 
     void ShowLoginFailDialog(){
