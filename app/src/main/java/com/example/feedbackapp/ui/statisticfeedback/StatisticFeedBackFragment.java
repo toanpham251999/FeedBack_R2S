@@ -16,15 +16,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.feedbackapp.Adapter.ClassDataUtils;
 import com.example.feedbackapp.Adapter.CustomAdapter;
 import com.example.feedbackapp.Adapter.CustomApdapterModule;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.model.Class;
-import com.example.feedbackapp.model.Module;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -37,6 +39,12 @@ import java.util.List;
 //chart
 
 public class StatisticFeedBackFragment extends Fragment {
+    // Viewmodel
+    private StatisticFeedBackViewModel mviewModel;
+    private CustomAdapter adapter;
+    private CustomApdapterModule adapterModule;
+    private String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8";
+   ClassList listClassReceived;
     //swipe left
     float x1, x2, y1 , y2;
     //chart
@@ -45,8 +53,8 @@ public class StatisticFeedBackFragment extends Fragment {
     private Spinner spinner;// for clss
     private Spinner spinnerModule;
     private List<Class> classess;
-    private List<Module> modules;
-    private StatisticFeedackViewModel mViewModel;
+    private List<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> modules;
+   // private StatisticFeedackViewModel mViewModel;
     private  View v;
     //textview
     private TextView textViewClass;
@@ -59,48 +67,78 @@ public class StatisticFeedBackFragment extends Fragment {
     public static StatisticFeedBackFragment newInstance() {
         return new StatisticFeedBackFragment();
     }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        mviewModel = ViewModelProviders.of(this).get(StatisticFeedBackViewModel.class);
+        mviewModel.init();
+        mviewModel.getClassListLiveData().observe(this, new Observer<ClassList>() {
+            @Override
+            public void onChanged(ClassList classList) {
+                //link: https://viblo.asia/p/android-architecture-components-viewmodel-xu-ly-configuration-changes-chua-bao-gio-don-gian-den-the-ByEZk3A4ZQ0
+               //if (classList != null) {
+
+                    adapter = new CustomAdapter(getActivity(),
+                            R.layout.spinner_item_layout,
+                            R.id.textView_item_name,
+                            classList.getListClass());
+                    spinner.setAdapter(adapter);
+                    try {
+                            spinner.setSelection(getArguments().getInt("class", 0));
+                            }
+                  catch (Exception e){}
+               // }
+
+            }
+        });
+        //Module
+        mviewModel.getModuleListLiveData().observe(this, new Observer<ListModule>() {
+            @Override
+            public void onChanged(ListModule listModule) {
+                //link: https://viblo.asia/p/android-architecture-components-viewmodel-xu-ly-configuration-changes-chua-bao-gio-don-gian-den-the-ByEZk3A4ZQ0
+                //if (classList != null) {
+
+                adapterModule = new CustomApdapterModule(getActivity(),
+                        R.layout.spinner_item_layout,
+                        R.id.textView_item_name,
+                        listModule.getListModule());
+                //spinner = (Spinner) v.findViewById(R.id.spinner_class);
+                spinnerModule.setAdapter(adapterModule); try {
+                    spinner.setSelection(getArguments().getInt("class", 0));
+
+                    spinnerModule.setSelection(getArguments().getInt("module", 0));
+                }
+                catch (Exception e){}
+                // }
+
+            }
+        });
+        mviewModel.getClassPosition().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+
+                spinner.setSelection(integer);
+            }
+        });
+        mviewModel.getModulePosition().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                spinnerModule.setSelection(integer);
+            }
+        });
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.statistic_feedback_fragment, container, false);
-
 // Code for spinner class
-        // Data:
-        this.classess = ClassDataUtils.getClasss();
 
         this.spinner = (Spinner) v.findViewById(R.id.spinner_class);
-
-        // Adapter"
-        CustomAdapter adapter = new CustomAdapter(this.getActivity(),
-                R.layout.spinner_item_layout,
-                R.id.textView_item_name,
-                this.classess);
-
-
-        this.spinner.setAdapter(adapter);
-        // End for spinner class
-        //code for spinner module
-        //data
-        this.modules = ClassDataUtils.getModule();
-
+         mviewModel.getClas(accessToken);
         this.spinnerModule = (Spinner) v.findViewById(R.id.spinner_module);
+        mviewModel.getModule(accessToken);
 
-        // Adapter"
-        CustomApdapterModule adapterModule = new CustomApdapterModule(this.getActivity(),
-                R.layout.spinner_item_layout,
-                R.id.textView_item_name,
-                this.modules);
-
-        this.spinnerModule.setAdapter(adapterModule);
-// get data from feedbackrightfragment
-        try{
-        this.spinner.setSelection(getArguments().getInt("class"));
-        this.spinnerModule.setSelection(getArguments().getInt("module"));
-        }
-        catch (Exception exception ){
-
-        }
 
 // set content for textview class and module
         this.textViewClass = (TextView)v.findViewById(R.id.textViewClass);
@@ -113,7 +151,6 @@ public class StatisticFeedBackFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("class", spinner.getSelectedItemPosition());
                 bundle.putInt("module",spinnerModule.getSelectedItemPosition());
-                //Navigation.findNavController(v).navigate(R.id.action_feedback_to_feedbackdetail, bundle);
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_feedbackdetail, bundle);
             }
         });
@@ -127,6 +164,7 @@ public class StatisticFeedBackFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -136,6 +174,7 @@ public class StatisticFeedBackFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 onItemSelectedHandlerModule(parent, view, position, id);
+
             }
 
             @Override
@@ -166,8 +205,6 @@ public class StatisticFeedBackFragment extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putInt("class", lassSelected);
                         bundle.putInt("module",moduleSelected);
-                        //Navigation.findNavController(v).navigate(R.id.action_fragment1_to_fragment2, bundle);
-                      //Navigation.findNavController(v).navigate(R.id.action_feedback_to_feedbackdetail);
                         NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_feedbackright, bundle);
                     }
                     else{
@@ -240,12 +277,7 @@ public class StatisticFeedBackFragment extends Fragment {
             textViewModule.setText(Html.fromHtml(a));
 
         }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(StatisticFeedackViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 //Set data for chart
     private void addDataSet() {
         //database = openOrCreateDatabase(DATABASE_NAME,MODE_PRIVATE,null);
@@ -295,5 +327,32 @@ public class StatisticFeedBackFragment extends Fragment {
         pieChart.setData(pieData);
         pieChart.invalidate();
     }
+/*
+    private void LoadAllClass(View root){
+        //"Bearer "+ new UserInfo(root.getContext()).token() - đáng ra là phải dùng token này để tương tác, nhưng retrofit đã hỗ trợ lưu
+        //load list module lên fragment
+//        listModuleReceived = response.body();
+//        Toast.makeText(root.getContext(),listModuleReceived.getListModule().length,Toast.LENGTH_LONG).show();
+//        setModuleAdapter(root);
+        StatisticClassSAPIService.statisticClassSAPIService.getClas(accessToken).enqueue(new Callback<ClassList>() {
+            @Override
+            public void onResponse(Call<ClassList> call, Response<ClassList> response) {
+                listClassReceived = response.body();
+                setClassAdapter(root);
+            }
 
+            @Override
+            public void onFailure(Call<ClassList> call, Throwable t) {
+
+            }
+        });
+    }
+    private void setClassAdapter(View root){
+        adapter = new CustomAdapter(getActivity(),
+                R.layout.spinner_item_layout,
+                R.id.textView_item_name,
+                listClassReceived.getListClass());
+        spinner.setAdapter(adapter);
+    }
+*/
   }
