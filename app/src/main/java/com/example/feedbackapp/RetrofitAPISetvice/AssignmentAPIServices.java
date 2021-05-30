@@ -1,6 +1,7 @@
 package com.example.feedbackapp.RetrofitAPISetvice;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.AssignmentInfo;
+import com.example.feedbackapp.UserInfo.BaseUrl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +19,7 @@ public interface AssignmentAPIServices {
 
     //khởi tạo service
     AssignmentAPIServices ASSIGNMENT_API_SERVICES = new Retrofit.Builder()
-            .baseUrl("https://androidserverr2s.herokuapp.com/")
+            .baseUrl(BaseUrl.value())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(AssignmentAPIServices.class);

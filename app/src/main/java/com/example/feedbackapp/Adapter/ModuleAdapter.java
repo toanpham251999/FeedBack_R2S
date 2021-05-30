@@ -23,6 +23,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ModuleReturnByID;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
+import com.example.feedbackapp.UserInfo.UserInfo;
 
 import java.util.ArrayList;
 
@@ -93,6 +94,24 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
 
             btnEdit = itemView.findViewById(R.id.btn_EditModule);
             btnDelete = itemView.findViewById(R.id.btn_DeleteModule);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context.getApplicationContext(),"nhấn Edit Module",Toast.LENGTH_LONG).show();
+                }
+            });
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context.getApplicationContext(),"nhấn Delete Module",Toast.LENGTH_LONG).show();
+                }
+            });
+            //nếu không phải admin, ẩn quyền thêm xóa sửa
+            UserInfo userInfo = new UserInfo(context.getApplicationContext());
+            if(!userInfo.role().equals("admin")){
+                btnEdit.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+            }
         }
     }
 
