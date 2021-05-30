@@ -118,4 +118,10 @@ public class Module {
     public void setFeedbackTitle(String feedbackTitle) {
         FeedbackTitle = feedbackTitle;
     }
+
+    // TODO: Text show in Spinner by Toan
+    @Override
+    public String toString()  {
+        return this.ModuleName;
+    }
 }

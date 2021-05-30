@@ -77,7 +77,7 @@ public class ModuleFragment extends Fragment {
     }
 
     private void setModuleAdapter(View root){
-        moduleList = new ArrayList<Module>(Arrays.asList(listModuleReceived.getListModule()));
+        moduleList =  listModuleReceived.getListModule();
         moduleAdapter =new ModuleAdapter(root.getContext(), moduleList);
         Toast.makeText(root.getContext(),"thêm vào adapter thành công "+moduleList.size(),Toast.LENGTH_LONG).show();
         moduleListRecycler.setAdapter(moduleAdapter);
