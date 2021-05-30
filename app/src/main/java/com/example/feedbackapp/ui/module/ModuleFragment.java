@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.module;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -7,6 +8,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+
+import androidx.navigation.fragment.NavHostFragment;
+
+import androidx.navigation.Navigation;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.feedbackapp.Adapter.ModuleAdapter;
@@ -24,6 +31,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.ui.assignment.AddAssignmentFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +47,11 @@ public class ModuleFragment extends Fragment {
     ArrayList<Module> moduleList;
     RecyclerView moduleListRecycler;
 
+    ImageButton imageButton;
+
+    ImageButton btnAddModule;
+
+
     private ModuleViewModel mViewModel;
 
     public static ModuleFragment newInstance() {
@@ -53,6 +66,34 @@ public class ModuleFragment extends Fragment {
         moduleListRecycler = root.findViewById(R.id.rcv_ModuleList);
         LoadAllModule(root);
         moduleListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        imageButton = root.findViewById(R.id.btn_AddModule);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_module);
+            }
+        });
+
+        btnAddModule = root.findViewById(R.id.btn_AddModule);
+        btnAddModule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key","abc"); // Put anything what you want
+                AddEditModuleFragment addEditModuleFragment = new AddEditModuleFragment();
+                addEditModuleFragment.setArguments(bundle);
+                Navigation.findNavController(root).navigate(R.id.module_to_add_module, bundle);
+                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
+            }
+        });
+        //nếu không phải admin, ẩn quyền thêm xóa sửa
+        UserInfo userInfo = new UserInfo(root.getContext());
+        if(!userInfo.role().equals("admin")){
+            btnAddModule.setVisibility(View.GONE);
+        }
+
         return root;
     }
 

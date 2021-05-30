@@ -39,11 +39,30 @@
     <fragment
         android:id="@+id/nav_classs"
         android:name="com.example.feedbackapp.ui.classs.ClasssFragment"
-        tools:layout="@layout/fragment_classs" />
+        tools:layout="@layout/fragment_classs">
+
+        <action
+            android:id="@+id/class_to_list_trainee"
+            app:destination="@+id/nav_show_trainee_of_class"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_show_trainee_of_class"
+        android:name="com.example.feedbackapp.ui.classs.ShowTraineeOfClassFragment"
+        tools:layout="@layout/show_trainee_of_class_fragment" />
+
     <fragment
         android:id="@+id/nav_module"
         android:name="com.example.feedbackapp.ui.module.ModuleFragment"
-        tools:layout="@layout/module_fragment" />
+        tools:layout="@layout/module_fragment">
+
+        <action
+            android:id="@+id/module_to_add_module"
+            app:destination="@+id/nav_add_edit_module"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_edit_module"
+        android:name="com.example.feedbackapp.ui.module.AddEditModuleFragment"
+        tools:layout="@layout/add_edit_module_fragment" />
     <fragment
         android:id="@+id/nav_enrrollment"
         android:name="com.example.feedbackapp.ui.enrrollment.EnrrollmentFragment"
@@ -121,6 +140,19 @@
     <fragment
         android:id="@+id/nav_trainee_dashboard"
         android:name="com.example.feedbackapp.ui.dashboard.TraineeDashboardFragment"
-        tools:layout="@layout/fragment_trainee_dashboard"/>
+        tools:layout="@layout/fragment_trainee_dashboard">
+        <action
+            android:id="@+id/action_listFeedback_to_doFeedback"
+            app:destination="@+id/nav_dofeedback"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_viewcommentfeedback"
+        android:name="com.example.feedbackapp.ui.statisticfeedback.ViewCommentFragment"
+        tools:layout="@layout/fragment_view_comment" />
+
+    <fragment
+        android:id="@+id/nav_add_module"
+        android:name="com.example.feedbackapp.ui.module.AddModuleFragment"
+        tools:layout="@layout/add_module_layout"/>
 
 </navigation>

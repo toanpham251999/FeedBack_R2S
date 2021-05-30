@@ -9,6 +9,9 @@ public class Topic {
     private String TopicName;
     private ArrayList<Question> listQuestion;
 
+    public Topic(){
+
+    }
     public Topic(String id, String topicName, ArrayList<Question> listQuestion) {
         Id = id;
         TopicName = topicName;
