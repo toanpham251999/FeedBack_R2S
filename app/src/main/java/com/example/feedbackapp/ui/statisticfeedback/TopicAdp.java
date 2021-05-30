@@ -114,7 +114,7 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
                         }
 
                     }
-                    int a;
+                   // int a;
                     // Hàm xử lý gửi dữ liệu lên
                    ShowConFirmDialog(arrrListAnswer);
                 }
@@ -213,7 +213,7 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
         //hiện dialog complete do feedback failed
         LayoutInflater inflater = activity.getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.login_failed_dialog, null);
-        TextView txt_LogoutTitle = (TextView) alertLayout.findViewById(R.id.txt_LogoutTitle);
+        TextView txt_LogoutTitle = (TextView) alertLayout.findViewById(R.id.txt_LoginErrorMessage);
         txt_LogoutTitle.setText("Please complete your feedback!");
         final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
         //final AlertDialog alertDialog=new AlertDialog.Builder(activity.getApplicationContext()).create();
