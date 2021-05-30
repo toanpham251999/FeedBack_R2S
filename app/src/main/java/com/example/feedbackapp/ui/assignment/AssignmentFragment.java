@@ -141,5 +141,4 @@ public class AssignmentFragment extends Fragment {
         //assignmentListRecycler.setHasFixedSize(true);
         assignmentListRecycler.setAdapter(assignmentAdapter);
     }
-
 }
