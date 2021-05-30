@@ -41,4 +41,10 @@ public class Topic {
     public void setListQuestion(ArrayList<Question> listQuestion) {
         this.listQuestion = listQuestion;
     }
+
+    // TODO: Text show in Spinner by Toan
+    @Override
+    public String toString()  {
+        return this.TopicName;
+    }
 }

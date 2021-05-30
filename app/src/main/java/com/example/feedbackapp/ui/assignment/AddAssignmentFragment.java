@@ -15,10 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import com.example.feedbackapp.Adapter.ModuleAdapter;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
+import com.example.feedbackapp.model.Class;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
@@ -30,11 +29,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddAssignmentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddAssignmentFragment extends Fragment {
 
     private AssignmentViewModel assignmentViewModel;
@@ -44,8 +38,8 @@ public class AddAssignmentFragment extends Fragment {
     Button btn_Save, btn_Back;
 
     // TODO: Khai báo các list và Adapter
-    ModuleAdapter moduleAdapter;
     ArrayList<Module> moduleList;
+    ArrayList<Class> classList;
 
     //TODO: AccessToken Varible
     String accessToken = "";
@@ -78,18 +72,27 @@ public class AddAssignmentFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_add_assignment, container, false);
         addEvents(root);
         accessToken = "Bearer "+ new UserInfo(root.getContext()).token();
+
         // Lấy danh sách Module, Class, Trainer và đổ lên Spinner
         LoadAllModule(root);
 
-        // Inflate the layout for this fragment
+        // Lấy listClass từ StatisticFeedBackFragment
         Bundle bundle = getArguments();
-        String strtext = "";
         if(bundle != null){
             // handle your code here.
-            bundle.getBundle("key");
-            strtext = bundle.getString("key");
+            //classList = (ArrayList<Class>) bundle.getSerializable("classListList");
         }
+
+        // Lấy danh sách class đổ lên spinner
+        //setClassSpinner(root);
         return root;
+    }
+
+    private void setClassSpinner(View root) {
+        ArrayAdapter<Class> adapter =
+                new ArrayAdapter<Class>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, classList);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spinner_class.setAdapter(adapter);
     }
 
     private void addEvents(View root) {
@@ -120,13 +123,28 @@ public class AddAssignmentFragment extends Fragment {
             }
         });
 
-        //Events khi chọn item trên Spinner
+        //Events khi chọn item trên Spinner Module
         // When user select a List-Item.
         this.spinner_module.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                onItemSelectedHandler(parent, view, position, id);
+                onItemSelectedHandlerModule(parent, view, position, id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //Events khi chọn item trên Spinner Class
+        // When user select a List-Item.
+        this.spinner_class.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                onItemSelectedHandlerClass(parent, view, position, id);
             }
 
             @Override
@@ -144,12 +162,11 @@ public class AddAssignmentFragment extends Fragment {
     }
 
     private void LoadAllModule(View root){
-        //"Bearer "+ new UserInfo(root.getContext()).token() - đáng ra là phải dùng token này để tương tác, nhưng retrofit đã hỗ trợ lưu
-        //load list module lên fragment
         ModuleAPIService.moduleAPIServices.getAllModule(accessToken).enqueue(new Callback<ListModule>() {
             @Override
             public void onResponse(Call<ListModule> call, Response<ListModule> response) {
-//                moduleList = new ArrayList<Module>(Arrays.asList(response.body().getListModule()));
+                //moduleList = new ArrayList<Module>(Arrays.asList(response.body().getListModule()));
+                moduleList = response.body().getListModule();
                 setModuleSpinner(root);
             }
 
@@ -160,8 +177,6 @@ public class AddAssignmentFragment extends Fragment {
     }
 
     private void setModuleSpinner(View root){
-        moduleAdapter =new ModuleAdapter(root.getContext(), moduleList);
-
         ArrayAdapter<Module> adapter =
                 new ArrayAdapter<Module>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, moduleList);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
@@ -169,9 +184,15 @@ public class AddAssignmentFragment extends Fragment {
         spinner_module.setAdapter(adapter);
     }
 
-    private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
+    private void onItemSelectedHandlerModule(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
         Module module = (Module) adapter.getItem(position);
         Toast.makeText(view.getContext(), "Selected Module: " + module.getModuleName() ,Toast.LENGTH_SHORT).show();
+    }
+
+    private void onItemSelectedHandlerClass(AdapterView<?> adapterView, View view, int position, long id) {
+        Adapter adapter = adapterView.getAdapter();
+        Class aClass = (Class) adapter.getItem(position);
+        Toast.makeText(view.getContext(), "Selected Class: " + aClass.getClassName() ,Toast.LENGTH_SHORT).show();
     }
 }
