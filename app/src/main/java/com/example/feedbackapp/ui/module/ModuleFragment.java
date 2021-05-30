@@ -9,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import androidx.navigation.fragment.NavHostFragment;
+
+import androidx.navigation.Navigation;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +31,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.ui.assignment.AddAssignmentFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +46,11 @@ public class ModuleFragment extends Fragment {
     ListModule listModuleReceived;  //giá trị API trả về, gồm cả isSuccess, message
     ArrayList<Module> moduleList;
     RecyclerView moduleListRecycler;
+
     ImageButton imageButton;
+
+    ImageButton btnAddModule;
+
 
     private ModuleViewModel mViewModel;
 
@@ -58,15 +67,33 @@ public class ModuleFragment extends Fragment {
         LoadAllModule(root);
         moduleListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         imageButton = root.findViewById(R.id.btn_AddModule);
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("class", spinner.getSelectedItemPosition());
-//                bundle.putInt("module",spinnerModule.getSelectedItemPosition());
+
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_module);
             }
         });
+
+        btnAddModule = root.findViewById(R.id.btn_AddModule);
+        btnAddModule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key","abc"); // Put anything what you want
+                AddEditModuleFragment addEditModuleFragment = new AddEditModuleFragment();
+                addEditModuleFragment.setArguments(bundle);
+                Navigation.findNavController(root).navigate(R.id.module_to_add_module, bundle);
+                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
+            }
+        });
+        //nếu không phải admin, ẩn quyền thêm xóa sửa
+        UserInfo userInfo = new UserInfo(root.getContext());
+        if(!userInfo.role().equals("admin")){
+            btnAddModule.setVisibility(View.GONE);
+        }
+
         return root;
     }
 

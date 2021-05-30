@@ -1,5 +1,10 @@
 package com.example.feedbackapp.ModelClassToReceiveFromAPI.Module;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Module {
 
     /**
@@ -64,7 +69,14 @@ public class Module {
     }
 
     public String getFeedbackStartTime() {
-        return FeedbackStartTime;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        try {
+            Date feedbackStartTime = formatter.parse(FeedbackStartTime);
+            return String.valueOf(feedbackStartTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return FeedbackStartTime;
+        }
     }
 
     public void setFeedbackStartTime(String feedbackStartTime) {
@@ -72,7 +84,14 @@ public class Module {
     }
 
     public String getFeedbackEndTime() {
-        return FeedbackEndTime;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        try {
+            Date feedbackEndTime = formatter.parse(FeedbackEndTime);
+            return String.valueOf(feedbackEndTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return FeedbackEndTime;
+        }
     }
 
     public void setFeedbackEndTime(String feedbackEndTime) {

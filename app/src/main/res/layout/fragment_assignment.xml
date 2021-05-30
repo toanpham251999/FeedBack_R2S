@@ -11,9 +11,7 @@
         android:layout_width="251dp"
         android:layout_height="55dp"
         android:layout_marginStart="52dp"
-
         android:layout_marginTop="40dp"
-
         android:text="Assignment"
         android:textAlignment="center"
         android:textColor="#000"
@@ -48,16 +46,14 @@
 
     <EditText
         android:id="@+id/editText_Search"
-        android:layout_width="248dp"
-        android:layout_height="58dp"
+        android:layout_width="245dp"
+        android:layout_height="43dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Search"
-
         android:background="@drawable/boder_search"
-
+        android:ems="10"
+        android:hint="Search"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_question" />
 
