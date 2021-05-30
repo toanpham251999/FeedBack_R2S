@@ -15,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
-import com.example.feedbackapp.model.Class;
+import com.example.feedbackapp.RetrofitAPISetvice.ClassAPIService;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
@@ -39,7 +42,7 @@ public class AddAssignmentFragment extends Fragment {
 
     // TODO: Khai báo các list và Adapter
     ArrayList<Module> moduleList;
-    ArrayList<Class> classList;
+    ArrayList<Classs> classList;
 
     //TODO: AccessToken Varible
     String accessToken = "";
@@ -75,22 +78,27 @@ public class AddAssignmentFragment extends Fragment {
 
         // Lấy danh sách Module, Class, Trainer và đổ lên Spinner
         LoadAllModule(root);
-
-        // Lấy listClass từ StatisticFeedBackFragment
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            // handle your code here.
-            //classList = (ArrayList<Class>) bundle.getSerializable("classListList");
-        }
-
-        // Lấy danh sách class đổ lên spinner
-        //setClassSpinner(root);
+        LoadAllClass(root);
         return root;
     }
 
+    private void LoadAllClass(View root) {
+        ClassAPIService.classAPIService.getAllClass(accessToken).enqueue(new Callback<ListClass>() {
+            @Override
+            public void onResponse(Call<ListClass> call, Response<ListClass> response) {
+                classList = new ArrayList<Classs>(Arrays.asList(response.body().getListClass()));
+                setClassSpinner(root);
+            }
+
+            @Override
+            public void onFailure(Call<ListClass> call, Throwable t) {
+            }
+        });
+    }
+
     private void setClassSpinner(View root) {
-        ArrayAdapter<Class> adapter =
-                new ArrayAdapter<Class>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, classList);
+        ArrayAdapter<Classs> adapter =
+                new ArrayAdapter<Classs>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, classList);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         spinner_class.setAdapter(adapter);
     }
@@ -192,7 +200,7 @@ public class AddAssignmentFragment extends Fragment {
 
     private void onItemSelectedHandlerClass(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
-        Class aClass = (Class) adapter.getItem(position);
-        Toast.makeText(view.getContext(), "Selected Class: " + aClass.getClassName() ,Toast.LENGTH_SHORT).show();
+        Classs aClasss = (Classs) adapter.getItem(position);
+        Toast.makeText(view.getContext(), "Selected Class: " + aClasss.getClassName() ,Toast.LENGTH_SHORT).show();
     }
 }
