@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.feedbackapp.model.Module;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomApdapterModule extends BaseAdapter {
     private LayoutInflater flater;
-    private List<Module> list;
+    private ArrayList<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> list;
     private int listItemLayoutResource;
     private int textViewItemNameId;
     // Arguments example:
@@ -25,8 +26,8 @@ public class CustomApdapterModule extends BaseAdapter {
     //        (A TextVew in file layout/spinner_item_layout_resource.xmll)
     // structure adapter for class
     public CustomApdapterModule(Activity context, int listItemLayoutResource,
-                         int textViewItemNameId,
-                         List<Module> list) {
+                                int textViewItemNameId,
+                                ArrayList<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> list) {
         this.listItemLayoutResource = listItemLayoutResource;
 
         this.textViewItemNameId = textViewItemNameId;
@@ -49,8 +50,8 @@ public class CustomApdapterModule extends BaseAdapter {
 
     public long getItemId(int position) {
         Module cla =(Module) this.getItem(position);
-        return cla.getModuleId();
-        // return position; (Return position if you need).
+       // return cla.getModuleId();
+         return position; //(Return position if you need).
     }
 
 

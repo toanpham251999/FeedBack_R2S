@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassDataUtils;
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.model.Question;
-import com.example.feedbackapp.model.Topic;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Question;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
 
 import java.util.ArrayList;
 
@@ -21,10 +21,12 @@ public class TopicAdpDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // Initial activity and array list
     private Activity activity;
     ArrayList<Topic> arrayListTopic;
+    private ArrayList<Question> arrayListQuestion;
     //Create contructor
     TopicAdpDetail(Activity activity, ArrayList<Topic> arrayListTopic){
         this.activity =activity;
         this.arrayListTopic = arrayListTopic;
+        //this.arrayListQuestion = arrayListQuestion;
     }
     @NonNull
     @Override
@@ -39,14 +41,23 @@ public class TopicAdpDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+           String stt;
+           switch (position){
+               case 0: stt = "I. ";break;
+               case 1: stt = "II. ";break;
+               case 2: stt = "III. ";break;
+               default: stt = "IV. ";break;
+           }
+
             // Set topic name on TextView
         TopicViewHolder topicViewHolder = (TopicViewHolder) holder;
             //holder.topicName.setText(arrayListTopic.get(position));
-            topicViewHolder.topicName.setText(arrayListTopic.get(position).getTopicName());
+            topicViewHolder.topicName.setText(stt + arrayListTopic.get(position).getTopicName());
 
             //Initialize memer ArrayList
-            ArrayList<Question> arrayListQuestion = new ArrayList<>();
-            arrayListQuestion = ClassDataUtils.getQuestionDetail(position);
+            //ArrayList<Question> arrayListQuestion = new ArrayList<>();
+
+            arrayListQuestion = arrayListTopic.get(position).getListQuestion();
 
             //Initialize member adapter
             QuestionAdpDetail adapterQuestion = new QuestionAdpDetail(arrayListQuestion);
