@@ -21,7 +21,7 @@
             app:srcCompat="@drawable/ic_success_circle_color_green" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/txt_SingleMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -30,7 +30,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_OK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

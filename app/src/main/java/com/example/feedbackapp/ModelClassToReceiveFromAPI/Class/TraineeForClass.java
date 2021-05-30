@@ -1,6 +1,6 @@
 package com.example.feedbackapp.ModelClassToReceiveFromAPI.Class;
 
-public class Trainee {
+public class TraineeForClass {
     private String Id;
     private String UserName;
     private String Name;
