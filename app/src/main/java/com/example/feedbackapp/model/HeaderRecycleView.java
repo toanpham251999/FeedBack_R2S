@@ -5,6 +5,24 @@ public class HeaderRecycleView {
     String module;
     String clas;
 
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
+    public String getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
+    }
+
+    String classId;
+    String moduleId;
     public HeaderRecycleView(String name, String module, String clas) {
         this.name = name;
         this.module = module;

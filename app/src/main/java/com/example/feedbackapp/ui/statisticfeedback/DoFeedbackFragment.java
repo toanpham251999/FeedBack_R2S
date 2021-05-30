@@ -6,70 +6,79 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassDataUtils;
+import com.example.feedbackapp.Adapter.CustomAdapter;
+import com.example.feedbackapp.Adapter.CustomApdapterModule;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.model.HeaderRecycleView;
-import com.example.feedbackapp.model.Topic;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
 
 import java.util.ArrayList;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DoFeedbackFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DoFeedbackFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public DoFeedbackFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DoFeedbackFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DoFeedbackFragment newInstance(String param1, String param2) {
-        DoFeedbackFragment fragment = new DoFeedbackFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mviewModel = ViewModelProviders.of(this).get(StatisticFeedBackViewModel.class);
+        mviewModel.init();
+        mviewModel.getTopicListLiveData().observe(this, new Observer<ListTopic>() {
+            @Override
+            public void onChanged(ListTopic listTopic) {
+                //link: https://viblo.asia/p/android-architecture-components-viewmodel-xu-ly-configuration-changes-chua-bao-gio-don-gian-den-the-ByEZk3A4ZQ0
+
+                // get data from bundle
+               String classId = getArguments().getString("ClassId");
+                String className = getArguments().getString("ClassName");
+                String moduleId = getArguments().getString("ModuleId");
+                String moduleName = getArguments().getString("ModuleName");
+                // get headerRecycleView
+                headerRecycleView = new HeaderRecycleView("Pham Duc Huy", moduleName, className);
+                headerRecycleView.setClassId(classId);
+                headerRecycleView.setModuleId(moduleId);
+                //RecycleView
+                arrayListTopic = listTopic.getListTopic();
+               // add for header and footer rcv
+                Topic a = new Topic();
+                Topic b = new Topic();
+                arrayListTopic.add(0,a);
+                arrayListTopic.add(b);
+                adapterTopic = new TopicAdp(getActivity(), arrayListTopic, headerRecycleView);
+                // Initailize layout manager
+                layoutManagerTopic = new LinearLayoutManager(getContext());
+                // Set layout manager
+                rcvListTopic.setLayoutManager(layoutManagerTopic);
+                //set adapter
+                rcvListTopic.setAdapter(adapterTopic);
+
+
+            }
+        });
     }
 // My declare parameter
+    // Fore rcv
+    private StatisticFeedBackViewModel mviewModel;
+    private String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8";
+    private ArrayList<Topic> topics;
+
     // Initialize variable
     RecyclerView rcvListTopic;
     ArrayList<Topic> arrayListTopic;
     HeaderRecycleView headerRecycleView;
     LinearLayoutManager layoutManagerTopic;
     TopicAdp adapterTopic;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,24 +88,7 @@ public class DoFeedbackFragment extends Fragment {
 // Code for rycycle view
         //Assign variable
         rcvListTopic = v.findViewById(R.id.rcvListTopic);
-
-        // Using for loop to add multiple group
-        arrayListTopic = new ArrayList<>();
-        arrayListTopic = ClassDataUtils.getTopic();
-        headerRecycleView = ClassDataUtils.getHeaderRecycleView();
-       /* for (int i = 1; i <=10;i++)
-        {
-            arrayListTopic.add("Topic " + (i - 1));
-        }*/
-        //Initialize topic adapter
-        adapterTopic = new TopicAdp(getActivity(), arrayListTopic, headerRecycleView);
-        // Initailize layout manager
-        layoutManagerTopic = new LinearLayoutManager(getContext());
-        // Set layout manager
-        rcvListTopic.setLayoutManager(layoutManagerTopic);
-        //set adapter
-        rcvListTopic.setAdapter(adapterTopic);
-
+        mviewModel.getTopic(accessToken);
         return v;
     }
 }

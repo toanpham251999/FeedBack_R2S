@@ -63,7 +63,7 @@ public class ClassDataUtils {
     }
 //para: topicID: 1->4
 // brief: get question by topicID
-    public static ArrayList<Question> getQuestion(int topicID)
+   /* public static ArrayList<Question> getQuestion(int topicID)
     {
         // get question
         ArrayList <Question> list = new ArrayList<Question>();
@@ -86,7 +86,7 @@ public class ClassDataUtils {
         }
 
         return list;
-    }
+    }*/
 // header recycleView
     public static HeaderRecycleView getHeaderRecycleView()
     {

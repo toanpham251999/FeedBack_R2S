@@ -44,7 +44,6 @@ public class StatisticFeedBackFragment extends Fragment {
     private CustomAdapter adapter;
     private CustomApdapterModule adapterModule;
     private String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8";
-   ClassList listClassReceived;
     //swipe left
     float x1, x2, y1 , y2;
     //chart
@@ -55,7 +54,6 @@ public class StatisticFeedBackFragment extends Fragment {
     private List<Class> classess;
     private List<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> modules;
    // private StatisticFeedackViewModel mViewModel;
-    private  View v;
     //textview
     private TextView textViewClass;
     private TextView textViewModule;
@@ -104,8 +102,9 @@ public class StatisticFeedBackFragment extends Fragment {
                         R.id.textView_item_name,
                         listModule.getListModule());
                 //spinner = (Spinner) v.findViewById(R.id.spinner_class);
-                spinnerModule.setAdapter(adapterModule); try {
-                    spinner.setSelection(getArguments().getInt("class", 0));
+                spinnerModule.setAdapter(adapterModule);
+                try {
+                    //spinner.setSelection(getArguments().getInt("class", 0));
 
                     spinnerModule.setSelection(getArguments().getInt("module", 0));
                 }

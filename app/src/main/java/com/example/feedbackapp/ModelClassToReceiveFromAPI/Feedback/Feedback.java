@@ -14,7 +14,7 @@ public class Feedback {
     private String ModuleId = "";
     private String ModuleName = "";
     private String EndTime = "";
-    private boolean IsCompleted = true;
+    private boolean IsCompleted = false;
     private ArrayList<Question> listQuestion = new ArrayList<Question>();
 
 
