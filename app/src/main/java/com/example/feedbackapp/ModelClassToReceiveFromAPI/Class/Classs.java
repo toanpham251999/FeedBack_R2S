@@ -11,14 +11,16 @@ public class Classs {
     private String StartTime;
     private String EndTime;
     private boolean isDeleted;
+    private Trainee[] listTrainee;
 
-    public Classs(String id, String className, Integer capacity, String startTime, String endTime, boolean isDeleted) {
+    public Classs(String id, String className, Integer capacity, String startTime, String endTime, boolean isDeleted, Trainee[] listTrainee) {
         Id = id;
         ClassName = className;
         Capacity = capacity;
         StartTime = startTime;
         EndTime = endTime;
         this.isDeleted = isDeleted;
+        this.listTrainee = listTrainee;
     }
 
     public String getId() {
@@ -77,6 +79,18 @@ public class Classs {
 
     public boolean isDeleted() {
         return isDeleted;
+    }
+
+    public Trainee[] getListTrainee() {
+        return listTrainee;
+    }
+
+    public String traineeCount(){
+        return String.valueOf(listTrainee.length);
+    }
+
+    public void setListTrainee(Trainee[] listTrainee) {
+        this.listTrainee = listTrainee;
     }
 
     public void setDeleted(boolean deleted) {

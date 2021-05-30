@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassAdapter;
+import com.example.feedbackapp.Adapter.ClassAdapterForTrainer;
 import com.example.feedbackapp.Adapter.ModuleAdapter;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
@@ -37,11 +38,13 @@ import retrofit2.Response;
 public class ClasssFragment extends Fragment {
 
     ClassAdapter classAdapter;
+    ClassAdapterForTrainer classAdapterForTrainer;
     private ClasssViewModel slideshowViewModel;
     ListClass listClassReceived;
     ArrayList<Classs> listClass;
     RecyclerView classListRecycler;
     ImageButton btnAddClass;
+    TextView mainLabel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class ClasssFragment extends Fragment {
         LoadAllClass(root);
         classListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        mainLabel = root.findViewById(R.id.txt_ClassList);
         btnAddClass = root.findViewById(R.id.btn_AddClass);
         btnAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +63,12 @@ public class ClasssFragment extends Fragment {
                 Toast.makeText(root.getContext(),"Click add Class!",Toast.LENGTH_LONG).show();
             }
         });
+        //nếu không phải admin, ẩn quyền thêm
+        UserInfo userInfo = new UserInfo(root.getContext());
+        if(!userInfo.role().equals("admin")){
+            mainLabel.setText("List Class");
+            btnAddClass.setVisibility(View.GONE);
+        }
 //        final TextView textView = root.findViewById(R.id.text_slideshow);
 //        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
@@ -90,9 +100,20 @@ public class ClasssFragment extends Fragment {
         });
     }
     void setClassAdapter(View root){
-        listClass = new ArrayList<Classs>(Arrays.asList(listClassReceived.getListClass()));
-        classAdapter =new ClassAdapter(root.getContext(), listClass);
-        Toast.makeText(root.getContext(),"thêm vào adapter thành công "+listClass.size(),Toast.LENGTH_LONG).show();
-        classListRecycler.setAdapter(classAdapter);
+        //nếu không phải admin, ẩn quyền thêm xóa sửa
+        UserInfo userInfo = new UserInfo(root.getContext());
+        if(userInfo.role().equals("admin")){
+            listClass = new ArrayList<Classs>(Arrays.asList(listClassReceived.getListClass()));
+            classAdapter =new ClassAdapter(root.getContext(), listClass);
+            Toast.makeText(root.getContext(),"thêm vào adapter thành công "+listClass.size(),Toast.LENGTH_LONG).show();
+            classListRecycler.setAdapter(classAdapter);
+        }
+        else{
+            listClass = new ArrayList<Classs>(Arrays.asList(listClassReceived.getListClass()));
+            classAdapterForTrainer =new ClassAdapterForTrainer(root.getContext(), listClass);
+            Toast.makeText(root.getContext(),"thêm vào adapter thành công "+listClass.size(),Toast.LENGTH_LONG).show();
+            classListRecycler.setAdapter(classAdapterForTrainer);
+        }
+
     }
 }
