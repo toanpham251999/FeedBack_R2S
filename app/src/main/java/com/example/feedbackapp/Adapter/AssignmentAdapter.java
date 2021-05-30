@@ -35,21 +35,11 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
-        String Tv = "";
         Assignment assignment = assignmentArrayList.get(position);
-
-        Tv = "<b>" + holder.textView_idAssignment.getText().toString() +"</b>";
-        holder.textView_idAssignment.setText(Html.fromHtml(Tv + (position + 1)));
-
-        Tv = "<b>" + holder.textView_moduleName.getText().toString() +"</b>";
-        holder.textView_moduleName.setText(Html.fromHtml(Tv + assignment.getModuleName()));
-
-        Tv = "<b>" + holder.textView_className.getText().toString() +"</b>";
-        holder.textView_className.setText(Html.fromHtml(Tv + assignment.getClassName()));
-
-        Tv = "<b>" + holder.textView_trainerName.getText().toString() +"</b>";
-        holder.textView_trainerName.setText(Html.fromHtml(Tv + assignment.getTrainerName()));
-
+        holder.textView_idAssignment.setText(Html.fromHtml("<b>Topic Id: </b>" + assignment.getId()));
+        holder.textView_moduleName.setText(Html.fromHtml("<b>Module Name: </b>" + assignment.getModuleName()));
+        holder.textView_className.setText(Html.fromHtml("<b>Class Name: </b>" + assignment.getClassName()));
+        holder.textView_trainerName.setText(Html.fromHtml("<b>Trainer Name: </b>" + assignment.getTrainerName()));
         holder.textView_rCode.setText(assignment.getRegistrationCode());
     }
 

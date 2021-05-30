@@ -34,22 +34,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Gán dữ liêuk
-        String Tv = "";
         Question question = questionArrayList.get(position);
+        holder.textView_idTopic.setText(Html.fromHtml("<b>Topic Id: </b>"+ question.getTopicId()));
+        holder.textView_topicName.setText(Html.fromHtml("<b>Topic Name: </b>"+question.getTopicName()));
+        holder.textView_questionId.setText(Html.fromHtml("<b>Question Id: </b>"+question.getId()));
+        holder.textView_questionContent.setText(Html.fromHtml("<b>Question Content: </b>"+question.getQuestionContent()));
 
-        Tv = "<b>" + holder.textView_idTopic.getText().toString() +"</b>";
-        holder.textView_idTopic.setText(Html.fromHtml(Tv + (position + 1)));
-
-        Tv = "<b>" + holder.textView_topicName.getText().toString() +"</b>";
-        holder.textView_topicName.setText(Html.fromHtml(Tv + question.getTopicName()));
-
-        Tv = "<b>" + holder.textView_questionId.getText().toString() +"</b>";
-        holder.textView_questionId.setText(Html.fromHtml(Tv + question.getId()));
-
-        Tv = "<b>" + holder.textView_questionContent.getText().toString() +"</b>";
-        holder.textView_questionContent.setText(Html.fromHtml(Tv + question.getQuestionContent()));
     }
 
     @Override

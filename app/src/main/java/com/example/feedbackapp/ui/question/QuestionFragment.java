@@ -114,11 +114,4 @@ public class QuestionFragment extends Fragment {
         questionListRecycler.setAdapter(questionAdapter);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

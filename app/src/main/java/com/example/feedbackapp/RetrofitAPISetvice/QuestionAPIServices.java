@@ -12,6 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 public interface QuestionAPIServices {
     //tạo 1 biến gson dùng cho service bên dưới
@@ -29,4 +30,9 @@ public interface QuestionAPIServices {
     //service lấy danh sách Question
     @GET("/api/question")
     Call<QuestionInfo> getQuestionList(@Header("Authorization") String authHeader);
+
+    //Add new question
+    //@POST("/api/question")
+    //Call<QuestionInfo> addNewQuestion(@Header("Authorization") String authHeader);
+
 }
