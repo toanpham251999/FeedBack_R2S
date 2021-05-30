@@ -85,10 +85,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
             android:entries="@array/Role_Entry"
-            android:gravity="center"
-            android:paddingHorizontal="50dp"
+            android:paddingHorizontal="15dp"
             android:spinnerMode="dropdown"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:background="@drawable/rounded"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
         <LinearLayout
             android:id="@+id/linearLayout_RememberMe"

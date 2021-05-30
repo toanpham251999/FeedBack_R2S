@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.module;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -8,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
+import androidx.navigation.fragment.NavHostFragment;
+
 import androidx.navigation.Navigation;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +46,11 @@ public class ModuleFragment extends Fragment {
     ListModule listModuleReceived;  //giá trị API trả về, gồm cả isSuccess, message
     ArrayList<Module> moduleList;
     RecyclerView moduleListRecycler;
+
+    ImageButton imageButton;
+
     ImageButton btnAddModule;
+
 
     private ModuleViewModel mViewModel;
 
@@ -57,6 +66,16 @@ public class ModuleFragment extends Fragment {
         moduleListRecycler = root.findViewById(R.id.rcv_ModuleList);
         LoadAllModule(root);
         moduleListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        imageButton = root.findViewById(R.id.btn_AddModule);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_module);
+            }
+        });
+
         btnAddModule = root.findViewById(R.id.btn_AddModule);
         btnAddModule.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +93,7 @@ public class ModuleFragment extends Fragment {
         if(!userInfo.role().equals("admin")){
             btnAddModule.setVisibility(View.GONE);
         }
+
         return root;
     }
 
