@@ -149,7 +149,7 @@ public class AddAssignmentFragment extends Fragment {
         ModuleAPIService.moduleAPIServices.getAllModule(accessToken).enqueue(new Callback<ListModule>() {
             @Override
             public void onResponse(Call<ListModule> call, Response<ListModule> response) {
-                moduleList = new ArrayList<Module>(Arrays.asList(response.body().getListModule()));
+//                moduleList = new ArrayList<Module>(Arrays.asList(response.body().getListModule()));
                 setModuleSpinner(root);
             }
 

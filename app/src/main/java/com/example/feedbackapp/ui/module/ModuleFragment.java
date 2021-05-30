@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.module;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.feedbackapp.Adapter.ModuleAdapter;
@@ -38,6 +41,7 @@ public class ModuleFragment extends Fragment {
     ListModule listModuleReceived;  //giá trị API trả về, gồm cả isSuccess, message
     ArrayList<Module> moduleList;
     RecyclerView moduleListRecycler;
+    ImageButton imageButton;
 
     private ModuleViewModel mViewModel;
 
@@ -53,6 +57,16 @@ public class ModuleFragment extends Fragment {
         moduleListRecycler = root.findViewById(R.id.rcv_ModuleList);
         LoadAllModule(root);
         moduleListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        imageButton = root.findViewById(R.id.btn_AddModule);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("class", spinner.getSelectedItemPosition());
+//                bundle.putInt("module",spinnerModule.getSelectedItemPosition());
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_module);
+            }
+        });
         return root;
     }
 
