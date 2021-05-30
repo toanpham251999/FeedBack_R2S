@@ -10,22 +10,26 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/img_errIcon"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="57dp"
+            android:layout_height="69dp"
+            android:layout_gravity="center"
             app:srcCompat="@drawable/ic_outline_error_outline_24" />
 
         <TextView
             android:id="@+id/txt_LoginErrorMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+
             android:padding="30dp"
             android:text="Login Failed, Check Your Login Details"
+            android:textAlignment="center"
             android:textSize="18sp" />
 
         <Button

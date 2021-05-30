@@ -1,50 +1,22 @@
 package com.example.feedbackapp.model;
 
 public class Question {
-    int QuestionID;
-    int TopicId;
+    String QuestionID;
     String QuestionContent;
-    boolean IsDeleted;
+   int Answer;
 
-    public int getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(int answer) {
-        this.answer = answer;
-    }
-
-    //
-    int answer;
-
-    public Question(int questionID, int topicId, String questionContent, boolean isDeleted) {
+    public Question(String questionID, String questionContent, int answer) {
         QuestionID = questionID;
-        TopicId = topicId;
         QuestionContent = questionContent;
-        IsDeleted = isDeleted;
-
+        Answer = answer;
     }
 
-    public Question(int questionID, int topicId, String questionContent) {
-        QuestionID = questionID;
-        TopicId = topicId;
-        QuestionContent = questionContent;
-    }
-
-    public int getQuestionID() {
+    public String getQuestionID() {
         return QuestionID;
     }
 
-    public void setQuestionID(int questionID) {
+    public void setQuestionID(String questionID) {
         QuestionID = questionID;
-    }
-
-    public int getTopicId() {
-        return TopicId;
-    }
-
-    public void setTopicId(int topicId) {
-        TopicId = topicId;
     }
 
     public String getQuestionContent() {
@@ -55,11 +27,11 @@ public class Question {
         QuestionContent = questionContent;
     }
 
-    public boolean isDeleted() {
-        return IsDeleted;
+    public int getAnswer() {
+        return Answer;
     }
 
-    public void setDeleted(boolean deleted) {
-        IsDeleted = deleted;
+    public void setAnswer(int answer) {
+        Answer = answer;
     }
 }

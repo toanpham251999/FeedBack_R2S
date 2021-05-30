@@ -1,67 +1,57 @@
 package com.example.feedbackapp.ui.statisticfeedback;
 
 import android.os.Bundle;
-import android.view.GestureDetector;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.feedbackapp.Adapter.ClassDataUtils;
 import com.example.feedbackapp.Adapter.CustomAdapter;
 import com.example.feedbackapp.Adapter.CustomApdapterModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.model.Class;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
-import com.example.feedbackapp.repositories.TopicRepository;
+import com.github.mikephil.charting.charts.PieChart;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class FeedbackDetailFragment extends Fragment {
-
-    public FeedbackDetailFragment() {
-        // Required empty public constructor
-    }
-    //My parameters
-    // Initialize variable
-    // Spiner
+public class ViewCommentFragment extends Fragment {
     // Viewmodel
     private StatisticFeedBackViewModel mviewModel;
     private CustomAdapter adapter;
     private CustomApdapterModule adapterModule;
     private String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8";
-    RecyclerView rcvDetail;
-    private ArrayList<Topic> topics;
-    LinearLayoutManager layoutManagerTopic;
-    private TopicAdpDetail adapterTopic;
 
+    //declare for spinner
     private Spinner spinner;// for clss
     private Spinner spinnerModule;
-    private List<Class> classes;
+    private List<Class> classess;
     private List<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> modules;
+
+    //Button
+    private Button showDetail;
     private Button showOverview;
-    private Button viewComment;
-    //for zoom in/out
-    private float mScale = 1f;
-    private ScaleGestureDetector mScaleGestureDetector;
-    GestureDetector gestureDetector;
+
+    // Recycleview
+    private RecyclerView rcvViewComment;
+    public ViewCommentFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,35 +84,15 @@ public class FeedbackDetailFragment extends Fragment {
                 spinnerModule.setAdapter(adapterModule);
 
                 spinnerModule.setSelection(getArguments().getInt("module", 0));
-          }
-        });
-        mviewModel.getTopicListLiveData().observe(this, new Observer<ListTopic>() {
-            @Override
-            public void onChanged(ListTopic listTopic) {
-                //link: https://viblo.asia/p/android-architecture-components-viewmodel-xu-ly-configuration-changes-chua-bao-gio-don-gian-den-the-ByEZk3A4ZQ0
-                topics = listTopic.getListTopic();
-
-                //Initialize topic adapter
-                adapterTopic = new TopicAdpDetail(getActivity(), topics);
-                // Initailize layout manager
-                layoutManagerTopic = new LinearLayoutManager(getContext());
-                // Set layout manager
-                rcvDetail.setLayoutManager(layoutManagerTopic);
-                //set adapter
-                rcvDetail.setAdapter(adapterTopic);
-
             }
         });
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-// Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_feedback_detail, container, false);
-// Code for spinner c
+        View v = inflater.inflate(R.layout.fragment_view_comment, container, false);
+        // Code for spinner c
 
         this.spinner = (Spinner) v.findViewById(R.id.spinner_class);
         mviewModel.getClas(accessToken);
@@ -143,15 +113,15 @@ public class FeedbackDetailFragment extends Fragment {
             }
         });
 
-// Click event for button View Comment
-        viewComment = (Button) v.findViewById(R.id.view_comment);
-        this.viewComment.setOnClickListener(new View.OnClickListener() {
+// Click event for button showdetail
+        showDetail = (Button) v.findViewById(R.id.show_detail);
+        this.showDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("class", spinner.getSelectedItemPosition());
                 bundle.putInt("module",spinnerModule.getSelectedItemPosition());
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_viewcommentfeedback, bundle);
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_feedbackdetail, bundle);
             }
         });
 // When user select a List-Item on spinner Class
@@ -183,39 +153,19 @@ public class FeedbackDetailFragment extends Fragment {
         });
 
 // Code for rycycle view
-        //Assign variable
-        mviewModel.getTopic(accessToken);
-        rcvDetail = v.findViewById(R.id.rcvDetail);
-
-        // Using for loop to add multiple group
-       /* arrayListTopic = new ArrayList<>();
-        arrayListTopic = ClassDataUtils.getTopicForDetail();*/
-       /* for (int i = 1; i <=10;i++)
-        {
-            arrayListTopic.add("Topic " + (i - 1));
-        }*/
-        //Initialize topic adapter
-       /* adapterTopic = new TopicAdpDetail(getActivity(), arrayListTopic);
-        // Initailize layout manager
-        layoutManagerTopic = new LinearLayoutManager(getContext());
-        // Set layout manager
-        rcvDetail.setLayoutManager(layoutManagerTopic);
-        //set adapter
-        rcvDetail.setAdapter(adapterTopic);*/
         return v;
     }
-// handler click spinner
+    // handler click spinner
     // Class
     private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
         Class clas = (Class) adapter.getItem(position);
     }
 
-// module
+    // module
     private void onItemSelectedHandlerModule(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
         Module module = (Module) adapter.getItem(position);
         String itemModule =module.getModuleName();
     }
-
 }

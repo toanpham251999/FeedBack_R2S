@@ -18,15 +18,13 @@ import java.util.Arrays;
 
 public class QuestionAdp extends RecyclerView.Adapter<QuestionAdp.ViewHolder> {
     // Initialize Arraylist
-    ArrayList<Question> arrayListQuestion;
-    // Initalize status of radio
-    private int[] state;
+    private ArrayList<Question> arrayListQuestion;
+    private int t;
+    //private ArrayList<Integer> listValue;
     //Create constructor
-   public QuestionAdp(ArrayList<Question> arrayListQuestion){
+   public QuestionAdp(ArrayList<Question> arrayListQuestion, int t){
        this.arrayListQuestion = arrayListQuestion;
-       // set vlue -1 for state[]
-       this.state = new int[arrayListQuestion.size()];
-       Arrays.fill(this.state, -1);
+       this.t = t;
    }
     @NonNull
     @Override
@@ -40,7 +38,7 @@ public class QuestionAdp extends RecyclerView.Adapter<QuestionAdp.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Set question name on TextView
-        holder.questionName.setText(arrayListQuestion.get(position).getQuestionContent());
+        holder.questionName.setText(String.valueOf(t ) +"." + String.valueOf(position + 1) + ' ' + arrayListQuestion.get(position).getQuestionContent());
         // Set radio
         //holder.radioGroup.setVisibility(View.VISIBLE);
         //setRadio(holder, this.state[position]);
@@ -48,38 +46,46 @@ public class QuestionAdp extends RecyclerView.Adapter<QuestionAdp.ViewHolder> {
         holder.radiostrongdisagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                arrayListQuestion.get(position).setAnswer(0);
-                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+               arrayListQuestion.get(position).setAnswer(0);
+                //setRadio(holder, arrayListQuestion.get(position).getAnswer());
+                setRadio(holder,0);
             }
         });
         holder.radiodisagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 arrayListQuestion.get(position).setAnswer(1);
-                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+               // setRadio(holder, arrayListQuestion.get(position).getAnswer());
+                setRadio(holder,1);
             }
         });
         holder.radioneutral.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                arrayListQuestion.get(position).setAnswer(2);
-                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+               arrayListQuestion.get(position).setAnswer(2);
+              //  setRadio(holder, arrayListQuestion.get(position).getAnswer());
+                setRadio(holder,2);
             }
         });
         holder.radiostrongagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                arrayListQuestion.get(position).setAnswer(3);
-                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+              arrayListQuestion.get(position).setAnswer(3);
+//                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+                setRadio(holder,3);
+
             }
         });
         holder.radioagree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 arrayListQuestion.get(position).setAnswer(4);
-                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+//                setRadio(holder, arrayListQuestion.get(position).getAnswer());
+                setRadio(holder,4);
+                //ListValue.add(value);
             }
         });
+       // ListValue.add(value);
 
     }
 
@@ -87,6 +93,17 @@ public class QuestionAdp extends RecyclerView.Adapter<QuestionAdp.ViewHolder> {
     public int getItemCount() {
         return arrayListQuestion.size();
     }
+/*
+    public ArrayList<Integer> getListCheckedRadio()
+    {
+        ArrayList<Integer> listValue = new ArrayList<Integer>();
+        for(int i = 0; i<getItemCount() ; i++)
+        {
+            listValue.add(0);
+        }
+        return listValue;
+        //listValue.add(selection);
+    }*/
     // Initialize radio
     private void setRadio(final ViewHolder holder, int selection) {
 
@@ -101,17 +118,19 @@ public class QuestionAdp extends RecyclerView.Adapter<QuestionAdp.ViewHolder> {
         b2.setChecked(false);
         b3.setChecked(false);
         b4.setChecked(false);
-        b3.setChecked(false);
+        b5.setChecked(false);
 
         if (selection == 0) b1.setChecked(true);
         if (selection == 1) b2.setChecked(true);
         if (selection == 2) b3.setChecked(true);
         if (selection == 3) b4.setChecked(true);
         if (selection == 4) b5.setChecked(true);
+        //listValue.add(selection);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
        //Inittial variable
+        //int t;
        TextView questionName;
         public RadioGroup radioGroup;
         public RadioButton radiostrongdisagree, radioneutral, radiostrongagree, radiodisagree, radioagree;
