@@ -1,6 +1,5 @@
-package com.example.feedbackapp.ui.feedback;
+package com.example.feedbackapp.ui.feedback.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.ui.feedback.Model.ListFeedback;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHolder> {
-    ArrayList<FeedbackModel> listFeedback;
-    public  FeedbackAdapter(ArrayList<FeedbackModel>listFeedback)
+    List<ListFeedback> listFeedback;
+    public  FeedbackAdapter(List<ListFeedback>listFeedback)
     {
         this.listFeedback=listFeedback;
     }
@@ -30,9 +30,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FeedbackModel list = listFeedback.get(position);
-        holder.txtFeedbackId.setText(list.getFeedbackId());
-        holder.txtFeedbackTitle.setText(list.getFeedbackTitle());
+        ListFeedback list = listFeedback.get(position);
+        holder.txtFeedbackId.setText(list.getTypeFeedbackId());
+        holder.txtFeedbackTitle.setText(list.getTitle());
         holder.txtAdminId.setText(list.getAdminId());
 
     }
