@@ -1,6 +1,7 @@
 package com.example.feedbackapp.ui.assignment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +17,31 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.NewAssignment;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.Account;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.ListAccount;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
+import com.example.feedbackapp.ModelClassToSendAPI.Assignment.AddAssignmentInfo;
+import com.example.feedbackapp.RetrofitAPISetvice.AssignmentAPIServices;
 import com.example.feedbackapp.RetrofitAPISetvice.ClassAPIService;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.RetrofitAPISetvice.LoginAPIServices;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.model.Trainee;
+import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,9 +57,13 @@ public class AddAssignmentFragment extends Fragment {
     // TODO: Khai báo các list và Adapter
     ArrayList<Module> moduleList;
     ArrayList<Classs> classList;
+    ArrayList<Trainee> trainerList;
 
     //TODO: AccessToken Varible
     String accessToken = "";
+
+    //TODO: Biến thông tin Assignment
+    String moduleId, classId, trainerId;
 
     public AddAssignmentFragment() {
         // Required empty public constructor
@@ -79,9 +97,27 @@ public class AddAssignmentFragment extends Fragment {
         // Lấy danh sách Module, Class, Trainer và đổ lên Spinner
         LoadAllModule(root);
         LoadAllClass(root);
+        LoadAllTrainer(root);
         return root;
     }
 
+    //Lấy ds Module
+    private void LoadAllModule(View root){
+        ModuleAPIService.moduleAPIServices.getAllModule(accessToken).enqueue(new Callback<ListModule>() {
+            @Override
+            public void onResponse(Call<ListModule> call, Response<ListModule> response) {
+                //moduleList = new ArrayList<Module>(Arrays.asList(response.body().getListModule()));
+                moduleList = response.body().getListModule();
+                setModuleSpinner(root);
+            }
+
+            @Override
+            public void onFailure(Call<ListModule> call, Throwable t) {
+            }
+        });
+    }
+
+    //Lấy ds class
     private void LoadAllClass(View root) {
         ClassAPIService.classAPIService.getAllClass(accessToken).enqueue(new Callback<ListClass>() {
             @Override
@@ -96,6 +132,30 @@ public class AddAssignmentFragment extends Fragment {
         });
     }
 
+    //Lấy ds trainer
+    private void LoadAllTrainer(View root) {
+        LoginAPIServices.loginAPIServices.getInfo().enqueue(new Callback<ListAccount>() {
+            @Override
+            public void onResponse(Call<ListAccount> call, Response<ListAccount> response) {
+                trainerList = response.body().getListTrainer();
+                setTrainerSpinner(root);
+            }
+
+            @Override
+            public void onFailure(Call<ListAccount> call, Throwable t) {
+            }
+        });
+    }
+
+    //Hàm đổ ds Module lên spinner
+    private void setModuleSpinner(View root){
+        ArrayAdapter<Module> adapter =
+                new ArrayAdapter<Module>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, moduleList);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spinner_module.setAdapter(adapter);
+    }
+
+    //Đổ ds class lên spinner
     private void setClassSpinner(View root) {
         ArrayAdapter<Classs> adapter =
                 new ArrayAdapter<Classs>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, classList);
@@ -103,18 +163,54 @@ public class AddAssignmentFragment extends Fragment {
         spinner_class.setAdapter(adapter);
     }
 
+    //Đổ ds trainer lên spinner
+    private void setTrainerSpinner(View root) {
+        ArrayAdapter<Trainee> adapter =
+                new ArrayAdapter<Trainee>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, trainerList);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spinner_trainer.setAdapter(adapter);
+    }
+
+    //Hàm thêm sự kiện
     private void addEvents(View root) {
         addControls(root);
         btn_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("key","abc"); // Put anything what you want
+                AddNewAssignment();
+            }
 
+            private void AddNewAssignment() {
+                Bundle bundle = new Bundle();
                 AddAssignmentFragment addAssignmentFragment = new AddAssignmentFragment();
                 addAssignmentFragment.setArguments(bundle);
 
-                Navigation.findNavController(root).navigate(R.id.add_assignment_to_assignment, bundle);
+                //Gọi API thêm Assignment
+                AssignmentAPIServices.ASSIGNMENT_API_SERVICES.addNewAssignment(accessToken,new AddAssignmentInfo(moduleId,classId,trainerId))
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if(response.body() == null){
+                                    Gson gson = new Gson();
+                                    try {
+                                        ErrorResponse errorResponse = gson.fromJson(
+                                                response.errorBody().string(),
+                                                ErrorResponse.class);
+                                        if(errorResponse.getMessage().equals("Your action is done successfully")){
+                                            Navigation.findNavController(root).navigate(R.id.add_assignment_to_assignment, bundle);
+                                        }
+                                        Toast toast = Toast.makeText(root.getContext(),  errorResponse.getMessage(),Toast.LENGTH_LONG);
+                                        toast.show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Log.e("TAG", "onFailure: ", t);
+                            }
+                        });
             }
         });
 
@@ -160,7 +256,24 @@ public class AddAssignmentFragment extends Fragment {
 
             }
         });
+
+        //Events khi chọn item trên Spinner Trainer
+        // When user select a List-Item.
+        this.spinner_trainer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                onItemSelectedHandlerTrainer(parent, view, position, id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
+
+    //Hàm thêm điều khiển
     private void addControls(View root) {
         spinner_module = (Spinner) root.findViewById(R.id.spinner_Topic);
         spinner_class = (Spinner) root.findViewById(R.id.spinner_class);
@@ -169,38 +282,27 @@ public class AddAssignmentFragment extends Fragment {
         btn_Back = (Button) root.findViewById(R.id.btn_Back);
     }
 
-    private void LoadAllModule(View root){
-        ModuleAPIService.moduleAPIServices.getAllModule(accessToken).enqueue(new Callback<ListModule>() {
-            @Override
-            public void onResponse(Call<ListModule> call, Response<ListModule> response) {
-                //moduleList = new ArrayList<Module>(Arrays.asList(response.body().getListModule()));
-                moduleList = response.body().getListModule();
-                setModuleSpinner(root);
-            }
-
-            @Override
-            public void onFailure(Call<ListModule> call, Throwable t) {
-            }
-        });
-    }
-
-    private void setModuleSpinner(View root){
-        ArrayAdapter<Module> adapter =
-                new ArrayAdapter<Module>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, moduleList);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_module.setAdapter(adapter);
-    }
-
+    //Xử lí sự kiện chọn item Module
     private void onItemSelectedHandlerModule(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
         Module module = (Module) adapter.getItem(position);
+        moduleId = module.getId();
         Toast.makeText(view.getContext(), "Selected Module: " + module.getModuleName() ,Toast.LENGTH_SHORT).show();
     }
 
+    //Xử lí sự kiện chọn item Class
     private void onItemSelectedHandlerClass(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
         Classs aClasss = (Classs) adapter.getItem(position);
+        classId = aClasss.getId();
         Toast.makeText(view.getContext(), "Selected Class: " + aClasss.getClassName() ,Toast.LENGTH_SHORT).show();
+    }
+
+    //Xử lí sự kiện chọn item Trainer
+    private void onItemSelectedHandlerTrainer(AdapterView<?> adapterView, View view, int position, long id) {
+        Adapter adapter = adapterView.getAdapter();
+        Trainee trainee = (Trainee) adapter.getItem(position);
+        trainerId = trainee.get_id();
+        Toast.makeText(view.getContext(), "Selected Trainer: " + trainee.getUserName() ,Toast.LENGTH_SHORT).show();
     }
 }
