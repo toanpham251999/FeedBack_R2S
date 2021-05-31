@@ -1,29 +1,33 @@
 package com.example.feedbackapp.ui.feedback.Adapter;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.ui.feedback.Interface.ICheckBoxListener;
-import com.example.feedbackapp.ui.feedback.Model.ListQuestion;
+import com.example.feedbackapp.constant.SystemConstant;
+import com.example.feedbackapp.ui.feedback.Model.Question;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
-    private List<ListQuestion>listQuestions;
-    ArrayList<ListQuestion>arrayList_id;
-   private ArrayList<String>arrayList = new ArrayList<String >();
+    private List<Question> listQuestions;
+    public ArrayList<Question>arrayList_id =  new ArrayList<>();
 
-    QuestionAdapter(List<ListQuestion>listQuestions)
+    public QuestionAdapter() {
+         this.listQuestions = new ArrayList<>();
+    }
+
+    public QuestionAdapter(List<Question>listQuestions)
     {
         this.listQuestions =listQuestions;
     }
@@ -37,29 +41,32 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder holder, int position) {
-        ListQuestion listQuestion = listQuestions.get(position);
-        holder.ck_question.setText(listQuestion.getQuestionContent());
-        holder.ck_question.setOnClickListener(new View.OnClickListener() {
+        //Question question = listQuestions.get(position);
+        holder.ck_question.setText(listQuestions.get(position).getQuestionContent());
+        holder.ck_question.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(holder.ck_question.isChecked())
                 {
                     //arrayList_id.add(listQuestions.get(position));
-                    Log.d("Check",listQuestion.getId());
-                    arrayList.add(listQuestion.getId());
+                    Log.i(" LIST QUESTION VALUES", "123"+listQuestions.get(position).toString());
+                    SystemConstant.arrayList_id.add(listQuestions.get(position));
+                    Log.i("ARRAY LIST VALUES", "123"+arrayList_id.toString());
+
                 }
                 else
                 {
-                    arrayList.remove(listQuestion.getId());
+                    SystemConstant.arrayList_id.remove(listQuestions.get(position));
+
                 }
-                //checkBoxListener.onCheckBoxChecking(arrayList);
+
             }
         });
 
     }
-    public ArrayList<String> onclicked()
+    public ArrayList<Question> onclicked()
     {
-        return this.arrayList;
+        return SystemConstant.arrayList_id;
     }
 
     @Override

@@ -14,38 +14,38 @@ import com.example.feedbackapp.ui.feedback.Model.Topic;
 
 import java.util.List;
 
-public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.ViewHolder> {
+public class TopicDetailAdapter extends RecyclerView.Adapter<TopicDetailAdapter.ViewHolder> {
     private RecyclerView.RecycledViewPool viewPool =new RecyclerView.RecycledViewPool();
     List<Topic> topics;
-    public TopicReviewAdapter (List<Topic> topics)
+    public TopicDetailAdapter(List<Topic> topics)
     {
         this.topics = topics;
     }
 
     @NonNull
     @Override
-    public TopicReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_review_new_feedback_item,parent,false);
+    public TopicDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_detail_feedback_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopicReviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopicDetailAdapter.ViewHolder holder, int position) {
         Topic topic = topics.get(position);
-        holder.txt_Topic.setText(topic.getTopicName());
+        holder.txt_Detail_Topic.setText(topic.getTopicName());
 
         // Create layout manager with initial prefetch item count
         LinearLayoutManager layoutManager = new LinearLayoutManager(
-                holder.rcv_review_subItem.getContext(),
+                holder.rcv_Detail_subItem.getContext(),
                 LinearLayoutManager.VERTICAL,
                 false
         );
         layoutManager.setInitialPrefetchItemCount(topic.getListQuestion().size());
         //Create subItem view adapter
-        QuestionReviewAdapter questionReviewAdapter = new QuestionReviewAdapter(topic.getListQuestion());
-        holder.rcv_review_subItem.setLayoutManager(layoutManager);
-        holder.rcv_review_subItem.setAdapter(questionReviewAdapter);
-        holder.rcv_review_subItem.setRecycledViewPool(viewPool);
+        QuestionDetailAdapter questionReviewAdapter = new QuestionDetailAdapter(topic.getListQuestion());
+        holder.rcv_Detail_subItem.setLayoutManager(layoutManager);
+        holder.rcv_Detail_subItem.setAdapter(questionReviewAdapter);
+        holder.rcv_Detail_subItem.setRecycledViewPool(viewPool);
     }
 
     @Override
@@ -54,14 +54,14 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
     }
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView txt_Topic;
-        RecyclerView rcv_review_subItem;
+        TextView txt_Detail_Topic;
+        RecyclerView rcv_Detail_subItem;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
             //Ánh xạ view
-            txt_Topic = itemView.findViewById(R.id.txt_detail_topic);
-            rcv_review_subItem = itemView.findViewById(R.id.rcv_detail_sub);
+            txt_Detail_Topic = itemView.findViewById(R.id.txt_detail_topic);
+            rcv_Detail_subItem = itemView.findViewById(R.id.rcv_detail_sub);
         }
     }
 }

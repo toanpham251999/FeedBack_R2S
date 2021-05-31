@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,14 +42,18 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         holder.txtFeedbackTitle.setText(list.getTitle());
         holder.txtAdminId.setText(list.getAdminId());
 
-//        holder.imgEditFeedback.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AppCompatActivity appCompatActivity = (AppCompatActivity)v.getContext();
-//                Fragment_Edit_Feedback fragment_edit_feedback = new Fragment_Edit_Feedback();
-//                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.edit_fragment,fragment_edit_feedback).addToBackStack(null).commit();
-//            }
-//        });
+        holder.imgEditFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_edit_feedback);
+            }
+        });
+        holder.imgDetailFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_detail_feedback);
+            }
+        });
     }
     public int getItemCount()
     {
@@ -59,6 +64,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         TextView txtFeedbackId;
         TextView txtFeedbackTitle;
         TextView txtAdminId;
+        ImageView imgDetailFeedback;
         ImageView imgEditFeedback;
         public ViewHolder(@NonNull View itemView)
         {
@@ -68,6 +74,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             txtFeedbackTitle =itemView.findViewById(R.id.txtFeedbackTitle);
             txtAdminId=itemView.findViewById(R.id.txtFeedbackAdminID);
             imgEditFeedback=itemView.findViewById(R.id.btn_Edit);
+            imgDetailFeedback=itemView.findViewById(R.id.btnView);
         }
     }
 }

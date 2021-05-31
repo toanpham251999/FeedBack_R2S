@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ListTopic {
+public class Topic {
 
     @SerializedName("Id")
     @Expose
@@ -14,7 +14,7 @@ public class ListTopic {
     private String topicName;
     @SerializedName("listQuestion")
     @Expose
-    private List<ListQuestion> listQuestion = null;
+    private List<Question> listQuestion = null;
 
     public String getId() {
         return id;
@@ -32,11 +32,11 @@ public class ListTopic {
         this.topicName = topicName;
     }
 
-    public List<ListQuestion> getListQuestion() {
+    public List<Question> getListQuestion() {
         return listQuestion;
     }
 
-    public void setListQuestion(List<ListQuestion> listQuestion) {
+    public void setListQuestion(List<Question> listQuestion) {
         this.listQuestion = listQuestion;
     }
 

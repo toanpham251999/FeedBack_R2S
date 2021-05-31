@@ -17,19 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.ui.feedback.Adapter.QuestionAdapter;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicAdapter;
 import com.example.feedbackapp.ui.feedback.Interface.ICheckBoxListener;
-import com.example.feedbackapp.ui.feedback.Model.ClassDataUtilsFeedback;
 import com.example.feedbackapp.ui.feedback.Adapter.CustomAdapter;
-import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
-import com.example.feedbackapp.ui.feedback.Model.ListQuestion;
-import com.example.feedbackapp.ui.feedback.Model.ListTopic;
-import com.example.feedbackapp.ui.feedback.Model.ListTypeFeedbackModel;
+import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Model.TypeFeedbackModel;
 import com.example.feedbackapp.ui.feedback.Model.TypeOfFeedbackModel;
@@ -43,21 +38,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Add_Feedback#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Add_Feedback extends Fragment{
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Button btnReviewFeedback;
     private String typeFeedback;
     private EditText feedbackName;
@@ -74,38 +58,13 @@ public class Add_Feedback extends Fragment{
 
     // adt
     private TopicAdapter topicAdapter;
-    private QuestionAdapter questionAdapter;
+    private QuestionAdapter questionAdapter =  new QuestionAdapter();
+    private TopicModel topicModel;
     private ICheckBoxListener iCheckBoxListener;
     public Add_Feedback() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Add_Feedback.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Add_Feedback newInstance(String param1, String param2) {
-        Add_Feedback fragment = new Add_Feedback();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,8 +105,8 @@ public class Add_Feedback extends Fragment{
         callbackListTopic.enqueue(new Callback<TopicModel>() {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
-                TopicModel topicModel = (TopicModel)response.body();
-                topicAdapter = new TopicAdapter(topicModel.getListTopic() );
+                topicModel = (TopicModel)response.body();
+                topicAdapter = new TopicAdapter(topicModel.getTopic());
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
@@ -167,7 +126,11 @@ public class Add_Feedback extends Fragment{
             @Override
             public void onClick(View v) {
                 //arr id question choose
-                ArrayList<String> a = questionAdapter.onclicked();
+                List<Question> a = new ArrayList<>();
+                questionAdapter = topicAdapter.GetQuestionAdapter();
+                //List<Question> arrQuestion = topicAdapter.topic.getListQuestion();
+                Log.i("QUESTION ADAPTER REPONSE", "123" + questionAdapter.onclicked().toString());
+                a = questionAdapter.onclicked();
                 Bundle bundle = new Bundle();
                 bundle.putString("feedbackName", feedbackName.getText().toString().trim());
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_review_new_feedback,bundle);

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
                 R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright,
                 R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
-                R.id.nav_edit_feedback,
+                R.id.nav_edit_feedback,R.id.nav_detail_feedback,
 
                 R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback,
 

@@ -10,18 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
-import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,23 +23,21 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Review_NewFeedbackFragment#newInstance} factory method to
+ * Use the {@link Fragment_Detail_Feedback#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Review_NewFeedbackFragment extends Fragment  {
+public class Fragment_Detail_Feedback extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    Button btnReview;
-    ArrayList<Question>listQuestions;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public Review_NewFeedbackFragment() {
+    public Fragment_Detail_Feedback() {
         // Required empty public constructor
     }
 
@@ -55,11 +47,11 @@ public class Review_NewFeedbackFragment extends Fragment  {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Review_NewFeedbackFragment.
+     * @return A new instance of fragment Fragment_Detail_Feedback.
      */
     // TODO: Rename and change types and number of parameters
-    public static Review_NewFeedbackFragment newInstance(String param1, String param2) {
-        Review_NewFeedbackFragment fragment = new Review_NewFeedbackFragment();
+    public static Fragment_Detail_Feedback newInstance(String param1, String param2) {
+        Fragment_Detail_Feedback fragment = new Fragment_Detail_Feedback();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,7 +72,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_review__new_feedback, container, false);
+        View view = inflater.inflate(R.layout.fragment__detail__feedback, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
         DataService dataServiceTopic = APIService.getService();
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
@@ -103,14 +95,6 @@ public class Review_NewFeedbackFragment extends Fragment  {
                 Log.d("DTopic",t.toString());
             }
         });
-        Bundle bundle = getArguments();
-        TextView txt_review_feedbacktitle;
-        txt_review_feedbacktitle = (TextView) view.findViewById(R.id.txt_detail_feedbacktitle);
-        if(bundle !=null) {
-            txt_review_feedbacktitle.setText(bundle.getString("feedbackName"));
-        }
-        else
-            Toast.makeText(this.getContext(),"Lỗi",Toast.LENGTH_LONG).show();
         return view;
     }
 
