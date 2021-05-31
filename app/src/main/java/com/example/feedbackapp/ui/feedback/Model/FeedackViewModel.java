@@ -1,4 +1,4 @@
-package com.example.feedbackapp.ui.feedback;
+package com.example.feedbackapp.ui.feedback.Model;
 
 import androidx.lifecycle.ViewModel;
 

@@ -20,14 +20,12 @@ import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     private List<ListQuestion>listQuestions;
-    private ICheckBoxListener checkBoxListener;
     ArrayList<ListQuestion>arrayList_id;
    private ArrayList<String>arrayList = new ArrayList<String >();
 
-    QuestionAdapter(List<ListQuestion>listQuestions, ICheckBoxListener checkBoxListener)
+    QuestionAdapter(List<ListQuestion>listQuestions)
     {
         this.listQuestions =listQuestions;
-        this.checkBoxListener = checkBoxListener;
     }
     @NonNull
     @Override

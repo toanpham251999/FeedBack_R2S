@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.ui.feedback.Adapter.FeedbackAdapter;
+import com.example.feedbackapp.ui.feedback.Model.FeedackViewModel;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
@@ -33,6 +34,7 @@ public class FeedBackFragment extends Fragment {
     private FeedackViewModel mViewModel;
     Button btnView,btnEdit,btnDelete;
     ImageView btnAddFeedback;
+    ImageView btn_Edit;
 
     public static FeedBackFragment newInstance() {
         return new FeedBackFragment();
@@ -76,6 +78,13 @@ public class FeedBackFragment extends Fragment {
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_feedback);
             }
         });
+        /*btn_Edit = (ImageView) view.findViewById(R.id.btn_Edit);
+        btn_Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_edit_feedback);
+            }
+        });*/
 
         return view;
     }

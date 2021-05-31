@@ -3,12 +3,17 @@ package com.example.feedbackapp.ui.feedback.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.ui.feedback.FeedBackFragment;
+import com.example.feedbackapp.ui.feedback.Fragment_Edit_Feedback;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedback;
 
 import java.util.List;
@@ -19,6 +24,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
     {
         this.listFeedback=listFeedback;
     }
+    FeedBackFragment feedBackFragment = new FeedBackFragment();
 
     @NonNull
     @Override
@@ -35,6 +41,14 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         holder.txtFeedbackTitle.setText(list.getTitle());
         holder.txtAdminId.setText(list.getAdminId());
 
+//        holder.imgEditFeedback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AppCompatActivity appCompatActivity = (AppCompatActivity)v.getContext();
+//                Fragment_Edit_Feedback fragment_edit_feedback = new Fragment_Edit_Feedback();
+//                appCompatActivity.getSupportFragmentManager().beginTransaction().replace(R.id.edit_fragment,fragment_edit_feedback).addToBackStack(null).commit();
+//            }
+//        });
     }
     public int getItemCount()
     {
@@ -45,6 +59,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         TextView txtFeedbackId;
         TextView txtFeedbackTitle;
         TextView txtAdminId;
+        ImageView imgEditFeedback;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -52,6 +67,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             txtFeedbackId =itemView.findViewById(R.id.txtFeedbackID);
             txtFeedbackTitle =itemView.findViewById(R.id.txtFeedbackTitle);
             txtAdminId=itemView.findViewById(R.id.txtFeedbackAdminID);
+            imgEditFeedback=itemView.findViewById(R.id.btn_Edit);
         }
     }
 }

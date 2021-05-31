@@ -115,7 +115,7 @@
                 app:srcCompat="@drawable/eye3_40x40" />
 
             <ImageView
-                android:id="@+id/btnEdit"
+                android:id="@+id/btn_Edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

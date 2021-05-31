@@ -15,6 +15,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -47,7 +48,7 @@ import retrofit2.Response;
  * Use the {@link Add_Feedback#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Add_Feedback extends Fragment implements ICheckBoxListener {
+public class Add_Feedback extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,6 +61,7 @@ public class Add_Feedback extends Fragment implements ICheckBoxListener {
     private Button btnReviewFeedback;
     private String typeFeedback;
     private EditText feedbackName;
+    private ImageView btn_Edit;
 
     //
     ArrayList<String> arrayList_save;
@@ -145,7 +147,7 @@ public class Add_Feedback extends Fragment implements ICheckBoxListener {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
                 TopicModel topicModel = (TopicModel)response.body();
-                topicAdapter = new TopicAdapter(topicModel.getListTopic(),iCheckBoxListener );
+                topicAdapter = new TopicAdapter(topicModel.getListTopic() );
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
@@ -171,6 +173,8 @@ public class Add_Feedback extends Fragment implements ICheckBoxListener {
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_review_new_feedback,bundle);
             }
         });
+
+
         return view;
     }
     // handler click spinner
@@ -179,12 +183,6 @@ public class Add_Feedback extends Fragment implements ICheckBoxListener {
         Adapter adapter = adapterView.getAdapter();
         TypeFeedbackModel clas = (TypeFeedbackModel) adapter.getItem(position);
         String itemName = clas.getClassName();
-    }
-
-    @Override
-    public void onCheckBoxChecking(ArrayList<String> arrayList) {
-        arrayList_save = arrayList;
-       // Log.d("AAA","OK");
     }
 
 

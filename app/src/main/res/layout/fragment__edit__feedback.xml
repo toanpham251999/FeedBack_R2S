@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.feedback.Fragment_Edit_Feedback">
+    android:layout_marginLeft="0dp"
+    android:orientation="vertical"
+    android:id="@+id/edit_fragment"
+    tools:context=".ui.feedback.Add_Feedback">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="0dp"
+        android:text="Edit New Feedback"
+        android:textAlignment="center"
+        android:textColor="#090909"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Feedback Type:" />
+
+        <Spinner
+            android:id="@+id/spn_Type_Feedback"
+            style="@style/SpinnerTheme"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Feedback Title:" />
+
+        <EditText
+            android:id="@+id/edt_FeedbackTitleCreate"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/border"
+            android:ems="5"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_ReviewFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="10dp"
+            android:text="Review" />
+
+        <Button
+            android:id="@+id/btn_BackFeedbackCreate"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#FB470E"
+            android:text="Back" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_Topic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:listitem="@layout/fragment_create_feedback_item" />
 
-</FrameLayout>
+</LinearLayout>
