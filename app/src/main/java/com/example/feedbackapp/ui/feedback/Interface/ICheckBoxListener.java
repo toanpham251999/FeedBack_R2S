@@ -5,5 +5,5 @@ import com.example.feedbackapp.ui.feedback.Model.ListQuestion;
 import java.util.ArrayList;
 
 public interface ICheckBoxListener {
-    void onCheckBoxChecking(ArrayList<ListQuestion>arrayList);
+     void onCheckBoxChecking(ArrayList<String>arrayList);
 }

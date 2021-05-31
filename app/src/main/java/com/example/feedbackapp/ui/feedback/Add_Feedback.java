@@ -19,7 +19,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.ui.feedback.Adapter.QuestionAdapter;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicAdapter;
+import com.example.feedbackapp.ui.feedback.Interface.ICheckBoxListener;
 import com.example.feedbackapp.ui.feedback.Model.ClassDataUtilsFeedback;
 import com.example.feedbackapp.ui.feedback.Adapter.CustomAdapter;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
@@ -44,7 +47,7 @@ import retrofit2.Response;
  * Use the {@link Add_Feedback#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Add_Feedback extends Fragment {
+public class Add_Feedback extends Fragment implements ICheckBoxListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +61,8 @@ public class Add_Feedback extends Fragment {
     private String typeFeedback;
     private EditText feedbackName;
 
+    //
+    ArrayList<String> arrayList_save;
 
 
     //private Spinner spinnerTypeFeedback;
@@ -65,7 +70,10 @@ public class Add_Feedback extends Fragment {
     private Spinner spinner;
     private List<TypeFeedbackModel> classes;
 
-
+    // adt
+    private TopicAdapter topicAdapter;
+    private QuestionAdapter questionAdapter;
+    private ICheckBoxListener iCheckBoxListener;
     public Add_Feedback() {
         // Required empty public constructor
     }
@@ -131,14 +139,13 @@ public class Add_Feedback extends Fragment {
         });
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic);
         DataService dataServiceTopic = APIService.getService();
-        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+        UserInfo userInfo = new UserInfo(getContext());
+        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo.token());
         callbackListTopic.enqueue(new Callback<TopicModel>() {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
                 TopicModel topicModel = (TopicModel)response.body();
-                TopicAdapter topicAdapter = new TopicAdapter(topicModel.getListTopic());
+                topicAdapter = new TopicAdapter(topicModel.getListTopic(),iCheckBoxListener );
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
@@ -157,7 +164,8 @@ public class Add_Feedback extends Fragment {
         btnReviewFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //arr id question choose
+                ArrayList<String> a = questionAdapter.onclicked();
                 Bundle bundle = new Bundle();
                 bundle.putString("feedbackName", feedbackName.getText().toString().trim());
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_review_new_feedback,bundle);
@@ -172,5 +180,12 @@ public class Add_Feedback extends Fragment {
         TypeFeedbackModel clas = (TypeFeedbackModel) adapter.getItem(position);
         String itemName = clas.getClassName();
     }
+
+    @Override
+    public void onCheckBoxChecking(ArrayList<String> arrayList) {
+        arrayList_save = arrayList;
+       // Log.d("AAA","OK");
+    }
+
 
 }

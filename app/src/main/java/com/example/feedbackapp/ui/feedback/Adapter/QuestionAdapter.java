@@ -20,8 +20,9 @@ import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     private List<ListQuestion>listQuestions;
-    ICheckBoxListener checkBoxListener;
+    private ICheckBoxListener checkBoxListener;
     ArrayList<ListQuestion>arrayList_id;
+   private ArrayList<String>arrayList = new ArrayList<String >();
 
     QuestionAdapter(List<ListQuestion>listQuestions, ICheckBoxListener checkBoxListener)
     {
@@ -40,21 +41,27 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder holder, int position) {
         ListQuestion listQuestion = listQuestions.get(position);
         holder.ck_question.setText(listQuestion.getQuestionContent());
-        /*holder.ck_question.setOnClickListener(new View.OnClickListener() {
+        holder.ck_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(holder.ck_question.isChecked())
                 {
-                    arrayList_id.add(new ListQuestion());
+                    //arrayList_id.add(listQuestions.get(position));
+                    Log.d("Check",listQuestion.getId());
+                    arrayList.add(listQuestion.getId());
                 }
                 else
                 {
-                    arrayList_id.remove(listQuestions.get(position));
+                    arrayList.remove(listQuestion.getId());
                 }
-                checkBoxListener.onCheckBoxChecking(arrayList_id);
+                //checkBoxListener.onCheckBoxChecking(arrayList);
             }
-        });*/
+        });
 
+    }
+    public ArrayList<String> onclicked()
+    {
+        return this.arrayList;
     }
 
     @Override

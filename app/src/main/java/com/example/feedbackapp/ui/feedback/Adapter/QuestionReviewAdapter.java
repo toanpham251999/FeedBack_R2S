@@ -18,7 +18,7 @@ import com.example.feedbackapp.ui.feedback.Model.ListQuestion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAdapter.ViewHolder> implements ICheckBoxListener {
+public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAdapter.ViewHolder> {
     private List<ListQuestion> listQuestions;
     ArrayList<ListQuestion>arrListQuestion;
     QuestionReviewAdapter(List<ListQuestion>listQuestions)
@@ -44,11 +44,11 @@ public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAd
         return listQuestions.size();
     }
 
-    @Override
-    public void onCheckBoxChecking(ArrayList<ListQuestion> arrayList) {
-        arrListQuestion=arrayList;
-        Log.d("checkbox","Check box OK");
-    }
+//    @Override
+//    public void onCheckBoxChecking(ArrayList<ListQuestion> arrayList) {
+//        arrListQuestion=arrayList;
+//        Log.d("checkbox","Check box OK");
+//    }
 
     class ViewHolder extends RecyclerView.ViewHolder
     {

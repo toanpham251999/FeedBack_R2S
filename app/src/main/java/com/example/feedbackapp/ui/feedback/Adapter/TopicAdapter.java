@@ -20,10 +20,11 @@ import java.util.List;
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> {
     private RecyclerView.RecycledViewPool viewPool =new RecyclerView.RecycledViewPool();
     List<ListTopic> listTopics;
-    ICheckBoxListener iCheckBoxListener;
-    public TopicAdapter (List<ListTopic>listTopics)
+    private ICheckBoxListener iCheckBoxListener;
+    public TopicAdapter (List<ListTopic>listTopics,  ICheckBoxListener iCheckBoxListener)
     {
         this.listTopics=listTopics;
+        this.iCheckBoxListener = iCheckBoxListener;
     }
 
     @NonNull
