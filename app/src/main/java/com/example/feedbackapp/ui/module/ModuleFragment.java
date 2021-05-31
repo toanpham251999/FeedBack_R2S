@@ -76,18 +76,20 @@ public class ModuleFragment extends Fragment {
             }
         });
 
-        btnAddModule = root.findViewById(R.id.btn_AddModule);
-        btnAddModule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("key","abc"); // Put anything what you want
-                AddEditModuleFragment addEditModuleFragment = new AddEditModuleFragment();
-                addEditModuleFragment.setArguments(bundle);
-                Navigation.findNavController(root).navigate(R.id.module_to_add_module, bundle);
-                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
-            }
-        });
+//        btnAddModule = root.findViewById(R.id.btn_AddModule);
+//        btnAddModule.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("key","abc"); // Put anything what you want
+//                AddEditModuleFragment addEditModuleFragment = new AddEditModuleFragment();
+//                addEditModuleFragment.setArguments(bundle);
+//                Navigation.findNavController(root).navigate(R.id.module_to_add_module, bundle);
+//                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+
         //nếu không phải admin, ẩn quyền thêm xóa sửa
         UserInfo userInfo = new UserInfo(root.getContext());
         if(!userInfo.role().equals("admin")){
