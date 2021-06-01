@@ -9,38 +9,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Model.Question;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAdapter.ViewHolder> {
+public class QuestionDetailAdapter extends RecyclerView.Adapter<QuestionDetailAdapter.ViewHolder> {
     private List<Question> listQuestions;
-    ArrayList<Question>arrListQuestion;
-    QuestionReviewAdapter(List<Question>listQuestions)
+    ArrayList<Question> arrListQuestion;
+    QuestionDetailAdapter(List<Question>listQuestions)
     {
         this.listQuestions =listQuestions;
     }
     @NonNull
     @Override
-    public QuestionReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_review_new_feedback_item_sub, parent,
+    public QuestionDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_detail_feedback_item_sub, parent,
                 false);
-        return new ViewHolder(view);
+        return new QuestionDetailAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuestionReviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QuestionDetailAdapter.ViewHolder holder, int position) {
         Question listQuestion = listQuestions.get(position);
-        for(int i=0;i< SystemConstant.id_question.size();i++)
-        {
-            if(listQuestion.getId().contains(SystemConstant.id_question.get(i)))
-            {
-                holder.txt_question_review.setText(listQuestion.getQuestionContent());
-            }
-        }
-
+        holder.txt_detail_question.setText(listQuestion.getQuestionContent());
     }
 
     @Override
@@ -56,11 +48,11 @@ public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAd
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView txt_question_review;
+        TextView txt_detail_question;
         ViewHolder(View itemView)
         {
             super(itemView);
-            txt_question_review = itemView.findViewById(R.id.txt_detail_question);
+            txt_detail_question = itemView.findViewById(R.id.txt_detail_question);
         }
 
     }

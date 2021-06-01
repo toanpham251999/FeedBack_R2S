@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="0dp"
     android:orientation="vertical"
+    android:id="@+id/edit_fragment"
     tools:context=".ui.feedback.Add_Feedback">
 
     <!-- TODO: Update blank fragment layout -->
@@ -16,7 +17,7 @@
         android:paddingLeft="0dp"
         android:paddingTop="24dp"
         android:paddingBottom="0dp"
-        android:text="Create New Feedback"
+        android:text="Edit New Feedback"
         android:textAlignment="center"
         android:textColor="#090909"
         android:textSize="30sp"

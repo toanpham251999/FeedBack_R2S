@@ -3,6 +3,7 @@ package com.example.feedbackapp.ui.feedback;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,20 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.ui.feedback.Adapter.TopicAdapter;
+import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
-import com.example.feedbackapp.ui.feedback.Interface.ICheckBoxListener;
-import com.example.feedbackapp.ui.feedback.Model.ListQuestion;
+import com.example.feedbackapp.ui.feedback.Model.AddFeedback;
+import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,11 +48,17 @@ public class Review_NewFeedbackFragment extends Fragment  {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Button btnReview;
-    ArrayList<ListQuestion>listQuestions;
+    ArrayList<Question>listQuestions;
+    private String idTypeFeedback;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button btn_Save_Review;
+    private Button btn_back_review;
+    public String edt_feedbacktitle = "";
+    ArrayList<Question>questions=new ArrayList<>();
+
 
     public Review_NewFeedbackFragment() {
         // Required empty public constructor
@@ -83,7 +96,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review__new_feedback, container, false);
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_review);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
         DataService dataServiceTopic = APIService.getService();
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
                 "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
@@ -92,7 +105,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
                 TopicModel topicModel = (TopicModel)response.body();
-                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(topicModel.getListTopic());
+                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(topicModel.getTopic());
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
@@ -106,13 +119,49 @@ public class Review_NewFeedbackFragment extends Fragment  {
             }
         });
         Bundle bundle = getArguments();
-        TextView txt_review_feedbacktitle;
-        txt_review_feedbacktitle = (TextView) view.findViewById(R.id.txt_review_feedbacktitle);
+        TextView txt_adminId;
+        btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review);
+        txt_adminId =(TextView)view.findViewById(R.id.txt_detail_admin);
         if(bundle !=null) {
-            txt_review_feedbacktitle.setText(bundle.getString("feedbackName"));
+            edt_feedbacktitle = bundle.getString("feedbackName");
+            txt_adminId.setText(bundle.getString("AdminId"));
+            idTypeFeedback = bundle.getString("typeFeedbackId");
         }
         else
             Toast.makeText(this.getContext(),"Lỗi",Toast.LENGTH_LONG).show();
+
+        btn_Save_Review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(),SystemConstant.id_question.toString(),Toast.LENGTH_LONG);
+                DataService dataService = APIService.getService();
+                UserInfo userInfo = new UserInfo(getContext());
+
+                //Gọi API thêm Feedback
+                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
+                        idTypeFeedback, SystemConstant.id_question)).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
+                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            }
+        });
+        btn_back_review = (Button)view.findViewById(R.id.btn_back_review);
+        btn_back_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.nav_add_feedback);
+            }
+        });
         return view;
     }
 
