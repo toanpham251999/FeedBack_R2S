@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.ui.feedback.Adapter.TopicDetailAdapter;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
@@ -82,7 +83,7 @@ public class Fragment_Detail_Feedback extends Fragment {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
                 TopicModel topicModel = (TopicModel)response.body();
-                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(topicModel.getTopic());
+                TopicDetailAdapter topicAdapter = new TopicDetailAdapter(topicModel.getTopic());
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());

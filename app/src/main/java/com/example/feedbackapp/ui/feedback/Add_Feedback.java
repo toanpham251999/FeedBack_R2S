@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
@@ -24,6 +26,7 @@ import com.example.feedbackapp.ui.feedback.Adapter.QuestionAdapter;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicAdapter;
 import com.example.feedbackapp.ui.feedback.Interface.ICheckBoxListener;
 import com.example.feedbackapp.ui.feedback.Adapter.CustomAdapter;
+import com.example.feedbackapp.ui.feedback.Model.ListTypeFeedbackModel;
 import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Model.TypeFeedbackModel;
@@ -32,6 +35,7 @@ import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,7 +52,8 @@ public class Add_Feedback extends Fragment{
     private ImageView btn_Edit;
 
     //
-    ArrayList<String> arrayList_save;
+    String feedbackTypeId;
+    List<Question> questionList = new ArrayList<>();
 
 
     //private Spinner spinnerTypeFeedback;
@@ -61,6 +66,8 @@ public class Add_Feedback extends Fragment{
     private QuestionAdapter questionAdapter =  new QuestionAdapter();
     private TopicModel topicModel;
     private ICheckBoxListener iCheckBoxListener;
+    private String stateFeedback;
+    private ListTypeFeedbackModel listTypeFeedbackModel;
     public Add_Feedback() {
         // Required empty public constructor
     }
@@ -72,6 +79,7 @@ public class Add_Feedback extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add__feedback, container, false);
         DataService dataServiceFeedback = APIService.getService();
+        spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback);
         Call<TypeOfFeedbackModel> callbackFeedback = dataServiceFeedback.GetDataTypeFeedback("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
                 "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
                 "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
@@ -79,9 +87,6 @@ public class Add_Feedback extends Fragment{
         {
             @Override
             public void onResponse(Call<TypeOfFeedbackModel> call, Response<TypeOfFeedbackModel> response) {
-
-                //classes = ClassDataUtilsFeedback.getClasss();
-                spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback);
                 TypeOfFeedbackModel listTypeFeedbackModel = (TypeOfFeedbackModel) response.body();
                 // Adapter"
                 CustomAdapter adapter = new CustomAdapter(getActivity(),
@@ -90,7 +95,9 @@ public class Add_Feedback extends Fragment{
                         listTypeFeedbackModel.getListTypeFeedback());
                 spinner.setAdapter(adapter);
                 spinner.setSelected(true);
+
                 Log.d("BBBB",listTypeFeedbackModel.getMessage());
+
             }
 
             @Override
@@ -98,6 +105,22 @@ public class Add_Feedback extends Fragment{
                 Log.d("DDD","Get Data Fail");
             }
         });
+        this.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                onItemSelectedHandler(parent,view,position,id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic);
         DataService dataServiceTopic = APIService.getService();
         UserInfo userInfo = new UserInfo(getContext());
@@ -126,13 +149,16 @@ public class Add_Feedback extends Fragment{
             @Override
             public void onClick(View v) {
                 //arr id question choose
-                List<Question> a = new ArrayList<>();
+
                 questionAdapter = topicAdapter.GetQuestionAdapter();
                 //List<Question> arrQuestion = topicAdapter.topic.getListQuestion();
                 Log.i("QUESTION ADAPTER REPONSE", "123" + questionAdapter.onclicked().toString());
-                a = questionAdapter.onclicked();
+                questionList = questionAdapter.onclicked();
+                Log.i("CHECK SPINNER",spinner.getSelectedItem().toString());
                 Bundle bundle = new Bundle();
+                bundle.putString("typeFeedbackId",feedbackTypeId);
                 bundle.putString("feedbackName", feedbackName.getText().toString().trim());
+                bundle.putString("AdminId","60a8f233a86b7c42384e8bf9");
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_review_new_feedback,bundle);
             }
         });
@@ -140,12 +166,18 @@ public class Add_Feedback extends Fragment{
 
         return view;
     }
+
+    public List<Question>GetListQuestion()
+    {
+        return this.questionList;
+    }
     // handler click spinner
     // Class
     private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
-        TypeFeedbackModel clas = (TypeFeedbackModel) adapter.getItem(position);
-        String itemName = clas.getClassName();
+        ListTypeFeedbackModel state = (ListTypeFeedbackModel) adapter.getItem(position);
+        feedbackTypeId= state.getId();
+
     }
 
 

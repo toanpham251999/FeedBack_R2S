@@ -15,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
+import com.example.feedbackapp.ui.feedback.Model.AddFeedback;
 import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
@@ -40,10 +43,14 @@ public class Review_NewFeedbackFragment extends Fragment  {
     private static final String ARG_PARAM2 = "param2";
     Button btnReview;
     ArrayList<Question>listQuestions;
+    private String idTypeFeedback;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button btn_Save_Review;
+    ArrayList<Question>questions=new ArrayList<>();
+
 
     public Review_NewFeedbackFragment() {
         // Required empty public constructor
@@ -82,35 +89,65 @@ public class Review_NewFeedbackFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review__new_feedback, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
-        DataService dataServiceTopic = APIService.getService();
-        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
-        callbackListTopic.enqueue(new Callback<TopicModel>() {
-            @Override
-            public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
-                TopicModel topicModel = (TopicModel)response.body();
-                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(topicModel.getTopic());
+//        DataService dataServiceTopic = APIService.getService();
+//        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
+//                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
+//                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+//        callbackListTopic.enqueue(new Callback<TopicModel>() {
+//            @Override
+//            public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
+//                TopicModel topicModel = (TopicModel)response.body();
+                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(SystemConstant.arrayList_id);
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(layoutManagerTopic);
                 Log.d("BTopic","Done");
-            }
+//            }
 
-            @Override
-            public void onFailure(Call<TopicModel> call, Throwable t) {
-                Log.d("DTopic",t.toString());
-            }
-        });
+//            @Override
+//            public void onFailure(Call<TopicModel> call, Throwable t) {
+//                Log.d("DTopic",t.toString());
+//            }
+//        });
         Bundle bundle = getArguments();
         TextView txt_review_feedbacktitle;
+        TextView txt_adminId;
+        btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review);
         txt_review_feedbacktitle = (TextView) view.findViewById(R.id.txt_detail_feedbacktitle);
+        txt_adminId =(TextView)view.findViewById(R.id.txt_detail_admin);
         if(bundle !=null) {
             txt_review_feedbacktitle.setText(bundle.getString("feedbackName"));
+            txt_adminId.setText(bundle.getString("AdminId"));
+            idTypeFeedback = bundle.getString("typeFeedbackId");
         }
         else
             Toast.makeText(this.getContext(),"Lỗi",Toast.LENGTH_LONG).show();
+
+        btn_Save_Review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),SystemConstant.id_question.toString(),Toast.LENGTH_LONG);
+                DataService dataService = APIService.getService();
+                UserInfo userInfo = new UserInfo(getContext());
+                Call<AddFeedback> callback = dataService.PostData("Bearer"+userInfo.token(),
+                        txt_review_feedbacktitle.toString(),
+                        idTypeFeedback,SystemConstant.id_question);
+                callback.enqueue(new Callback<AddFeedback>() {
+                    @Override
+                    public void onResponse(Call<AddFeedback> call, Response<AddFeedback> response) {
+                        Toast.makeText(getContext(),"POST OK",Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddFeedback> call, Throwable t) {
+                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+            }
+        });
         return view;
     }
 

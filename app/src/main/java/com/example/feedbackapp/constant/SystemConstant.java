@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public class SystemConstant {
     public static ArrayList<Question> arrayList_id =  new ArrayList<>();
+    public static ArrayList<String> id_question = new ArrayList<>();
 }

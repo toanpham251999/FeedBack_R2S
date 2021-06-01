@@ -22,6 +22,7 @@ import java.util.List;
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     private List<Question> listQuestions;
     public ArrayList<Question>arrayList_id =  new ArrayList<>();
+    public ArrayList<String>id_typeFeedback = new ArrayList<>();
 
     public QuestionAdapter() {
          this.listQuestions = new ArrayList<>();
@@ -51,13 +52,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                     //arrayList_id.add(listQuestions.get(position));
                     Log.i(" LIST QUESTION VALUES", "123"+listQuestions.get(position).toString());
                     SystemConstant.arrayList_id.add(listQuestions.get(position));
+                    SystemConstant.id_question.add(listQuestions.get(position).getId());
                     Log.i("ARRAY LIST VALUES", "123"+arrayList_id.toString());
+                    Log.i("ARRAY LIST VALUES ID", "123"+id_typeFeedback.toString());
 
                 }
                 else
                 {
                     SystemConstant.arrayList_id.remove(listQuestions.get(position));
-
+                    SystemConstant.id_question.remove(listQuestions.get(position).getId());
                 }
 
             }
