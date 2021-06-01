@@ -35,7 +35,6 @@
             android:name=".MainActivity"
             android:theme="@style/Theme.FeedBackApp.NoActionBar">
 
-
         </activity>
 
         <meta-data

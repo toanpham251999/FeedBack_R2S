@@ -2,6 +2,7 @@ package com.example.feedbackapp.ui.dashboard;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.FeedbackAdapter;
+
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Auth.Admin;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Auth.ListAdminInfo;
+
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Answer.AnswerInfo;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Answer.ListAnswerInfor;
+
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Feedback.Feedback;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Feedback.ListFeedbackInfo;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Feedback.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.TraineeAssignment.TraineeAssignment;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.TraineeAssignment.TraineeAssignmentInfo;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.RetrofitAPISetvice.AnswerService;
 import com.example.feedbackapp.RetrofitAPISetvice.FeedbackAPIServices;
 import com.example.feedbackapp.RetrofitAPISetvice.TraineeAssignmentAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
@@ -54,6 +61,8 @@ public class TraineeDashboardFragment extends Fragment {
         ShowSuccessDialog(root);
 
         actGetListFeedback(root);
+        // Test get list answer
+
 
         return root;
     }

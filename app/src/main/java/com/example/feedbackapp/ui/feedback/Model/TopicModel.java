@@ -13,7 +13,7 @@ public class TopicModel {
         private String message;
         @SerializedName("listTopic")
         @Expose
-        private List<ListTopic> listTopic = null;
+        private List<Topic> topic = null;
 
         public Boolean getIsSuccess() {
             return isSuccess;
@@ -31,11 +31,11 @@ public class TopicModel {
             this.message = message;
         }
 
-        public List<ListTopic> getListTopic() {
-            return listTopic;
+        public List<Topic> getTopic() {
+            return topic;
         }
 
-        public void setListTopic(List<ListTopic> listTopic) {
-            this.listTopic = listTopic;
+        public void setTopic(List<Topic> topic) {
+            this.topic = topic;
         }
 }

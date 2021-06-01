@@ -1,15 +1,22 @@
 package com.example.feedbackapp.ui.feedback.Service;
 
+import com.example.feedbackapp.ui.feedback.Model.AddFeedback;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
 import com.example.feedbackapp.ui.feedback.Model.ListTypeFeedbackModel;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Model.TypeOfFeedbackModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 public interface DataService {
     @GET("api/feedback")
@@ -20,4 +27,7 @@ public interface DataService {
 
     @GET("api/topic")
     Call<TopicModel>GetDataTopic(@Header("Authorization") String token);
+
+    @POST("api/feedback")
+    Call<ResponseBody>PostData(@Header("Authorization") String token, @Body AddFeedback addFeedback);
 }

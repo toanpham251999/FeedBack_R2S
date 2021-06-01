@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.model.Class;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 public class CustomAdapter extends BaseAdapter  {
 
     private LayoutInflater flater;
-    private List<Class> list;
+    private List<Classs> list;
     private int listItemLayoutResource;
     private int textViewItemNameId;
     // Arguments example:
@@ -27,7 +28,7 @@ public class CustomAdapter extends BaseAdapter  {
     // structure adapter for class
     public CustomAdapter(Activity context, int listItemLayoutResource,
                          int textViewItemNameId,
-                         List<Class> list) {
+                         List<Classs> list) {
         this.listItemLayoutResource = listItemLayoutResource;
 
         this.textViewItemNameId = textViewItemNameId;
@@ -49,15 +50,16 @@ public class CustomAdapter extends BaseAdapter  {
 
     @Override
     public long getItemId(int position) {
-        Class cla =(Class)this.getItem(position);
-        return cla.getClassID();
+
+        Classs cla =(Classs)this.getItem(position);
+        return position;
         // return position; (Return position if you need).
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Class clas = (Class) getItem(position);
+        Classs clas = (Classs) getItem(position);
 
         // Example: @listItemLayoutResource: R.layout.spinner_item_layout_resource
         // (File: layout/spinner_item_layout_resourcerce.xml)

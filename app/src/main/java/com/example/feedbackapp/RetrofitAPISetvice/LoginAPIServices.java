@@ -1,5 +1,6 @@
 package com.example.feedbackapp.RetrofitAPISetvice;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.ListAccount;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.LoginInfo;
 import com.example.feedbackapp.ModelClassToSendAPI.Login.LoginValue;
 import com.example.feedbackapp.UserInfo.BaseUrl;
@@ -7,15 +8,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface LoginAPIServices {
 
@@ -43,5 +40,5 @@ public interface LoginAPIServices {
 
     //service lấy thông tin tất cả tài khoản
     @GET("/api/auth")
-    Call<LoginInfo> getInfo();
+    Call<ListAccount> getInfo();
 }

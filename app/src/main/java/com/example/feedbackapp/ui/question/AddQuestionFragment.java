@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.question;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +18,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Question.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
+import com.example.feedbackapp.ModelClassToSendAPI.Assignment.AddAssignmentInfo;
+import com.example.feedbackapp.ModelClassToSendAPI.Question.AddQuestionInfo;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.RetrofitAPISetvice.AssignmentAPIServices;
+import com.example.feedbackapp.RetrofitAPISetvice.QuestionAPIServices;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.ui.question.AddQuestionFragment;
 import com.example.feedbackapp.ui.question.QuestionViewModel;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddQuestionFragment extends Fragment {
 
@@ -33,10 +49,14 @@ public class AddQuestionFragment extends Fragment {
     // TODO: Control Varible
     Spinner spinner_Topic;
     EditText editText_questionContent;
+    TextView textView_note;
     Button btn_Save, btn_Back;
 
     //TODO: topicList
     ArrayList<Topic> topicList;
+
+    //todo: accessToken, bien dau vao
+    String accessToken, topicId, questionContent;
 
     public AddQuestionFragment() {
         // Required empty public constructor
@@ -64,6 +84,7 @@ public class AddQuestionFragment extends Fragment {
                 new ViewModelProvider(this).get(QuestionViewModel.class);
         View root = inflater.inflate(R.layout.fragment_add_question, container, false);
         addEvents(root);
+        accessToken = "Bearer "+ new UserInfo(root.getContext()).token();
         // Lấy listTopic từ QuestionFragment
         Bundle bundle = getArguments();
         if(bundle != null){
@@ -90,12 +111,43 @@ public class AddQuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("key","abc"); // Put anything what you want
-
                 AddQuestionFragment addQuestionFragment = new AddQuestionFragment();
                 addQuestionFragment.setArguments(bundle);
 
-                Navigation.findNavController(root).navigate(R.id.add_question_to_question, bundle);
+                //Lấy dl đầu vào và xác thực
+                questionContent = editText_questionContent.getText().toString();
+                if(questionContent.equals(""))
+                    textView_note.setText("Please enter th question");
+                else{
+                    textView_note.setText("");
+                    //Gọi API thêm Question
+                    QuestionAPIServices.QUESTION_API_SERVICES.addNewQuestion(accessToken,new AddQuestionInfo(questionContent,topicId))
+                            .enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if(response.body() != null){
+                                        Gson gson = new Gson();
+                                        try {
+                                            ErrorResponse errorResponse = gson.fromJson(
+                                                    response.body().string(),
+                                                    ErrorResponse.class);
+                                            if(errorResponse.getMessage().equals("Your action is done successfully"))
+                                                ShowSuccessDialog(root, bundle);
+                                            else
+                                                ShowSuccessDialog(root, null);
+                                            Toast toast = Toast.makeText(root.getContext(),  errorResponse.getMessage(),Toast.LENGTH_LONG);
+                                            toast.show();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Log.e("TAG", "onFailure: ", t);
+                                }
+                            });
+                }
             }
         });
 
@@ -131,14 +183,45 @@ public class AddQuestionFragment extends Fragment {
     private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
         Topic topic = (Topic) adapter.getItem(position);
-        //LoadQuestionListByTopicId(view, topic.getId());
+        topicId = topic.getId();
         Toast.makeText(view.getContext(), "Selected Topic: " + topic.getTopicName() ,Toast.LENGTH_SHORT).show();
     }
 
     private void addControls(View root) {
         editText_questionContent = root.findViewById(R.id.editText_questionContent);
+        textView_note = root.findViewById(R.id.textView_note);
         spinner_Topic = root.findViewById(R.id.spinner_Topic);
         btn_Save = (Button) root.findViewById(R.id.btn_Save);
         btn_Back = (Button) root.findViewById(R.id.btn_Back);
+    }
+
+    //Xử lí hiển thị Dialog
+    void ShowSuccessDialog(View root, Bundle bundle){
+        //hiện dialog
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.success_dialog_layout, null);
+        TextView note = (TextView) alertLayout.findViewById(R.id.txt_SingleMessage);
+        note.setText("Add Successfully!");
+        if(bundle == null){
+            alertLayout = inflater.inflate(R.layout.failure_dialog_layout, null);
+            note = (TextView) alertLayout.findViewById(R.id.txt_SingleErrorMessage);
+            note.setText("Question already exist!");
+        }
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_OK);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+                if(bundle != null)
+                    Navigation.findNavController(root).navigate(R.id.add_question_to_question, bundle);
+            }
+        });
+        dialog.show();
     }
 }

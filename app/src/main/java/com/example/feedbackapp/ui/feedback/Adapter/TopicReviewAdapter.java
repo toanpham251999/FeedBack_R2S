@@ -10,16 +10,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.ui.feedback.Model.ListTopic;
+import com.example.feedbackapp.constant.SystemConstant;
+import com.example.feedbackapp.ui.feedback.Add_Feedback;
+import com.example.feedbackapp.ui.feedback.Model.Question;
+import com.example.feedbackapp.ui.feedback.Model.Topic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.ViewHolder> {
     private RecyclerView.RecycledViewPool viewPool =new RecyclerView.RecycledViewPool();
-    List<ListTopic> listTopics;
-    public TopicReviewAdapter (List<ListTopic>listTopics)
+    List<Topic> topics;
+    public Topic topic;
+    public TopicReviewAdapter (List<Topic> topics)
     {
-        this.listTopics=listTopics;
+        this.topics= topics;
     }
 
     @NonNull
@@ -31,8 +36,8 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TopicReviewAdapter.ViewHolder holder, int position) {
-        ListTopic listTopic = listTopics.get(position);
-        holder.txt_Topic.setText(listTopic.getTopicName());
+        topic = topics.get(position);
+        holder.txt_Topic.setText(topic.getTopicName());
 
         // Create layout manager with initial prefetch item count
         LinearLayoutManager layoutManager = new LinearLayoutManager(
@@ -40,9 +45,9 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
                 LinearLayoutManager.VERTICAL,
                 false
         );
-        layoutManager.setInitialPrefetchItemCount(listTopic.getListQuestion().size());
+        layoutManager.setInitialPrefetchItemCount(topics.size());
         //Create subItem view adapter
-        QuestionReviewAdapter questionReviewAdapter = new QuestionReviewAdapter(listTopic.getListQuestion());
+        QuestionReviewAdapter questionReviewAdapter = new QuestionReviewAdapter(topic.getListQuestion());
         holder.rcv_review_subItem.setLayoutManager(layoutManager);
         holder.rcv_review_subItem.setAdapter(questionReviewAdapter);
         holder.rcv_review_subItem.setRecycledViewPool(viewPool);
@@ -50,7 +55,7 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
 
     @Override
     public int getItemCount() {
-        return listTopics.size();
+        return topics.size();
     }
     class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -60,8 +65,8 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
         {
             super(itemView);
             //Ánh xạ view
-            txt_Topic = itemView.findViewById(R.id.txt_topic_review);
-            rcv_review_subItem = itemView.findViewById(R.id.rcv_review_sub);
+            txt_Topic = itemView.findViewById(R.id.txt_detail_topic);
+            rcv_review_subItem = itemView.findViewById(R.id.rcv_detail_sub);
         }
     }
 }
