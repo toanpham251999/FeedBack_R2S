@@ -7,9 +7,9 @@ import java.util.ArrayList;
 public class ClassList {
     private boolean isSuccess;
     private String message;
-    private ArrayList<Class> listClass;
+    private ArrayList<Classs> listClass;
 
-    public ClassList(boolean success, String message, ArrayList<Class> listClass) {
+    public ClassList(boolean success, String message, ArrayList<Classs> listClass) {
         this.isSuccess = success;
         this.message = message;
         this.listClass = listClass;
@@ -32,11 +32,11 @@ public class ClassList {
         this.message = message;
     }
 
-    public ArrayList<Class> getListClass() {
+    public ArrayList<Classs> getListClass() {
         return listClass;
     }
 
-    public void setListClass(ArrayList<Class> listClass) {
+    public void setListClass(ArrayList<Classs> listClass) {
         this.listClass = listClass;
     }
 }

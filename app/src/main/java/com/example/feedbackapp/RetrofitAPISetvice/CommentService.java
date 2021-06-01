@@ -1,15 +1,13 @@
 package com.example.feedbackapp.RetrofitAPISetvice;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Answer.AnswerInfo;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Answer.ListAnswerInfor;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
-import com.example.feedbackapp.ModelClassToSendAPI.Answer.Answer;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Comment.CommentInfo;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Comment.ListComment;
 import com.example.feedbackapp.ModelClassToSendAPI.Answer.ListAnswer;
+import com.example.feedbackapp.ModelClassToSendAPI.Comment;
 import com.example.feedbackapp.UserInfo.BaseUrl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -19,23 +17,22 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 
-public interface AnswerService {
+public interface CommentService {
     //tạo 1 biến gson dùng cho service bên dưới
     Gson gson = new GsonBuilder()
             .setDateFormat("dd-MM-yyyy")
             .create();
 
     //khởi tạo service
-    AnswerService answerService = new Retrofit.Builder()
+    CommentService commentService = new Retrofit.Builder()
             .baseUrl(BaseUrl.value())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(AnswerService.class);
+            .create(CommentService.class);
 
-    //service thêm và lấy danh sách answer
-    @GET("api/answer")
-    Call<ListAnswerInfor> getAnswer(@Header("Authorization") String authHeader);
-
-    @POST("api/answer")
-    Call<AnswerInfo> postAnswer(@Header("Authorization") String authHeader, @Body ListAnswer listAnswer);
+    //service thêm và lấy danh sách comment
+    @GET("api/comment")
+    Call<ListComment> getComment(@Header("Authorization") String authHeader);
+    @POST("api/comment")
+    Call<CommentInfo> postComment(@Header("Authorization") String authHeader, @Body Comment comment);
 }

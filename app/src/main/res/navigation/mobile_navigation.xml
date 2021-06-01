@@ -138,7 +138,11 @@
     <fragment
         android:id="@+id/nav_dofeedback"
         android:name="com.example.feedbackapp.ui.statisticfeedback.DoFeedbackFragment"
-        tools:layout="@layout/fragment_do_feedback" />
+        tools:layout="@layout/fragment_do_feedback" >
+        <action
+            android:id="@+id/action_dofeedback_to_listfeedback"
+            app:destination="@id/nav_trainee_dashboard" />
+    </fragment>
     <fragment
         android:id="@+id/nav_statisticdofeedback"
         android:name="com.example.feedbackapp.ui.statisticfeedback.StatisticFeedBackFragment"
@@ -161,6 +165,7 @@
         android:id="@+id/nav_add_module"
         android:name="com.example.feedbackapp.ui.module.AddModuleFragment"
         tools:layout="@layout/add_module_layout"/>
+
     <fragment
         android:id="@+id/nav_edit_feedback"
         android:name="com.example.feedbackapp.ui.feedback.Fragment_Edit_Feedback"

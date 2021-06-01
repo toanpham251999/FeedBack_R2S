@@ -23,9 +23,11 @@ import com.example.feedbackapp.Adapter.ClassDataUtils;
 import com.example.feedbackapp.Adapter.CustomAdapter;
 import com.example.feedbackapp.Adapter.CustomApdapterModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
+import com.example.feedbackapp.ModelClassToSendAPI.Answer.Answer;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.model.Class;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
@@ -54,7 +56,7 @@ public class FeedbackDetailFragment extends Fragment {
 
     private Spinner spinner;// for clss
     private Spinner spinnerModule;
-    private List<Class> classes;
+    private List<Classs> classes;
     private List<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> modules;
     private Button showOverview;
     private Button viewComment;
@@ -62,6 +64,11 @@ public class FeedbackDetailFragment extends Fragment {
     private float mScale = 1f;
     private ScaleGestureDetector mScaleGestureDetector;
     GestureDetector gestureDetector;
+
+    // get positon item of spinner
+    private Classs classChoosed;
+    private Module moduleChoosed;
+    private ArrayList<Answer> answerArrayList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +110,7 @@ public class FeedbackDetailFragment extends Fragment {
                 topics = listTopic.getListTopic();
 
                 //Initialize topic adapter
-                adapterTopic = new TopicAdpDetail(getActivity(), topics);
+                adapterTopic = new TopicAdpDetail(getActivity(), topics, classChoosed, moduleChoosed);
                 // Initailize layout manager
                 layoutManagerTopic = new LinearLayoutManager(getContext());
                 // Set layout manager
@@ -184,31 +191,17 @@ public class FeedbackDetailFragment extends Fragment {
 
 // Code for rycycle view
         //Assign variable
-        mviewModel.getTopic(accessToken);
+      //  mviewModel.getTopic(accessToken);
         rcvDetail = v.findViewById(R.id.rcvDetail);
-
-        // Using for loop to add multiple group
-       /* arrayListTopic = new ArrayList<>();
-        arrayListTopic = ClassDataUtils.getTopicForDetail();*/
-       /* for (int i = 1; i <=10;i++)
-        {
-            arrayListTopic.add("Topic " + (i - 1));
-        }*/
-        //Initialize topic adapter
-       /* adapterTopic = new TopicAdpDetail(getActivity(), arrayListTopic);
-        // Initailize layout manager
-        layoutManagerTopic = new LinearLayoutManager(getContext());
-        // Set layout manager
-        rcvDetail.setLayoutManager(layoutManagerTopic);
-        //set adapter
-        rcvDetail.setAdapter(adapterTopic);*/
         return v;
     }
 // handler click spinner
     // Class
     private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
-        Class clas = (Class) adapter.getItem(position);
+        Classs clas = (Classs) adapter.getItem(position);
+        classChoosed =(Classs) adapter.getItem(position);
+        mviewModel.getTopic(accessToken);
     }
 
 // module
@@ -216,6 +209,8 @@ public class FeedbackDetailFragment extends Fragment {
         Adapter adapter = adapterView.getAdapter();
         Module module = (Module) adapter.getItem(position);
         String itemModule =module.getModuleName();
+        moduleChoosed = (Module) adapter.getItem(position);
+        mviewModel.getTopic(accessToken);
     }
 
 }
