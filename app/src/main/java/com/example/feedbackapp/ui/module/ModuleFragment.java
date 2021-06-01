@@ -93,6 +93,7 @@ public class ModuleFragment extends Fragment {
 //                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
 //            }
 //        });
+      
         //nếu không phải admin, ẩn quyền thêm xóa sửa
         UserInfo userInfo = new UserInfo(root.getContext());
         if(!userInfo.role().equals("admin")){
