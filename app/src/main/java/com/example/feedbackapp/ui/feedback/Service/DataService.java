@@ -9,6 +9,7 @@ import com.example.feedbackapp.ui.feedback.Model.TypeOfFeedbackModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -28,9 +29,5 @@ public interface DataService {
     Call<TopicModel>GetDataTopic(@Header("Authorization") String token);
 
     @POST("api/feedback")
-    @FormUrlEncoded
-    Call<AddFeedback>PostData(@Header("Authorization") String token,
-                              @Field("feedbackTitle") String feedbackTitle,
-                              @Field("feedbackTypeId") String feedbackId,
-                              @Field("QuestionId")ArrayList<String> QuestionId);
+    Call<ResponseBody>PostData(@Header("Authorization") String token, @Body AddFeedback addFeedback);
 }

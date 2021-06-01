@@ -4,46 +4,42 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddFeedback {
-    @SerializedName("feedbackTitle")
-    @Expose
-    private String feedbackTitle;
-    @SerializedName("feedbackTypeId")
-    @Expose
-    private String feedbackTypeId;
-    @SerializedName("QuestionId")
-    @Expose
-    private ArrayList<String> QuestionId;
+    private String Title;
 
-    public AddFeedback(String feedbackTitle, String feedbackTypeId, ArrayList<String> questionId) {
-        this.feedbackTitle = feedbackTitle;
-        this.feedbackTypeId = feedbackTypeId;
-        QuestionId = questionId;
+    public String getTitle() {
+        return Title;
     }
 
-    public String getFeedbackTitle() {
-        return feedbackTitle;
+    public void setTitle(String title) {
+        Title = title;
     }
 
-    public void setFeedbackTitle(String feedbackTitle) {
-        this.feedbackTitle = feedbackTitle;
+    public String getTypeFeedbackId() {
+        return TypeFeedbackId;
     }
 
-    public String getFeedbackTypeId() {
-        return feedbackTypeId;
+    public void setTypeFeedbackId(String typeFeedbackId) {
+        TypeFeedbackId = typeFeedbackId;
     }
 
-    public void setFeedbackTypeId(String feedbackTypeId) {
-        this.feedbackTypeId = feedbackTypeId;
+    public List<String> getListQuestion() {
+        return listQuestion;
     }
 
-    public ArrayList<String> getQuestionId() {
-        return QuestionId;
+    public void setListQuestion(List<String> listQuestion) {
+        this.listQuestion = listQuestion;
     }
 
-    public void setQuestionId(ArrayList<String> questionId) {
-        QuestionId = questionId;
+    private String TypeFeedbackId;
+    private List<String> listQuestion;
+
+    public AddFeedback(String title, String typeFeedbackId, List<String> listQuestion) {
+        Title = title;
+        TypeFeedbackId = typeFeedbackId;
+        this.listQuestion = listQuestion;
     }
 
 

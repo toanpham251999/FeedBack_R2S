@@ -3,6 +3,7 @@ package com.example.feedbackapp.ui.feedback;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.constant.SystemConstant;
@@ -23,9 +25,12 @@ import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,17 +135,30 @@ public class Review_NewFeedbackFragment extends Fragment  {
                 Toast.makeText(getContext(),SystemConstant.id_question.toString(),Toast.LENGTH_LONG);
                 DataService dataService = APIService.getService();
                 UserInfo userInfo = new UserInfo(getContext());
-                Call<AddFeedback> callback = dataService.PostData("Bearer"+userInfo.token(),
-                        txt_review_feedbacktitle.toString(),
-                        idTypeFeedback,SystemConstant.id_question);
-                callback.enqueue(new Callback<AddFeedback>() {
+                //Gọi API thêm Feedback
+//                Call<ResponseBody> callback = dataService.PostData("Bearer"+userInfo.token(),
+//                        new AddFeedback("Quoc1",idTypeFeedback,SystemConstant.id_question));
+//                callback.enqueue(new Callback<AddFeedback>() {
+//                    @Override
+//                    public void onResponse(Call<AddFeedback> call, Response<AddFeedback> response) {
+//                        Toast.makeText(getContext(),"POST OK",Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<AddFeedback> call, Throwable t) {
+//                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
+//                    }
+//                });
+                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback("feedback test 2",
+                        idTypeFeedback, SystemConstant.id_question)).enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<AddFeedback> call, Response<AddFeedback> response) {
-                        Toast.makeText(getContext(),"POST OK",Toast.LENGTH_LONG).show();
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
+                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
                     }
 
                     @Override
-                    public void onFailure(Call<AddFeedback> call, Throwable t) {
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
                     }
                 });
