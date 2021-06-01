@@ -1,5 +1,7 @@
 package com.example.feedbackapp.RetrofitAPISetvice;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.UserInfo.BaseUrl;
@@ -9,8 +11,10 @@ import com.google.gson.GsonBuilder;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 public interface ClassAPIService {
     //tạo 1 biến gson dùng cho service bên dưới
@@ -28,4 +32,8 @@ public interface ClassAPIService {
     //service lấy tất cả class
     @GET("/api/class")
     Call<ListClass> getAllClass(@Header("Authorization") String token);
+
+    //service add class
+    @POST("api/class")
+    Call<ClassList> addClass(@Header("Authorization") String authHeader, @Body Classs classs);
 }

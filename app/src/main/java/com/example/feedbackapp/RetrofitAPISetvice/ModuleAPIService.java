@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
@@ -39,5 +40,6 @@ public interface ModuleAPIService {
     Call<ModuleReturnByID> getModule(@Path("id") String id);
 
     //service xóa 1 module theo id
-
+    @DELETE("/api/module/{id}")
+    Call<Module> deleteModule(@Header("Authorization") String token, @Path("id") String id);
 }

@@ -9,23 +9,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassAdapter;
 import com.example.feedbackapp.Adapter.ClassAdapterForTrainer;
-import com.example.feedbackapp.Adapter.ModuleAdapter;
+import com.example.feedbackapp.Adapter.RecyclerItemClickListener;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ClassAPIService;
-import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
 
 import java.util.ArrayList;
@@ -46,6 +42,11 @@ public class ClasssFragment extends Fragment {
     ImageButton btnAddClass;
     TextView mainLabel;
 
+
+    public static ClasssFragment getInstance(){
+        return new ClasssFragment();
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel = new ViewModelProvider(this).get(ClasssViewModel.class);
@@ -61,6 +62,7 @@ public class ClasssFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(root.getContext(),"Click add Class!",Toast.LENGTH_LONG).show();
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_edit_class);
             }
         });
         //nếu không phải admin, ẩn quyền thêm
@@ -114,6 +116,13 @@ public class ClasssFragment extends Fragment {
             Toast.makeText(root.getContext(),"thêm vào adapter thành công "+listClass.size(),Toast.LENGTH_LONG).show();
             classListRecycler.setAdapter(classAdapterForTrainer);
         }
-
+        classListRecycler.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        );
     }
 }
