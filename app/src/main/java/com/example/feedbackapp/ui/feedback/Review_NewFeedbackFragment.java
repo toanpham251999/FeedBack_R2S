@@ -97,27 +97,27 @@ public class Review_NewFeedbackFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review__new_feedback, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
-//        DataService dataServiceTopic = APIService.getService();
-//        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-//                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-//                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
-//        callbackListTopic.enqueue(new Callback<TopicModel>() {
-//            @Override
-//            public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
-//                TopicModel topicModel = (TopicModel)response.body();
-                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(SystemConstant.arrayList_id);
+        DataService dataServiceTopic = APIService.getService();
+        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
+                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
+                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+        callbackListTopic.enqueue(new Callback<TopicModel>() {
+            @Override
+            public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
+                TopicModel topicModel = (TopicModel)response.body();
+                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(topicModel.getTopic());
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(layoutManagerTopic);
                 Log.d("BTopic","Done");
-//            }
+            }
 
-//            @Override
-//            public void onFailure(Call<TopicModel> call, Throwable t) {
-//                Log.d("DTopic",t.toString());
-//            }
-//        });
+            @Override
+            public void onFailure(Call<TopicModel> call, Throwable t) {
+                Log.d("DTopic",t.toString());
+            }
+        });
         Bundle bundle = getArguments();
         TextView txt_adminId;
         btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review);

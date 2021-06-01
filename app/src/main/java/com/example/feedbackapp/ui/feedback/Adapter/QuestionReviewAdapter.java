@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Model.Question;
 
 import java.util.ArrayList;
@@ -32,7 +33,14 @@ public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAd
     @Override
     public void onBindViewHolder(@NonNull QuestionReviewAdapter.ViewHolder holder, int position) {
         Question listQuestion = listQuestions.get(position);
-        holder.txt_question_review.setText(listQuestion.getQuestionContent());
+        for(int i=0;i< SystemConstant.id_question.size();i++)
+        {
+            if(listQuestion.getId().contains(SystemConstant.id_question.get(i)))
+            {
+                holder.txt_question_review.setText(listQuestion.getQuestionContent());
+            }
+        }
+
     }
 
     @Override

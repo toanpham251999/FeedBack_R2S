@@ -42,7 +42,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull QuestionAdapter.ViewHolder holder, int position) {
-        //Question question = listQuestions.get(position);
+        Question question = listQuestions.get(position);
+        for(int i=0;i<SystemConstant.id_question.size();i++)
+        {
+            if(question.getId().contains(SystemConstant.id_question.get(i)))
+            {
+                holder.ck_question.setChecked(true);
+            }
+        }
         holder.ck_question.setText(listQuestions.get(position).getQuestionContent());
         holder.ck_question.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
