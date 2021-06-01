@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.model.Question;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Question;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class QuestionAdpDetail extends RecyclerView.Adapter<QuestionAdpDetail.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //Set question name on TextView
         // need a getPercnet in class ClassDataUtils.java by id question
-        holder.questionName.setText(arrayListQuestion.get(position).getQuestionContent());
+        holder.questionName.setText("- " + arrayListQuestion.get(position).getQuestionContent());
         holder.stronglyDisagree.setText("100%");
         holder.disagree.setText("100%");
         holder.neutral.setText("100%");

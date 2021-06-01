@@ -25,7 +25,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Module ID: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -40,7 +42,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Module Name: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -55,7 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Admin ID: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -70,7 +76,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Start Date: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -85,7 +93,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="End Date: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -100,7 +110,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback Title: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -115,7 +127,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback Start Time: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 
@@ -130,7 +144,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Feedback End Time: "
+
                 android:textSize="18sp" />
+
 
         </LinearLayout>
     </LinearLayout>
@@ -140,7 +156,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+
         android:layout_marginLeft="-55dp"
+
         android:orientation="vertical">
 
         <ImageButton

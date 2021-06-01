@@ -35,19 +35,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/textView_module"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="140dp"
-        android:text="Truyền thông và mạng máy tính:"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"></TextView>
+        <TextView
+            android:id="@+id/textView_module"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Truyền thông và mạng máy tính:"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintHorizontal_bias="0.11"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2"></TextView>
 
     <TextView
         android:id="@+id/textView4"
@@ -71,23 +70,23 @@
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/textView4"></TextView>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="83dp"
-        android:layout_height="82dp"
-        android:layout_marginTop="40dp"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="83dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="40dp"
 
-        android:layout_marginEnd="40dp"
-        android:src="@drawable/userlast"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/userlast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewNameUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="20dp"
             android:text="Le Ngoc Tu"
             android:textColor="@color/black"
             android:textSize="20dp"

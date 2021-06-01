@@ -1,5 +1,10 @@
 package com.example.feedbackapp.ModelClassToReceiveFromAPI.Module;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Module {
 
     /**
@@ -17,7 +22,18 @@ public class Module {
     private String FeedbackId;
     private String FeedbackTitle;
 
-    public Module(String id, String startTime, String endTime, Boolean isDeleted, String feedbackStartTime, String feedbackEndTime, String adminName, String adminId, String moduleName, String feedbackId, String feedbackTitle) {
+    public Module(String id,
+                  String startTime,
+                  String endTime,
+                  Boolean isDeleted,
+                  String feedbackStartTime,
+                  String feedbackEndTime,
+                  String adminName,
+                  String adminId,
+                  String moduleName,
+                  String feedbackId,
+                  String feedbackTitle
+    ) {
         Id = id;
         StartTime = startTime;
         EndTime = endTime;
@@ -29,6 +45,20 @@ public class Module {
         ModuleName = moduleName;
         FeedbackId = feedbackId;
         FeedbackTitle = feedbackTitle;
+    }
+
+    public Module() {
+        Id = "";
+        StartTime = "";
+        EndTime = "";
+        isDeleted = false;
+        FeedbackStartTime = "";
+        FeedbackEndTime = "";
+        AdminName = "";
+        AdminId = "";
+        ModuleName = "";
+        FeedbackId = "";
+        FeedbackTitle = "";
     }
 
     public String getId() {
@@ -64,7 +94,14 @@ public class Module {
     }
 
     public String getFeedbackStartTime() {
-        return FeedbackStartTime;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        try {
+            Date feedbackStartTime = formatter.parse(FeedbackStartTime);
+            return String.valueOf(feedbackStartTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return FeedbackStartTime;
+        }
     }
 
     public void setFeedbackStartTime(String feedbackStartTime) {
@@ -72,7 +109,14 @@ public class Module {
     }
 
     public String getFeedbackEndTime() {
-        return FeedbackEndTime;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        try {
+            Date feedbackEndTime = formatter.parse(FeedbackEndTime);
+            return String.valueOf(feedbackEndTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return FeedbackEndTime;
+        }
     }
 
     public void setFeedbackEndTime(String feedbackEndTime) {
@@ -117,5 +161,11 @@ public class Module {
 
     public void setFeedbackTitle(String feedbackTitle) {
         FeedbackTitle = feedbackTitle;
+    }
+
+    // TODO: Text show in Spinner by Toan
+    @Override
+    public String toString()  {
+        return this.ModuleName;
     }
 }

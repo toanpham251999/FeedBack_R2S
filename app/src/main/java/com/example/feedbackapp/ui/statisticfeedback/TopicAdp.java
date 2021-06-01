@@ -1,6 +1,7 @@
 package com.example.feedbackapp.ui.statisticfeedback;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +13,36 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassDataUtils;
+import com.example.feedbackapp.ModelClassToSendAPI.Answer.Answer;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.model.HeaderRecycleView;
-import com.example.feedbackapp.model.Question;
-import com.example.feedbackapp.model.Topic;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Question;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TopicAdp extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    //Init vavirables to package answer
+    private String ClassId;
+    private String ModuleId;
+    private String QuestionId;
+    //private ArrayList<Integer> ListValue;
+    private ArrayList<com.example.feedbackapp.model.Question> newArrayListQuestion = new ArrayList<com.example.feedbackapp.model.Question>();
    // Initial activity and array list
     private Activity activity;
     ArrayList<Topic> arrayListTopic;
     HeaderRecycleView headerRecycleView;
+    private ArrayList<Question> arrayListQuestion;
+    private QuestionAdp adapterQuestion;
     //Create contructor
 TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView headerRecycleView){
     this.activity =activity;
     this.arrayListTopic = arrayListTopic;
     this.headerRecycleView = headerRecycleView;
+    //Arrays.fill(this.ListValue, );
 }
     @NonNull
     @Override
@@ -57,6 +71,14 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // Code text header
+        String stt;
+        switch (position){
+            case 1: stt = "I. ";break;
+            case 2: stt = "II. ";break;
+            case 3: stt = "III. ";break;
+            default: stt = "IV. ";break;
+        }
+
         if(position == 0)
         {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
@@ -70,8 +92,31 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
             ((FooterViewHolder) holder).submitFeedback.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    // Handle event submit feed back
+                 /*   Thêm 1 answer: String classId, String moduleId, String questionId, int value
+                    + bên QuestionAdp: + OnbindViewHolder: có được questionId, value :
+                            + ben ngoài lấy được: ClassId, ModuleId đã truyền qua bundle tới. THÊM BIẾN VÀO HÀM KHỞI TẠO
+                            + nut submit ở AdpTopic.:   Ở ĐÂY*/
+                            // Handle event submit feed back
+                    ArrayList<Answer> arrrListAnswer = new ArrayList<Answer>();
+                    int vt = 0;
+                    for(int i =1; i < (arrayListTopic.size() - 1); i++)
+                    {
 
+                        for(int j =0; j < arrayListTopic.get(i).getListQuestion().size() ; j++ ){
+                            Answer answer = new Answer(headerRecycleView.getClassId(), headerRecycleView.getModuleId(), arrayListTopic.get(i).getListQuestion().get(j).getId(),newArrayListQuestion.get(vt).getAnswer());
+                            arrrListAnswer.add(answer);
+                            vt++;
+                        }
+                        if(newArrayListQuestion.get(vt-1).getAnswer() == -1)
+                        {
+                            ShowLoginFailDialog();
+                            break;
+                        }
+
+                    }
+                    int a;
+                    // Hàm xử lý gửi dữ liệu lên
+                   ShowConFirmDialog(arrrListAnswer);
                 }
             });
         }
@@ -79,20 +124,23 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
             // Set topic name on TextView
             TopicViewHolder topicViewHolder = (TopicViewHolder) holder;
             //holder.topicName.setText(arrayListTopic.get(position));
-            topicViewHolder.topicName.setText(arrayListTopic.get(position).getTopicName());
+            topicViewHolder.topicName.setText(stt + arrayListTopic.get(position).getTopicName());
 
         //Initialize memer ArrayList
-            ArrayList<Question> arrayListQuestion = new ArrayList<>();
-            arrayListQuestion = ClassDataUtils.getQuestion(position);
-       /* //Using loop to add multiple member
-        for(int i = 1; i <= 4; i++)
-        {
-            arrayListQuestion.add("Member " + i);
-        }*/
-
+            arrayListQuestion = arrayListTopic.get(position).getListQuestion();
+            //newArrayListQuestion.clear();
+            // add answer
+            ArrayList<com.example.feedbackapp.model.Question> newArrayListQuestionCall = new ArrayList<com.example.feedbackapp.model.Question>();
+            for(int i = 0; i < arrayListQuestion.size() ; i++)
+            {
+                Question question = arrayListQuestion.get(i);
+                com.example.feedbackapp.model.Question newQuestion = new com.example.feedbackapp.model.Question(question.getId(), question.getQuestionContent(), -1);
+                newArrayListQuestion.add(newQuestion);
+                newArrayListQuestionCall.add(newQuestion);
+            }
             //Initialize member adapter
-        QuestionAdp adapterQuestion = new QuestionAdp(arrayListQuestion);
-
+            //adapterQuestion = new QuestionAdp((ArrayList<com.example.feedbackapp.model.Question>) newArrayListQuestion.subList(newArrayListQuestion.size() - arrayListQuestion.size(), newArrayListQuestion.size() - 1), position);
+            adapterQuestion = new QuestionAdp(newArrayListQuestionCall, position);
         //Initialize layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         //Set layout manager
@@ -109,7 +157,7 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
 // Get type item if position == 0 : is header, else: is topic
     @Override
     public int getItemViewType(int position) {
-        if (position == 0)
+        if (position ==  0)
             return 0;//header
         else if (position == arrayListTopic.size() - 1)
             return -1;//footer
@@ -160,6 +208,62 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
             submitFeedback = itemView.findViewById(R.id.SubmitFeedback);
             rcvListQuestion = itemView.findViewById(R.id.rcvListQuestion);
         }
+    }
+    void ShowLoginFailDialog(){
+        //hiện dialog complete do feedback failed
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.login_failed_dialog, null);
+        TextView txt_LogoutTitle = (TextView) alertLayout.findViewById(R.id.txt_LogoutTitle);
+        txt_LogoutTitle.setText("Please complete your feedback!");
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        //final AlertDialog alertDialog=new AlertDialog.Builder(activity.getApplicationContext()).create();
+        AlertDialog.Builder alert = new AlertDialog.Builder(alertLayout.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    void ShowConFirmDialog(ArrayList<Answer> listAnswer){
+        //hiện dialog complete do feedback failed
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
+        TextView txt_LogoutMessage = (TextView) alertLayout.findViewById(R.id.txt_LogoutMessage);
+        txt_LogoutMessage.setText("Do you want to submit feedback?");
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        final Button btnCancel= (Button) alertLayout.findViewById(R.id.btn_Cancel);
+        AlertDialog.Builder alert = new AlertDialog.Builder(alertLayout.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+                // hiện dialog thông báo thành công
+
+                //thực hiện API: đưa answer lên, update iscompleted
+
+                //(Xóa nút sửa) navigation đến traineeDashboardFragment.
+                // Đẩy comment lên nha
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
 //Link refer:https://eitguide.net/multiple-view-type-trong-recyclerview/

@@ -20,7 +20,10 @@ import com.example.feedbackapp.ModelClassToSendAPI.Login.LoginValue;
 import com.example.feedbackapp.RetrofitAPISetvice.LoginAPIServices;
 import com.example.feedbackapp.UserInfo.UserInfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,13 +39,15 @@ public class LoginActivity extends AppCompatActivity {
     Spinner spnRolePicker;
     CheckBox chkRememberMe;
     Button btnLogin;
-
     LoginInfo loginInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //kiểm tra xem phiên đăng nhập còn hay không, nếu còn thì vào menu luôn
+        CheckRememberTime();
 
         //lấy các thành phần có trong layout
         txtUserName = (EditText) findViewById(R.id.txt_UserName);
@@ -133,8 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                         //lưu thông tin đăng nhập lại để còn dùng tiếp
                         OnRememberAccount();
                         //chuyển đến trang menu
-                        Intent mainMenu = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(mainMenu);
+                        SwitchToMemuScreen();
                     }
                     else{
                         Toast.makeText(getApplicationContext(),"sai account!",Toast.LENGTH_LONG).show();
@@ -168,9 +172,21 @@ public class LoginActivity extends AppCompatActivity {
         else{
             strRole = "admin";
         }
+        //tạo biến Remember password
         Boolean isRemember = chkRememberMe.isChecked();
+
+        //tạo biến lưu ngày giờ đơn giản
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String curentDateTime = formatter.format(Calendar.getInstance().getTime());
+//        Date curentDateTime = null;
+//        try {
+//            curentDateTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("27-05-2021 11:00:00");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+        //String curentDateTime =formatter.format("27-05-2021 11:00:00");
         UserInfo userInfo = new UserInfo(getApplicationContext());
-        userInfo.newInfo(loginInfo.getAccessToken(),loginInfo.getAccount().getUserName(), Calendar.getInstance().getTime().toString(),isRemember,strRole);
+        userInfo.newInfo(loginInfo.getAccessToken(),loginInfo.getAccount().getUserName(),String.valueOf(curentDateTime),isRemember,strRole);
     }
 
     void ShowLoginFailDialog(){
@@ -191,5 +207,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    //hàm kiểm tra xem còn phiên đăng nhập hay không
+    void CheckRememberTime(){
+        //vì có try catch, nên nếu chưa có dữ liệu vẫn không lo bị văng
+        try {
+            //gọi dữ liệu account đã lưu
+            UserInfo userInfo = new UserInfo(getApplicationContext());
+            //lấy ngày giờ hiện tại để so sánh
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            Date curentDateTime = Calendar.getInstance().getTime();
+            Date loginDateTime = formatter.parse(userInfo.loginTime());
+            //tính khoảng cách giữa thời gian login và hiện tại (mili giây)
+            long difference_In_Time = curentDateTime.getTime() - loginDateTime.getTime();
+            // đổi 1 ngày ra miligiay = 86 400 000, 30 phút ra miligiay =  1 800 000
+            if((userInfo.isRemember().equals("true") && difference_In_Time < 86400000) ||
+                    (userInfo.isRemember().equals("false") && difference_In_Time < 1800000)){
+                //nếu phiên đăng nhập vẫn còn
+                SwitchToMemuScreen();
+            }
+            else{
+                //hết phiên, đăng nhập lại
+            }
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void SwitchToMemuScreen(){
+        //chuyển đến trang menu
+        Intent mainMenu = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(mainMenu);
     }
 }

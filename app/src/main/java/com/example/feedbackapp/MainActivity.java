@@ -1,30 +1,25 @@
 package com.example.feedbackapp;
 
-import android.content.Intent;
+
+import android.app.AlertDialog;
+
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.Menu;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.Toast;
 
 
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.Assignment;
-import com.example.feedbackapp.ui.assignment.AssignmentFragment;
-import com.example.feedbackapp.ui.feedback.FeedBackFragment;
-import com.example.feedbackapp.ui.feedback.FeedbackAdapter;
-import com.example.feedbackapp.ui.feedback.FeedbackModel;
-
 import com.example.feedbackapp.UserInfo.UserInfo;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -32,11 +27,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     //Test and delete
@@ -45,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     float mScale = 0.1f;
     private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,20 +51,31 @@ public class MainActivity extends AppCompatActivity {
 
         //
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         navigationView = findViewById(R.id.nav_view);
         ConfigNavigationView();
         //ẩn bớt phần tử trong slide menu
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_homepage, R.id.nav_assignment, R.id.nav_classs, R.id.nav_module,R.id.nav_enrrollment, R.id.nav_feedback,
-                R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright, R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback)
+
+                R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
+                R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright,
+                R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
+
+                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback,
+
+                R.id.nav_add_module
+
+        )
+
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);// điều hướng đến  fragment nav_host_fragment trong layout content_main
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
 
 //Code to zoom
         gestureDetector = new GestureDetector(this, new GestureListener());
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
 
 
         //hiện thông tin người dùng sau khi đăng nhập, dùng để test
@@ -131,8 +135,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    //hàm dùng để ẩn bớt chức năng tùy theo role user
     void ConfigNavigationView(){
-        //chưa dùng tới
         UserInfo userInfo = new UserInfo(getApplicationContext());
         String role = userInfo.role();
 
@@ -157,14 +162,51 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //hàm hiển thị xác nhận đăng xuất
+    void showLogoutDialog(){
+        //hiện dialog login failed
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        final Button btnCancel = (Button) alertLayout.findViewById(R.id.btn_Cancel);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //thực hiện xóa dữ liệu account
+                //về trang login
+                Toast.makeText(getApplicationContext(),"logout confirmed!",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //không làm gì cả
+                Toast.makeText(getApplicationContext(),"logout canceled!",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     //hàm này để thử xem dữ liệu như token, username, có lưu lại được không
     public void ShowUserData(){
         UserInfo userInfo = new UserInfo(getApplicationContext());
         String toastValue = "token: " + userInfo.token() +
                 "\n username: " + userInfo.username() +
                 "\n login time: " + userInfo.loginTime() +
+
                 "\n remember: " + userInfo.isRemember() +
                 "\n role: " + userInfo.role();
+
         Toast.makeText(getApplicationContext(),toastValue,Toast.LENGTH_LONG).show();
     }
 }
