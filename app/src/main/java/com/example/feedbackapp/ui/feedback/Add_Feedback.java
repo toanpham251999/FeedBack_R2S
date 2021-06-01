@@ -19,9 +19,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Adapter.QuestionAdapter;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicAdapter;
 import com.example.feedbackapp.ui.feedback.Interface.ICheckBoxListener;
@@ -50,6 +52,7 @@ public class Add_Feedback extends Fragment{
     private String typeFeedback;
     private EditText feedbackName;
     private ImageView btn_Edit;
+    private Button btn_BackFeedbackCreate;
 
     //
     String feedbackTypeId;
@@ -145,6 +148,7 @@ public class Add_Feedback extends Fragment{
         //Xử lý Review
         btnReviewFeedback =(Button)view.findViewById(R.id.btn_ReviewFeedback);
         feedbackName =(EditText)view.findViewById(R.id.edt_FeedbackTitleCreate);
+        btn_BackFeedbackCreate =(Button)view.findViewById(R.id.btn_BackFeedbackCreate);
         btnReviewFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +163,31 @@ public class Add_Feedback extends Fragment{
                 bundle.putString("typeFeedbackId",feedbackTypeId);
                 bundle.putString("feedbackName", feedbackName.getText().toString().trim());
                 bundle.putString("AdminId","60a8f233a86b7c42384e8bf9");
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_review_new_feedback,bundle);
+                if(feedbackName.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getContext(),"You must fill feedback name",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if(SystemConstant.id_question.isEmpty())
+                {
+                    Toast.makeText(getContext(),"You must check every topic 1 question",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if(SystemConstant.id_question.size()<4)
+                {
+                    Toast.makeText(getContext(),"You must check every topic 1 question",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else
+                {
+                    NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_review_new_feedback,bundle);
+                }
+            }
+        });
+        btn_BackFeedbackCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_feedback);
             }
         });
 

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
     private String mParam1;
     private String mParam2;
     private Button btn_Save_Review;
+    public String edt_feedbacktitle = "";
     ArrayList<Question>questions=new ArrayList<>();
 
 
@@ -116,13 +118,11 @@ public class Review_NewFeedbackFragment extends Fragment  {
 //            }
 //        });
         Bundle bundle = getArguments();
-        TextView txt_review_feedbacktitle;
         TextView txt_adminId;
         btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review);
-        txt_review_feedbacktitle = (TextView) view.findViewById(R.id.txt_detail_feedbacktitle);
         txt_adminId =(TextView)view.findViewById(R.id.txt_detail_admin);
         if(bundle !=null) {
-            txt_review_feedbacktitle.setText(bundle.getString("feedbackName"));
+            edt_feedbacktitle = bundle.getString("feedbackName");
             txt_adminId.setText(bundle.getString("AdminId"));
             idTypeFeedback = bundle.getString("typeFeedbackId");
         }
@@ -132,24 +132,12 @@ public class Review_NewFeedbackFragment extends Fragment  {
         btn_Save_Review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),SystemConstant.id_question.toString(),Toast.LENGTH_LONG);
+                //Toast.makeText(getContext(),SystemConstant.id_question.toString(),Toast.LENGTH_LONG);
                 DataService dataService = APIService.getService();
                 UserInfo userInfo = new UserInfo(getContext());
+
                 //Gọi API thêm Feedback
-//                Call<ResponseBody> callback = dataService.PostData("Bearer"+userInfo.token(),
-//                        new AddFeedback("Quoc1",idTypeFeedback,SystemConstant.id_question));
-//                callback.enqueue(new Callback<AddFeedback>() {
-//                    @Override
-//                    public void onResponse(Call<AddFeedback> call, Response<AddFeedback> response) {
-//                        Toast.makeText(getContext(),"POST OK",Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<AddFeedback> call, Throwable t) {
-//                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
-//                    }
-//                });
-                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback("feedback test 2",
+                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
                         idTypeFeedback, SystemConstant.id_question)).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

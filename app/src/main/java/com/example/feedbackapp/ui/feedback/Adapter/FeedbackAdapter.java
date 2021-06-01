@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.feedback.Adapter;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListFeedback list = listFeedback.get(position);
-        holder.txtFeedbackId.setText(list.getTypeFeedbackId());
-        holder.txtFeedbackTitle.setText(list.getTitle());
-        holder.txtAdminId.setText(list.getAdminId());
+        holder.txtFeedbackId.setText(Html.fromHtml("<b>Feedback ID: </b>" + list.getTypeFeedbackId()));
+        holder.txtFeedbackTitle.setText(Html.fromHtml("<b>Title: </b>" + list.getTitle()));
+        holder.txtAdminId.setText(Html.fromHtml("<b>Admin Id: </b>" + list.getAdminId()));
 
         holder.imgEditFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
