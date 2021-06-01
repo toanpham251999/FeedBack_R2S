@@ -294,11 +294,11 @@ public class FeedbackRightFragment extends Fragment {
                     pieChart.setData(createPieData(answerArrayList, status,"Training program & content (nội dung đào tạo)"));
                     pieChart.invalidate();
                     //pieChart1
-                    pieChart1.setData(createPieData(answerArrayList, status,"Trainer/Coach"));
-                    pieChart1.invalidate();
-                    //pieChart2
-                    pieChart2.setData(createPieData(answerArrayList, status, "Course Organization (tổ chức khóa học)" ));
+                    pieChart2.setData(createPieData(answerArrayList, status,"Trainer/Coach"));
                     pieChart2.invalidate();
+                    //pieChart2
+                    pieChart1.setData(createPieData(answerArrayList, status, "Course Organization (tổ chức khóa học)" ));
+                    pieChart1.invalidate();
                     //pieChart4
                     pieChart3.setData(createPieData(answerArrayList, status, "Other"));
                     pieChart3.invalidate();
@@ -329,7 +329,7 @@ public class FeedbackRightFragment extends Fragment {
         }
         ArrayList<Integer> count = new ArrayList<>();
         count.add(indexCount0);
-        count.add(indexCount0);
+        count.add(indexCount1);
         count.add(indexCount2);
         count.add(indexCount3);
         count.add(indexCount4);

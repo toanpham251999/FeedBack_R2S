@@ -313,7 +313,7 @@ private ArrayList<Answer> answerArrayList;
                     }
                     ArrayList<Integer> count = new ArrayList<>();
                     count.add(indexCount0);
-                    count.add(indexCount0);
+                    count.add(indexCount1);
                     count.add(indexCount2);
                     count.add(indexCount3);
                     count.add(indexCount4);
