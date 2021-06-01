@@ -2,19 +2,32 @@ package com.example.feedbackapp.ui.statisticfeedback;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.nfc.Tag;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassDataUtils;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Answer.AnswerInfo;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Comment.CommentInfo;
 import com.example.feedbackapp.ModelClassToSendAPI.Answer.Answer;
+import com.example.feedbackapp.ModelClassToSendAPI.Answer.ListAnswer;
+import com.example.feedbackapp.ModelClassToSendAPI.Comment;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.RetrofitAPISetvice.AnswerService;
+import com.example.feedbackapp.RetrofitAPISetvice.CommentService;
 import com.example.feedbackapp.model.HeaderRecycleView;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
@@ -23,6 +36,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TopicAdp extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //Init vavirables to package answer
@@ -37,6 +54,7 @@ public class TopicAdp extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     HeaderRecycleView headerRecycleView;
     private ArrayList<Question> arrayListQuestion;
     private QuestionAdp adapterQuestion;
+    private String comment;
     //Create contructor
 TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView headerRecycleView){
     this.activity =activity;
@@ -85,6 +103,24 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
             headerViewHolder.clas.setText(headerRecycleView.getClas());
             headerViewHolder.module.setText(headerRecycleView.getModule());
             headerViewHolder.name.setText(headerRecycleView.getName());
+            // update comment
+            ((HeaderViewHolder) holder).editComment.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    comment = s.toString();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            comment = headerViewHolder.editComment.getText().toString();
         }
         else if(position == (arrayListTopic.size() - 1))
         {
@@ -99,6 +135,8 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
                             // Handle event submit feed back
                     ArrayList<Answer> arrrListAnswer = new ArrayList<Answer>();
                     int vt = 0;
+
+                    boolean complete = true;
                     for(int i =1; i < (arrayListTopic.size() - 1); i++)
                     {
 
@@ -107,16 +145,20 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
                             arrrListAnswer.add(answer);
                             vt++;
                         }
-                        if(newArrayListQuestion.get(vt-1).getAnswer() == -1)
+                        if(newArrayListQuestion.get(vt-2).getAnswer() == -1)
                         {
-                            ShowLoginFailDialog();
+                           ShowLoginFailDialog();
+                            complete = false;
                             break;
                         }
 
                     }
-                   // int a;
-                    // Hàm xử lý gửi dữ liệu lên
-                   ShowConFirmDialog(arrrListAnswer);
+
+                    // Send data to server
+                    if (complete == true) {
+
+                        ShowConFirmDialog(arrrListAnswer,view);
+                   }
                 }
             });
         }
@@ -186,12 +228,14 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
         TextView clas;
         TextView name;
         RecyclerView rcvListQuestion;
+        EditText editComment;
         public HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
             //Assign variable
             module = itemView.findViewById(R.id.textView_module);
             clas = itemView.findViewById(R.id.textView_class);
             name = itemView.findViewById(R.id.textViewNameUser);
+            editComment = itemView.findViewById(R.id.editComment);
             rcvListQuestion = itemView.findViewById(R.id.rcvListQuestion);
 
         }
@@ -201,7 +245,6 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
         //Initialize variable
         Button submitFeedback;
         RecyclerView rcvListQuestion;
-
         public FooterViewHolder(@NonNull View itemView) {
             super(itemView);
             //Assign variable
@@ -231,7 +274,7 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
         });
         dialog.show();
     }
-    void ShowConFirmDialog(ArrayList<Answer> listAnswer){
+    void ShowConFirmDialog(ArrayList<Answer> listAnswer, View view){
         //hiện dialog complete do feedback failed
         LayoutInflater inflater = activity.getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
@@ -249,18 +292,87 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
             public void onClick(View v)
             {
                 dialog.dismiss();
-                // hiện dialog thông báo thành công
+                //hiện dialog thông báo thành công
+               Comment comment1 = new Comment(listAnswer.get(0).getClassId(),listAnswer.get(0).getModuleId(), comment);
+                ListAnswer listAnswer1 = new ListAnswer(listAnswer);
+                // do API post comment
+               CommentService.commentService.postComment(
+                        "Bearer "+ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRjMTk1N2FhNjBjN2M3YzNlYTIiLCJ0eXBlVXNlciI6InRyYWluZWUiLCJpYXQiOjE2MjE4NjAwNjB9.2fpi3Fs7bYl233OHKppcDVZwmcVz3aG1TubOh_ZWj9E",
+                        comment1
 
-                //thực hiện API: đưa answer lên, update iscompleted
+                ).enqueue(new Callback<CommentInfo>() {
+                    @Override
+                    public void onResponse(Call<CommentInfo> call, Response<CommentInfo> response) {
+                        CommentInfo commentInfo = response.body();
 
-                //(Xóa nút sửa) navigation đến traineeDashboardFragment.
-                // Đẩy comment lên nha
+                        if(commentInfo.isSuccess()){
+                            //hiển thị dialog thành công
+                            //ShowSuccessDialog();
+                            Log.d("TAG", "Success");
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommentInfo> call, Throwable t) {
+                        Log.d("TAG", "Fail");
+                    }
+                });
+                // API: post answer to server and update feedback iscompleted = true
+                AnswerService.answerService.postAnswer(
+                        "Bearer "+ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRjMTk1N2FhNjBjN2M3YzNlYTIiLCJ0eXBlVXNlciI6InRyYWluZWUiLCJpYXQiOjE2MjE4NjAwNjB9.2fpi3Fs7bYl233OHKppcDVZwmcVz3aG1TubOh_ZWj9E",
+                        listAnswer1
+
+                ).enqueue(new Callback<AnswerInfo>() {
+                    @Override
+                    public void onResponse(Call<AnswerInfo> call, Response<AnswerInfo> response) {
+                        AnswerInfo answerInfo = response.body();
+
+                        if(answerInfo.isSuccess()){
+                            //hiển thị dialog thành công
+                            ShowSuccessDialog(view);
+                            //Log.d("TAG", "Success");
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<AnswerInfo> call, Throwable t) {
+                        //Log.d("TAG", "Fail");
+                    }
+                });
+
+
+
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    void ShowSuccessDialog(View view){
+        //hiện dialog complete do feedback failed
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.success_dialog_layout, null);
+        TextView txt_SingleMessage = (TextView) alertLayout.findViewById(R.id.txt_SingleMessage);
+        txt_SingleMessage.setText("Submit feedback \nsuccess");
+        final Button btnOK = (Button) alertLayout.findViewById(R.id.btn_OK);
+        AlertDialog.Builder alert = new AlertDialog.Builder(alertLayout.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnOK.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+                //(Xóa nút sửa) navigation to traineeDashboardFragment.
+                Navigation.findNavController(view).navigate(R.id.action_dofeedback_to_listfeedback);
             }
         });
         dialog.show();

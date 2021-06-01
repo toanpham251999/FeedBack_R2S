@@ -14,7 +14,7 @@ public class Feedback {
     private String ModuleId = "";
     private String ModuleName = "";
     private String EndTime = "";
-    private boolean IsCompleted = false;
+    private boolean isCompleted = true;
     private ArrayList<Question> listQuestion = new ArrayList<Question>();
 
 
@@ -30,7 +30,7 @@ public class Feedback {
     public String getModuleId() {return this.ModuleId;}
     public String getModuleName() {return this.ModuleName;}
     public String getEndTime() {return this.EndTime;}
-    public boolean getIsCompleted() {return this.IsCompleted;}
+    public boolean getIsCompleted() {return this.isCompleted;}
     public ArrayList<Question> getListQuestion() {return this.listQuestion;}
 
     public void setId(String Id){this.Id = Id;}

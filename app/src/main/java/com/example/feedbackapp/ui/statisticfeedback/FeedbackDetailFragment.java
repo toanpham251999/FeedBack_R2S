@@ -23,6 +23,7 @@ import com.example.feedbackapp.Adapter.ClassDataUtils;
 import com.example.feedbackapp.Adapter.CustomAdapter;
 import com.example.feedbackapp.Adapter.CustomApdapterModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
@@ -54,7 +55,7 @@ public class FeedbackDetailFragment extends Fragment {
 
     private Spinner spinner;// for clss
     private Spinner spinnerModule;
-    private List<Class> classes;
+    private List<Classs> classes;
     private List<com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module> modules;
     private Button showOverview;
     private Button viewComment;
@@ -208,7 +209,7 @@ public class FeedbackDetailFragment extends Fragment {
     // Class
     private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
         Adapter adapter = adapterView.getAdapter();
-        Class clas = (Class) adapter.getItem(position);
+        Classs clas = (Classs) adapter.getItem(position);
     }
 
 // module
