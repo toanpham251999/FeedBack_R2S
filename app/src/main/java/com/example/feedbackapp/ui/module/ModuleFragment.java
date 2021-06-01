@@ -96,7 +96,8 @@ public class ModuleFragment extends Fragment {
         //nếu không phải admin, ẩn quyền thêm xóa sửa
         UserInfo userInfo = new UserInfo(root.getContext());
         if(!userInfo.role().equals("admin")){
-            btnAddModule.setVisibility(View.GONE);
+            //btnAddModule.setVisibility(View.GONE);
+            imageButton.setVisibility(View.GONE);
         }
 
         return root;
