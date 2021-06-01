@@ -10,8 +10,9 @@ public class Trainee {
     String Password;
     String ActivationCode;
     String ResetPasswordCode;
+    String _id; //TODO: them boi Toan
 
-    public Trainee(String userName, String name, String email, String phone, String address, boolean isActive, String password, String activationCode, String resetPasswordCode) {
+    public Trainee(String userName, String name, String email, String phone, String address, boolean isActive, String password, String activationCode, String resetPasswordCode, String _id) {
         UserName = userName;
         Name = name;
         Email = email;
@@ -21,6 +22,7 @@ public class Trainee {
         Password = password;
         ActivationCode = activationCode;
         ResetPasswordCode = resetPasswordCode;
+        this._id = _id;
     }
 
     public Trainee(String userName, String name ) {
@@ -98,5 +100,20 @@ public class Trainee {
 
     public void setResetPasswordCode(String resetPasswordCode) {
         ResetPasswordCode = resetPasswordCode;
+    }
+
+    //TODO: them boi Toan
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    // TODO: Text show in Spinner by Toan
+    @Override
+    public String toString()  {
+        return this.getUserName();
     }
 }

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.TraineeForClass;
 import com.example.feedbackapp.R;
 
 import java.util.ArrayList;
@@ -19,6 +20,11 @@ import java.util.ArrayList;
 public class ClassAdapterForTrainer extends RecyclerView.Adapter<ClassAdapterForTrainer.ViewHolder> {
     Context context;
     ArrayList<Classs> listClass;
+
+    //dùng để hiển thị danh sách trainee tại 1 recycler view khác
+    TraineeOfClassAdapter traineeOfClassAdapter;
+    ArrayList<TraineeForClass> traineeList;
+    RecyclerView rcvTraineeList;
 
     public ClassAdapterForTrainer(Context context, ArrayList<Classs> listClass) {
         this.context = context;
@@ -39,6 +45,17 @@ public class ClassAdapterForTrainer extends RecyclerView.Adapter<ClassAdapterFor
         holder.txtTrainerClassID.setText(Html.fromHtml("<b>Class ID: </b>"+classs.getId()));
         holder.txtTrainerClassName.setText(Html.fromHtml("<b>Class Name: </b>"+classs.getClassName()));
         holder.txtTrainerNumber.setText(Html.fromHtml("<b>Number of Trainee: </b>"+classs.traineeCount()));
+
+        holder.btnReadClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+            }
+        });
+    }
+
+    public Classs selectedClass(int position){
+        Classs classs = listClass.get(position);
+        return classs;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.module;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.feedbackapp.Adapter.CustomAdapter;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Auth.Admin;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Auth.ListAdminInfo;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Feedback.Feedback;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Feedback.ListFeedbackInfo;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ModuleInfo;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.RetrofitAPISetvice.AuthAPIService;
+import com.example.feedbackapp.RetrofitAPISetvice.FeedbackAPIServices;
+import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.model.CustomItem;
 import com.example.feedbackapp.model.CustomItemAdapter;
 import com.example.feedbackapp.model.MyDate;
@@ -30,6 +42,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddModuleFragment extends Fragment {
     // init
@@ -42,6 +58,10 @@ public class AddModuleFragment extends Fragment {
     Spinner adminSpiner, feedbackSpinner;
     ArrayList<CustomItem> customList;
 
+    ArrayList<CustomItem> listAdmin, listFeedback;
+
+    int indexAdminId = 0, indexFeedbackId = 0;
+
 
     public static AddModuleFragment newInstance() {
         return new AddModuleFragment();
@@ -50,8 +70,6 @@ public class AddModuleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-
         View root = inflater.inflate(R.layout.add_module_layout, container, false);
 
         adminSpiner = root.findViewById(R.id.spn_listAdmin);
@@ -69,14 +87,11 @@ public class AddModuleFragment extends Fragment {
         moduleFeedbackEndDateWrap = root.findViewById(R.id.moduleFeedbackEndDateWrap);
         moduleFeedbackStartDateWrap = root.findViewById(R.id.moduleFeedbackStartDateWrap);
 
-        // get api
-        customList = getCustomList();
-        CustomItemAdapter adapter = new CustomItemAdapter(root.getContext(), customList);
+        listAdmin = new ArrayList<CustomItem>();
+        listFeedback = new ArrayList<CustomItem>();
 
-        if(adminSpiner != null){
-            adminSpiner.setAdapter(adapter);
-            feedbackSpinner.setAdapter(adapter);
-        }
+        // get api
+        getData(root);
 
         //save data
         btnSave = root.findViewById(R.id.btn_SaveAddModule);
@@ -84,6 +99,28 @@ public class AddModuleFragment extends Fragment {
             public void onClick(View v) {
                 boolean isAccept = OnSaveModuleValidate(root);
             }
+        });
+
+
+        // spinner listener
+        adminSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                indexAdminId = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {}
+
+        });
+
+        feedbackSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                indexFeedbackId = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {}
+
         });
 
 
@@ -162,6 +199,8 @@ public class AddModuleFragment extends Fragment {
                     tvModuleStartTimeNotify.setId(R.id.moduleStartTimeNotify);
                     tvModuleStartTimeNotify.setText("Please choose start date after now date");
                     moduleStartDateWrap.addView(tvModuleStartTimeNotify);
+
+                    flag = false;
                 }
             }
         }
@@ -191,14 +230,26 @@ public class AddModuleFragment extends Fragment {
 
 
                 TextView tvModuleEndTimeNotify = new TextView(root.getContext(), null, 0, R.style.notifyWarning);
-                tvModuleEndTimeNotify.setId(R.id.moduleStartTimeNotify);
+                tvModuleEndTimeNotify.setId(R.id.moduleEndTimeNotify);
                 tvModuleEndTimeNotify.setText("Date is not in the correct");
-                moduleStartDateWrap.addView(tvModuleEndTimeNotify);
+                moduleEndDateWrap.addView(tvModuleEndTimeNotify);
             }else{
                 try {
                     TextView tvModuleEndTimeNotify = root.findViewById(R.id.moduleEndTimeNotify);
                     ((ViewGroup) tvModuleEndTimeNotify.getParent()).removeView(tvModuleEndTimeNotify);
                 }catch (Exception e){}
+
+                // check date
+                MyDate startDate = convertStringToDate(moduleStartTime);
+                if(!compareDate(startDate, endDate)){
+                    TextView tvModuleEndTimeNotify = new TextView(root.getContext(), null, 0, R.style.notifyWarning);
+                    tvModuleEndTimeNotify.setId(R.id.moduleEndTimeNotify);
+                    tvModuleEndTimeNotify.setText("Please choose end date after start date");
+                    moduleEndDateWrap.addView(tvModuleEndTimeNotify);
+
+                    flag = false;
+                }
+
             }
         }
 
@@ -244,6 +295,8 @@ public class AddModuleFragment extends Fragment {
                     tvModuleFeedbackStartTimeNotify.setId(R.id.moduleStartTimeNotify);
                     tvModuleFeedbackStartTimeNotify.setText("Please choose feedback start date after now date");
                     moduleFeedbackStartDateWrap.addView(tvModuleFeedbackStartTimeNotify);
+
+                    flag = false;
                 }
             }
         }
@@ -282,10 +335,107 @@ public class AddModuleFragment extends Fragment {
                     TextView tvModuleFeedbackEndTimeNotify = root.findViewById(R.id.moduleFeedbackEndTimeNotify);
                     ((ViewGroup) tvModuleFeedbackEndTimeNotify.getParent()).removeView(tvModuleFeedbackEndTimeNotify);
                 }catch (Exception e){}
+
+                // check date
+                MyDate starFeedbacktDate = convertStringToDate(feedbackStartTime);
+                if(!compareDate(starFeedbacktDate, endFeedbackDate)){
+                    TextView tvModuleFeedbackEndTimeNotify = new TextView(root.getContext(), null, 0, R.style.notifyWarning);
+                    tvModuleFeedbackEndTimeNotify.setId(R.id.moduleFeedbackStartTimeNotify);
+                    tvModuleFeedbackEndTimeNotify.setText("Please choose Feedback end date after Feedback start date");
+                    moduleFeedbackEndDateWrap.addView(tvModuleFeedbackEndTimeNotify);
+
+                    flag = false;
+                }
             }
         }
 
+
+
+        // check accept
+        if(flag){
+            MyDate startDate = convertStringToDate(moduleStartTime);
+            MyDate endDate = convertStringToDate(moduleEndTime);
+            MyDate feedbackEndDate = convertStringToDate(feedbackEndTime);
+            MyDate feedbackStartDate = convertStringToDate(feedbackEndTime);
+
+
+            Module module = new Module();
+            module.setModuleName(moduleName);
+            module.setFeedbackId(listFeedback.get(indexFeedbackId).getSpinnerId());
+            module.setAdminId(indexAdminId == 0 ? "current admin" : listAdmin.get(indexAdminId).getSpinnerId());
+            module.setStartTime(endDate.getDate() + "/" + endDate.getMonth() + "/" + endDate.getYear());
+            module.setEndTime(startDate.getDate() + "/" + startDate.getMonth() + "/" + startDate.getYear());
+            module.setFeedbackStartTime(feedbackStartDate.getDate() + "/" + feedbackStartDate.getMonth() + "/" + feedbackStartDate.getYear());
+            module.setFeedbackEndTime(feedbackEndDate.getDate() + "/" + feedbackEndDate.getMonth() + "/" + feedbackEndDate.getYear());
+
+
+
+            ModuleAPIService.moduleAPIServices.addModule(
+                    "Bearer "+ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8",
+                    module
+
+            ).enqueue(new Callback<ModuleInfo>() {
+                @Override
+                public void onResponse(Call<ModuleInfo> call, Response<ModuleInfo> response) {
+                    ModuleInfo moduleInfo = response.body();
+
+                    if(moduleInfo.getIsSuccess()){
+                        ShowSuccessDialog(root);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ModuleInfo> call, Throwable t) {
+
+                }
+            });
+        }
+
         return flag;
+    }
+
+    void ShowFailDialog(View root){
+        //hiện dialog login failed
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.login_failed_dialog, null);
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    void ShowSuccessDialog(View root){
+        //hiện dialog login failed
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.add_success_dialog_layout, null);
+
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_OK);
+        AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
+
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private MyDate getCurrentDate(){
@@ -372,12 +522,64 @@ public class AddModuleFragment extends Fragment {
         return isLeap;
     }
 
-    private ArrayList<CustomItem> getCustomList() {
-        customList = new ArrayList<CustomItem>();
-        customList.add(new CustomItem("Android1", "android id 1"));
-        customList.add(new CustomItem("Android2", "android id 2"));
-        customList.add(new CustomItem("Android3", "android id 3"));
+    private void getData(View root) {
+        // init spinner
+        CustomItem itemAdmin = new CustomItem("Current Admin", "current admin");
+        listAdmin.add(itemAdmin);
+        loadListItem(root, listAdmin, adminSpiner);
 
-        return customList;
+        CustomItem itemFeedback = new CustomItem("Feedback", "feedback");
+        ArrayList<CustomItem> listFeedbacTemp = new ArrayList<CustomItem>();
+        listFeedbacTemp.add(itemFeedback);
+        loadListItem(root, listFeedbacTemp, feedbackSpinner);
+
+
+
+        // get list admin
+        AuthAPIService.authAPIServices.getListAdmin("Bearer "+ new UserInfo(root.getContext()).token()).enqueue(new Callback<ListAdminInfo>() {
+            @Override
+            public void onResponse(Call<ListAdminInfo> call, Response<ListAdminInfo> response) {
+                ListAdminInfo listAdminInfo = response.body();
+
+                for(Admin adminItem : listAdminInfo.getListAdmin()){
+                    CustomItem item = new CustomItem(adminItem.getUserName(), adminItem.getId());
+                    listAdmin.add(item);
+                }
+
+                loadListItem(root, listAdmin, adminSpiner);
+
+            }
+
+            @Override
+            public void onFailure(Call<ListAdminInfo> call, Throwable t) {
+
+            }
+        });
+
+        // get list feedback title
+        FeedbackAPIServices.feedbackAPIServices.getListFeedback("Bearer "+ new UserInfo(root.getContext()).token()).enqueue(new Callback<ListFeedbackInfo>() {
+            @Override
+            public void onResponse(Call<ListFeedbackInfo> call, Response<ListFeedbackInfo> response) {
+                ListFeedbackInfo listFeedbackInfo = response.body();
+
+                for(Feedback feedbackItem : listFeedbackInfo.getListFeedback()){
+                    CustomItem item = new CustomItem(feedbackItem.getTitle(), feedbackItem.getId());
+                    listFeedback.add(item);
+                }
+
+                loadListItem(root, listFeedback, feedbackSpinner);
+
+            }
+
+            @Override
+            public void onFailure(Call<ListFeedbackInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void loadListItem (View root, ArrayList<CustomItem> customList, Spinner spinner){
+        CustomItemAdapter adapter = new CustomItemAdapter(root.getContext(), customList);
+        spinner.setAdapter(adapter);
     }
 }
