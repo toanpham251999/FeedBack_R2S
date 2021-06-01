@@ -355,7 +355,7 @@ public class AddModuleFragment extends Fragment {
         if(flag){
             MyDate startDate = convertStringToDate(moduleStartTime);
             MyDate endDate = convertStringToDate(moduleEndTime);
-            MyDate feedbackEndDate = convertStringToDate(feedbackEndTime);
+            MyDate feedbackEndDate = convertStringToDate(feedbackStartTime);
             MyDate feedbackStartDate = convertStringToDate(feedbackEndTime);
 
 
@@ -363,8 +363,9 @@ public class AddModuleFragment extends Fragment {
             module.setModuleName(moduleName);
             module.setFeedbackId(listFeedback.get(indexFeedbackId).getSpinnerId());
             module.setAdminId(indexAdminId == 0 ? "current admin" : listAdmin.get(indexAdminId).getSpinnerId());
-            module.setStartTime(endDate.getDate() + "/" + endDate.getMonth() + "/" + endDate.getYear());
-            module.setEndTime(startDate.getDate() + "/" + startDate.getMonth() + "/" + startDate.getYear());
+            module.setEndTime(endDate.getDate() + "/" + endDate.getMonth() + "/" + endDate.getYear());
+            module.setStartTime(startDate.getDate() + "/" + startDate.getMonth() + "/" + startDate.getYear());
+
             module.setFeedbackStartTime(feedbackStartDate.getDate() + "/" + feedbackStartDate.getMonth() + "/" + feedbackStartDate.getYear());
             module.setFeedbackEndTime(feedbackEndDate.getDate() + "/" + feedbackEndDate.getMonth() + "/" + feedbackEndDate.getYear());
 
@@ -393,26 +394,6 @@ public class AddModuleFragment extends Fragment {
         }
 
         return flag;
-    }
-
-    void ShowFailDialog(View root){
-        //hiện dialog login failed
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.login_failed_dialog, null);
-        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
-        AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
-        alert.setView(alertLayout);
-        alert.setCancelable(false);
-        AlertDialog dialog = alert.create();
-        btnYes.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
     void ShowSuccessDialog(View root){
@@ -452,9 +433,14 @@ public class AddModuleFragment extends Fragment {
 
     private boolean compareDate(MyDate firstDate, MyDate secondDate){
         if(firstDate.getYear() > secondDate.getYear()) return false;
-        if(firstDate.getMonth() > secondDate.getMonth()) return false;
-        if(firstDate.getDate() > secondDate.getDate()) return false;
 
+        if(firstDate.getYear() == secondDate.getYear()){
+            if(firstDate.getMonth() > secondDate.getMonth()) return false;
+
+            if(firstDate.getMonth() == secondDate.getMonth()){
+                if(firstDate.getDate() > secondDate.getDate()) return false;
+            }
+        }
         return true;
     }
 
