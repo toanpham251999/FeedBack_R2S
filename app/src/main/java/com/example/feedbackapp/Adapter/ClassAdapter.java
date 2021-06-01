@@ -81,6 +81,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
         ClassAddEditFragment editClassFragment = new ClassAddEditFragment();
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,editClassFragment).addToBackStack(null).commit();
+
     }
 
     //hàm hiển thị xác nhận xóa class

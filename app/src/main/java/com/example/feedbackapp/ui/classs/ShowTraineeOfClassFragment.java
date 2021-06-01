@@ -33,7 +33,10 @@ public class ShowTraineeOfClassFragment extends Fragment{
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_classs);
+                FragmentManager fragmentManager = getFragmentManager();
+                if(fragmentManager.getBackStackEntryCount()>0){
+                    fragmentManager.popBackStack();
+                }
             }
         });
         return root;
