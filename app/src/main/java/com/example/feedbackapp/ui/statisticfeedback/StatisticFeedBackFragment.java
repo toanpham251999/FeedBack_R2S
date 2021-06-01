@@ -133,7 +133,7 @@ public class StatisticFeedBackFragment extends Fragment {
         View v = inflater.inflate(R.layout.statistic_feedback_fragment, container, false);
 // Code for spinner class
 
-        this.spinner = (Spinner) v.findViewById(R.id.spinner_class);
+        this.spinner = (Spinner) v.findViewById(R.id.txt_className);
          mviewModel.getClas(accessToken);
         this.spinnerModule = (Spinner) v.findViewById(R.id.spinner_module);
         mviewModel.getModule(accessToken);

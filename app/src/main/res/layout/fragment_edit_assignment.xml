@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.assignment.AddAssignmentFragment">
+    tools:context=".ui.assignment.EditAssignmentFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -13,8 +13,8 @@
         android:layout_width="332dp"
         android:layout_height="55dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="60dp"
-        android:text="Add Assignment"
+        android:layout_marginTop="10dp"
+        android:text="Edit Assignment"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="35sp"
@@ -24,8 +24,8 @@
 
     <LinearLayout
         android:layout_width="369dp"
-        android:layout_height="423dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,83 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Class ID:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/txt_classId"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_unable_tv"
+            android:enabled="false"
+            android:text="a"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_classNamelb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Class Name:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/txt_className"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_unable_tv"
+            android:enabled="false"
+            android:text="a"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Module ID:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/txt_moduleId"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_unable_tv"
+            android:enabled="false"
+            android:text="a"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="Module Name:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/txt_moduleName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_unable_tv"
+            android:enabled="false"
+            android:text="a"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Trainer ID:"
             android:textColor="@color/black" />
 
         <Spinner
@@ -46,41 +122,9 @@
             android:layout_marginTop="10dp"
             android:spinnerMode="dropdown" />
 
-        <TextView
-            android:id="@+id/txt_classNamelb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Class Name:"
-            android:textColor="@color/black" />
-
-        <Spinner
-            android:id="@+id/txt_className"
-            style="@style/SpinnerTheme"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:spinnerMode="dropdown" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Trainer ID:"
-            android:textColor="@color/black" />
-
-        <Spinner
-            android:id="@+id/txt_moduleId"
-            style="@style/SpinnerTheme"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:spinnerMode="dropdown" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/btn_Save"

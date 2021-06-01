@@ -12,7 +12,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="60dp"
-        android:text="Add Question"
+        android:text="Edit Question"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="35sp"
@@ -36,13 +36,16 @@
             android:text="Topic Name:"
             android:textColor="@color/black" />
 
-        <Spinner
-            android:id="@+id/spinner_Trainer"
-            style="@style/SpinnerTheme"
+        <TextView
+            android:id="@+id/txt_topicName"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:spinnerMode="dropdown" />
+            android:background="@drawable/border_unable_tv"
+            android:enabled="false"
+            android:text="a"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txt_classNamelb"
