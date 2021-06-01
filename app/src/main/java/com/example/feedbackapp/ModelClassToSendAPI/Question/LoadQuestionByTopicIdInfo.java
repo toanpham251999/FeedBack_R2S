@@ -1,4 +1,4 @@
-package com.example.feedbackapp.ModelClassToSendAPI;
+package com.example.feedbackapp.ModelClassToSendAPI.Question;
 
 public class LoadQuestionByTopicIdInfo {
     private String TopicId;

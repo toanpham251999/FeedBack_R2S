@@ -11,7 +11,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,23 +21,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.feedbackapp.Adapter.CustomAdapter;
 import com.example.feedbackapp.Adapter.QuestionAdapter;
-import com.example.feedbackapp.Adapter.QuestionAdapter;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Question.QuestionInfo;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Question.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
-import com.example.feedbackapp.ModelClassToSendAPI.LoadQuestionByTopicIdInfo;
+import com.example.feedbackapp.ModelClassToSendAPI.Question.LoadQuestionByTopicIdInfo;
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.RetrofitAPISetvice.QuestionAPIServices;
 import com.example.feedbackapp.RetrofitAPISetvice.TopicAPIServices;
 import com.example.feedbackapp.UserInfo.UserInfo;
-import com.example.feedbackapp.ui.question.QuestionFragment;
-import com.example.feedbackapp.ui.statisticfeedback.StatisticFeedBackViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

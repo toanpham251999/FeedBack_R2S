@@ -205,7 +205,7 @@ public class AddQuestionFragment extends Fragment {
         if(bundle == null){
             alertLayout = inflater.inflate(R.layout.failure_dialog_layout, null);
             note = (TextView) alertLayout.findViewById(R.id.txt_SingleErrorMessage);
-            note.setText("Assignment already exist!");
+            note.setText("Question already exist!");
         }
         final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_OK);
         AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
