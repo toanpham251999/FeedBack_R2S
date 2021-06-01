@@ -96,4 +96,10 @@ public class Classs {
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
+
+    // TODO: Text show in Spinner by Toan
+    @Override
+    public String toString()  {
+        return this.getClassName();
+    }
 }

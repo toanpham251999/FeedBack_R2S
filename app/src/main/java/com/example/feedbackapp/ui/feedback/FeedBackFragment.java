@@ -1,35 +1,42 @@
 package com.example.feedbackapp.ui.feedback;
 
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.ui.feedback.Adapter.FeedbackAdapter;
+import com.example.feedbackapp.ui.feedback.Model.FeedackViewModel;
+import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
+import com.example.feedbackapp.ui.feedback.Service.APIService;
+import com.example.feedbackapp.ui.feedback.Service.DataService;
 
-import java.util.ArrayList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FeedBackFragment extends Fragment {
 
     private FeedackViewModel mViewModel;
     Button btnView,btnEdit,btnDelete;
     ImageView btnAddFeedback;
+    ImageView btn_Edit;
+
 
     public static FeedBackFragment newInstance() {
         return new FeedBackFragment();
@@ -38,20 +45,32 @@ public class FeedBackFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.feedback_fragment,container,false);
+
+        GetData();
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcvFeedback);
+        DataService dataService = APIService.getService();
+        UserInfo userInfo = new UserInfo(getContext());
+        Call<ListFeedbackModel> callback = dataService.GetDataListFeedback("Bearer "+userInfo.token());
+        callback.enqueue(new Callback<ListFeedbackModel>()
+        {
+            @Override
+            public void onResponse(Call<ListFeedbackModel> call, Response<ListFeedbackModel> response) {
+                ListFeedbackModel listfeedback = (ListFeedbackModel) response.body();
+                FeedbackAdapter feedbackAdapter = new FeedbackAdapter(listfeedback.getListFeedback());
 
-        ArrayList<FeedbackModel> listFeedback;
-        FeedbackAdapter feedbackAdapter;
+                recyclerView.setAdapter(feedbackAdapter);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                recyclerView.setLayoutManager(layoutManager);
+                Log.d("BBB",listfeedback.getMessage());
+            }
 
-        listFeedback = new ArrayList<>();
-        listFeedback.add(new FeedbackModel("1","Title1","11"));
-        listFeedback.add(new FeedbackModel("2","Title2","12"));
-        listFeedback.add(new FeedbackModel("3","Title3","13"));
-        listFeedback.add(new FeedbackModel("4","Title4","14"));
-        feedbackAdapter=new FeedbackAdapter(listFeedback);
-        recyclerView.setAdapter(feedbackAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+            @Override
+            public void onFailure(Call<ListFeedbackModel> call, Throwable t) {
+                Log.d("DDD","Not OK");
+            }
+        });
+
+
 
         btnAddFeedback = (ImageView) view.findViewById(R.id.btnAddFeedback);
         btnAddFeedback.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +79,19 @@ public class FeedBackFragment extends Fragment {
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_feedback);
             }
         });
+        /*btn_Edit = (ImageView) view.findViewById(R.id.btn_Edit);
+        btn_Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_edit_feedback);
+            }
+        });*/
 
         return view;
+    }
+
+    private void GetData() {
+
     }
 
 

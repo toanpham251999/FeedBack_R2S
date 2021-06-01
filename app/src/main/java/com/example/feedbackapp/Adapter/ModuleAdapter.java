@@ -1,6 +1,8 @@
 package com.example.feedbackapp.Adapter;
 
+import android.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
@@ -25,7 +30,11 @@ import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +74,123 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         holder.txtLabelFeedbackTitle.setText(Html.fromHtml("<b>Feedback Title: </b>"+ module.getFeedbackTitle()));
         holder.txtLabelFeedbackStartTime.setText(Html.fromHtml("<b>Feedback Start Time: </b>"+ module.getFeedbackStartTime()));
         holder.txtLabelFeedbackEndTime.setText(Html.fromHtml("<b>Feedback End Time: </b>"+ module.getFeedbackEndTime()));
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeleteModule(module);
+            }
+        });
+    }
+
+    //hàm hiển thị xác nhận xóa module
+    void DeleteModule(Module module){
+        //hiện dialog xác nhận xóa
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
+        //custom thông báo cho module (chưa bắt đầu và đang chạy)
+        TextView txtMessage;
+        txtMessage = alertLayout.findViewById(R.id.txt_LogoutMessage);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date curentDate = Calendar.getInstance().getTime();
+        try {
+            curentDate = formatter.parse(Calendar.getInstance().getTime().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date startDate = Calendar.getInstance().getTime();  //gán tạm để không null
+        try {
+            startDate = formatter.parse(module.getStartTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(startDate.getTime()-curentDate.getTime() > 0){
+            //nếu module chưa bắt đầu
+            txtMessage.setText("Do you want to delete this Module?");
+        }
+        else{
+            //nếu module đang chạy
+            txtMessage.setText("This Module has been started. You really want to delete this Module?");
+        }
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
+        final Button btnCancel = (Button) alertLayout.findViewById(R.id.btn_Cancel);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //thực hiện gọi API xóa module
+                Toast.makeText(context,"delete confirmed!",Toast.LENGTH_LONG).show();
+                doDelete(module);
+                dialog.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //không làm gì cả
+                Toast.makeText(context,"delete canceled!",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    void doDelete(Module module){
+        ModuleAPIService.moduleAPIServices.deleteModule("Bearer "+ new UserInfo(context).token(), module.getId()).enqueue(new Callback<Module>() {
+            @Override
+            public void onResponse(Call<Module> call, Response<Module> response) {
+                if(response.isSuccessful()){
+                    showDeleteMessage(true);
+                }
+                else{
+                    showDeleteMessage(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Module> call, Throwable t) {
+                showDeleteMessage(false);
+            }
+        });
+    }
+
+    void showDeleteMessage(boolean success){
+        LayoutInflater inflater = LayoutInflater.from(context);
+        final Button btnOK;
+        TextView txtMessage;
+        View alertLayout;
+        if(success){
+            alertLayout = inflater.inflate(R.layout.success_dialog_layout, null);
+            btnOK = alertLayout.findViewById(R.id.btn_OK);
+            txtMessage = alertLayout.findViewById(R.id.txt_SingleMessage);
+            txtMessage.setText("Delete success!");
+        }
+        else{
+            alertLayout = inflater.inflate(R.layout.failure_dialog_layout, null);
+            btnOK = alertLayout.findViewById(R.id.btn_OK);
+            txtMessage = alertLayout.findViewById(R.id.txt_SingleErrorMessage);
+            txtMessage.setText("Delete fail!");
+        }
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnOK.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

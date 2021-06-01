@@ -14,18 +14,19 @@ import android.view.ViewGroup;
 
 import com.example.feedbackapp.R;
 
-public class ShowTraineeOfClassFragment extends Fragment {
-
+public class ShowTraineeOfClassFragment extends Fragment{
     private ShowTraineeOfClassViewModel mViewModel;
 
-    public static ShowTraineeOfClassFragment newInstance() {
+    public static ShowTraineeOfClassFragment getInstance() {
         return new ShowTraineeOfClassFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.show_trainee_of_class_fragment, container, false);
+        View root =  inflater.inflate(R.layout.show_trainee_of_class_fragment, container, false);
+
+        return root;
     }
 
     @Override
@@ -34,5 +35,4 @@ public class ShowTraineeOfClassFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ShowTraineeOfClassViewModel.class);
         // TODO: Use the ViewModel
     }
-
 }

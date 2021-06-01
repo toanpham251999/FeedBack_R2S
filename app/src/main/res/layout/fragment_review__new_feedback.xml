@@ -23,7 +23,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="354dp"
-        android:layout_height="546dp"
+        android:layout_height="439dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"
         app:cardBackgroundColor="#8CFF95"
@@ -47,12 +47,13 @@
                     android:text="Feedback Title: " />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/txt_detail_feedbacktitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="New feedback"
                     android:textColor="#FF3030" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -68,91 +69,22 @@
                     android:text="Admin ID: " />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/txt_detail_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Test"
                     android:textColor="#FF3030" />
+
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView14"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
-                android:text="Tranning program and content (nội dung đào tạo)"
-                android:textStyle="bold" />
+                tools:listitem="@layout/fragment_review_new_feedback_item" />
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="- I am statisfied with the topic/course's content  (Tôi hài lòng với nội dung môn học/khóa học)" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="- The course is useful for my work (Khóa học có ích cho công việc của tôi)" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
-                android:text="Trainner/coach"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="- The trainning content is fully transferred following the course (Nội dung được truyền đạt đầy đủ theo giáo trình)" />
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="- My question were incouraged and answer satisfactorily (Tôi khuyến khích đặt câu hỏi và hài lòng với câu trả lời của giảng viên)" />
-
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
-                android:text="Course organization (Tổ chức khóa học)"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="The class Admin was supportive (and helpful providing accourage and timelu and professional manner) (Quản lý lớp hỗ trợ hiệu quả và nhiệt tình) " />
-
-            <TextView
-                android:id="@+id/Orther"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
-                android:text="Orther"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="-What aspect of the topic/course could be improve ? (Những điểm có thể cải tiến ở môn học/khóa học này)" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -163,7 +95,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_Save_Review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="150dp"
@@ -171,7 +103,7 @@
             android:text="Save" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_back_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

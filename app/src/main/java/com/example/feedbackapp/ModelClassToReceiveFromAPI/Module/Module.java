@@ -22,7 +22,18 @@ public class Module {
     private String FeedbackId;
     private String FeedbackTitle;
 
-    public Module(String id, String startTime, String endTime, Boolean isDeleted, String feedbackStartTime, String feedbackEndTime, String adminName, String adminId, String moduleName, String feedbackId, String feedbackTitle) {
+    public Module(String id,
+                  String startTime,
+                  String endTime,
+                  Boolean isDeleted,
+                  String feedbackStartTime,
+                  String feedbackEndTime,
+                  String adminName,
+                  String adminId,
+                  String moduleName,
+                  String feedbackId,
+                  String feedbackTitle
+    ) {
         Id = id;
         StartTime = startTime;
         EndTime = endTime;
@@ -34,6 +45,20 @@ public class Module {
         ModuleName = moduleName;
         FeedbackId = feedbackId;
         FeedbackTitle = feedbackTitle;
+    }
+
+    public Module() {
+        Id = "";
+        StartTime = "";
+        EndTime = "";
+        isDeleted = false;
+        FeedbackStartTime = "";
+        FeedbackEndTime = "";
+        AdminName = "";
+        AdminId = "";
+        ModuleName = "";
+        FeedbackId = "";
+        FeedbackTitle = "";
     }
 
     public String getId() {
