@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -30,6 +32,11 @@ public interface QuestionAPIServices {
     //service lấy danh sách Question
     @GET("/api/question")
     Call<QuestionInfo> getQuestionList(@Header("Authorization") String authHeader);
+
+    //Lấy danh sach question theo topic
+    @POST("/api/question/filter")
+    @FormUrlEncoded
+    Call<QuestionInfo> getQuestionListByTopicId(@Header("Authorization") String authHeader,@Field("TopicId") String topicId);
 
     //Add new question
     //@POST("/api/question")

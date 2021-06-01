@@ -5,6 +5,7 @@ public class Module {
     /**
      * Class gửi đi khác với nhận về, vì gửi đi chỉ 7 biến, nhận về 11 biến
      */
+
     private String ModuleName;
     private String StartTime;
     private String EndTime;

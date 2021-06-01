@@ -1,4 +1,4 @@
-package com.example.feedbackapp.ui.feedback;
+package com.example.feedbackapp.ui.feedback.Adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,13 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.feedbackapp.ui.feedback.Model.ListTypeFeedbackModel;
+import com.example.feedbackapp.ui.feedback.Model.TypeFeedbackModel;
+
 import java.util.List;
 
-public class CustomFeedbackAdapter extends BaseAdapter  {
+public class CustomAdapter extends BaseAdapter  {
 
     private LayoutInflater flater;
-    private ArrayList<TypeFeedbackModel> listTypeFeedback;
+    private List<ListTypeFeedbackModel> list;
     private int listItemLayoutResource;
     private int textViewItemNameId;
     // Arguments example:
@@ -24,39 +26,39 @@ public class CustomFeedbackAdapter extends BaseAdapter  {
     //  @textViewItemPercentId: R.id.textView_item_percent
     //        (A TextVew in file layout/spinner_item_layout_resource.xmll)
     // structure adapter for class
-    public CustomFeedbackAdapter(Activity context, int listItemLayoutResource,
-                                 int textViewItemNameId,
-                                 ArrayList<TypeFeedbackModel> list) {
+    public CustomAdapter(Activity context, int listItemLayoutResource,
+                         int textViewItemNameId,
+                         List<ListTypeFeedbackModel> list) {
         this.listItemLayoutResource = listItemLayoutResource;
 
         this.textViewItemNameId = textViewItemNameId;
-        this.listTypeFeedback = list;
+        this.list = list;
         this.flater = context.getLayoutInflater();
     }
     @Override
     public int getCount() {
-        if(this.listTypeFeedback == null)  {
+        if(this.list == null)  {
             return 0;
         }
-        return this.listTypeFeedback.size();
+        return this.list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.listTypeFeedback.get(position);
+        return this.list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-         TypeFeedbackModel typeFeedbackModel =(TypeFeedbackModel) this.getItem(position);
-        return typeFeedbackModel.getTypeId();
+        ListTypeFeedbackModel cla =(ListTypeFeedbackModel)this.getItem(position);
+        return cla.getV();
         // return position; (Return position if you need).
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        TypeFeedbackModel typeFeedbackModel = (TypeFeedbackModel) getItem(position);
+        ListTypeFeedbackModel clas = (ListTypeFeedbackModel) getItem(position);
 
         // Example: @listItemLayoutResource: R.layout.spinner_item_layout_resource
         // (File: layout/spinner_item_layout_resourcerce.xml)
@@ -65,7 +67,7 @@ public class CustomFeedbackAdapter extends BaseAdapter  {
         // Example: @textViewItemNameId: R.id.textView_item_name
         // (A TextView in file layout/spinner_item_layout_resourcerce.xml)
         TextView textViewItemName = (TextView) rowView.findViewById(this.textViewItemNameId);
-        textViewItemName.setText(typeFeedbackModel.getTypeName());
+        textViewItemName.setText(clas.getTypeName());
 
         // Example: @textViewItemPercentId: R.id.textView_item_percent
         // (A TextView in file layout/spinner_item_layout_resource.xmlxml)
