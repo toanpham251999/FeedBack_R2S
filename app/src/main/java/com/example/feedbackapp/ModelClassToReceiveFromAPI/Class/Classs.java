@@ -1,5 +1,7 @@
 package com.example.feedbackapp.ModelClassToReceiveFromAPI.Class;
 
+import com.example.feedbackapp.model.Trainee;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
