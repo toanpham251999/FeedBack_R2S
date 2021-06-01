@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.ui.feedback.Adapter.FeedbackAdapter;
 import com.example.feedbackapp.ui.feedback.Model.FeedackViewModel;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
@@ -36,6 +37,7 @@ public class FeedBackFragment extends Fragment {
     ImageView btnAddFeedback;
     ImageView btn_Edit;
 
+
     public static FeedBackFragment newInstance() {
         return new FeedBackFragment();
     }
@@ -47,9 +49,8 @@ public class FeedBackFragment extends Fragment {
         GetData();
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcvFeedback);
         DataService dataService = APIService.getService();
-        Call<ListFeedbackModel> callback = dataService.GetDataListFeedback("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+        UserInfo userInfo = new UserInfo(getContext());
+        Call<ListFeedbackModel> callback = dataService.GetDataListFeedback("Bearer "+userInfo.token());
         callback.enqueue(new Callback<ListFeedbackModel>()
         {
             @Override

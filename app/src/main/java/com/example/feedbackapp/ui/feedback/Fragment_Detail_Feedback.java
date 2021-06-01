@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicDetailAdapter;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
@@ -37,6 +38,7 @@ public class Fragment_Detail_Feedback extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    UserInfo userInfo = new UserInfo(getContext());
 
     public Fragment_Detail_Feedback() {
         // Required empty public constructor
@@ -76,9 +78,7 @@ public class Fragment_Detail_Feedback extends Fragment {
         View view = inflater.inflate(R.layout.fragment__detail__feedback, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
         DataService dataServiceTopic = APIService.getService();
-        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo.token());
         callbackListTopic.enqueue(new Callback<TopicModel>() {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {

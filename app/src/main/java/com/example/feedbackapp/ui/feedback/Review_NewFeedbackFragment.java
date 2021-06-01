@@ -55,6 +55,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
     private String mParam1;
     private String mParam2;
     private Button btn_Save_Review;
+    private Button btn_back_review;
     public String edt_feedbacktitle = "";
     ArrayList<Question>questions=new ArrayList<>();
 
@@ -152,6 +153,13 @@ public class Review_NewFeedbackFragment extends Fragment  {
                 });
 
 
+            }
+        });
+        btn_back_review = (Button)view.findViewById(R.id.btn_back_review);
+        btn_back_review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.nav_add_feedback);
             }
         });
         return view;

@@ -83,9 +83,8 @@ public class Add_Feedback extends Fragment{
         View view = inflater.inflate(R.layout.fragment_add__feedback, container, false);
         DataService dataServiceFeedback = APIService.getService();
         spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback);
-        Call<TypeOfFeedbackModel> callbackFeedback = dataServiceFeedback.GetDataTypeFeedback("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+        UserInfo userInfo = new UserInfo(getContext());
+        Call<TypeOfFeedbackModel> callbackFeedback = dataServiceFeedback.GetDataTypeFeedback("Bearer "+userInfo.token());
         callbackFeedback.enqueue(new Callback<TypeOfFeedbackModel>()
         {
             @Override
@@ -126,8 +125,8 @@ public class Add_Feedback extends Fragment{
 
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic);
         DataService dataServiceTopic = APIService.getService();
-        UserInfo userInfo = new UserInfo(getContext());
-        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo.token());
+        UserInfo userInfo1 = new UserInfo(getContext());
+        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo1.token());
         callbackListTopic.enqueue(new Callback<TopicModel>() {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
