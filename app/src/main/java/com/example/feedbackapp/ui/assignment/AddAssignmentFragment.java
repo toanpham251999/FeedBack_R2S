@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.assignment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -196,9 +198,10 @@ public class AddAssignmentFragment extends Fragment {
                                         ErrorResponse errorResponse = gson.fromJson(
                                                 response.errorBody().string(),
                                                 ErrorResponse.class);
-                                        if(errorResponse.getMessage().equals("Your action is done successfully")){
-                                            Navigation.findNavController(root).navigate(R.id.add_assignment_to_assignment, bundle);
-                                        }
+                                        if(errorResponse.getMessage().equals("Your action is done successfully"))
+                                            ShowSuccessDialog(root, bundle);
+                                        else
+                                            ShowSuccessDialog(root, null);
                                         Toast toast = Toast.makeText(root.getContext(),  errorResponse.getMessage(),Toast.LENGTH_LONG);
                                         toast.show();
                                     } catch (IOException e) {
@@ -304,5 +307,35 @@ public class AddAssignmentFragment extends Fragment {
         Trainee trainee = (Trainee) adapter.getItem(position);
         trainerId = trainee.get_id();
         Toast.makeText(view.getContext(), "Selected Trainer: " + trainee.getUserName() ,Toast.LENGTH_SHORT).show();
+    }
+
+    //Xử lí hiển thị Dialog
+    void ShowSuccessDialog(View root, Bundle bundle){
+        //hiện dialog
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.success_dialog_layout, null);
+        TextView note = (TextView) alertLayout.findViewById(R.id.txt_SingleMessage);
+        note.setText("Add Successfully!");
+        if(bundle == null){
+            alertLayout = inflater.inflate(R.layout.failure_dialog_layout, null);
+            note = (TextView) alertLayout.findViewById(R.id.txt_SingleErrorMessage);
+            note.setText("Assignment already exist!");
+        }
+        final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_OK);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        AlertDialog dialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+                if(bundle != null)
+                Navigation.findNavController(root).navigate(R.id.add_assignment_to_assignment, bundle);
+            }
+        });
+        dialog.show();
     }
 }
