@@ -14,24 +14,24 @@ import com.example.feedbackapp.ui.feedback.Model.Topic;
 
 import java.util.List;
 
-public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.ViewHolder> {
+public class TopicReviewEditAdapter extends RecyclerView.Adapter<TopicReviewEditAdapter.ViewHolder> {
     private RecyclerView.RecycledViewPool viewPool =new RecyclerView.RecycledViewPool();
     List<Topic> topics;
     public Topic topic;
-    public TopicReviewAdapter (List<Topic> topics)
+    public TopicReviewEditAdapter (List<Topic> topics)
     {
         this.topics= topics;
     }
 
     @NonNull
     @Override
-    public TopicReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_review_new_feedback_item,parent,false);
-        return new ViewHolder(view);
+    public TopicReviewEditAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_review_edit_feedback_item,parent,false);
+        return new TopicReviewEditAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopicReviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopicReviewEditAdapter.ViewHolder holder, int position) {
         topic = topics.get(position);
         holder.txt_Topic.setText(topic.getTopicName());
 
@@ -43,7 +43,7 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
         );
         layoutManager.setInitialPrefetchItemCount(topics.size());
         //Create subItem view adapter
-        QuestionReviewAdapter questionReviewAdapter = new QuestionReviewAdapter(topic.getListQuestion());
+        QuestionReviewEditAdapter questionReviewAdapter = new QuestionReviewEditAdapter(topic.getListQuestion());
         holder.rcv_review_subItem.setLayoutManager(layoutManager);
         holder.rcv_review_subItem.setAdapter(questionReviewAdapter);
         holder.rcv_review_subItem.setRecycledViewPool(viewPool);

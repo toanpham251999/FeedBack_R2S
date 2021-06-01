@@ -15,7 +15,7 @@
         android:paddingLeft="0dp"
         android:paddingTop="24dp"
         android:paddingBottom="0dp"
-        android:text="Review New Feedback"
+        android:text="Review Edit Feedback"
         android:textAlignment="center"
         android:textColor="#090909"
         android:textSize="30sp"
@@ -23,7 +23,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="354dp"
-        android:layout_height="415dp"
+        android:layout_height="439dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"
         app:cardBackgroundColor="#8CFF95"
@@ -82,7 +82,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_detail_edit"
                 android:layout_width="match_parent"
-                android:layout_height="423dp"
+                android:layout_height="wrap_content"
                 tools:listitem="@layout/fragment_review_new_feedback_item" />
 
         </LinearLayout>

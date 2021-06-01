@@ -13,12 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feedbackapp.R;
@@ -37,7 +35,6 @@ import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -82,7 +79,7 @@ public class Add_Feedback extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add__feedback, container, false);
         DataService dataServiceFeedback = APIService.getService();
-        spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback);
+        spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback_edit);
         UserInfo userInfo = new UserInfo(getContext());
         Call<TypeOfFeedbackModel> callbackFeedback = dataServiceFeedback.GetDataTypeFeedback("Bearer "+userInfo.token());
         callbackFeedback.enqueue(new Callback<TypeOfFeedbackModel>()
@@ -123,7 +120,7 @@ public class Add_Feedback extends Fragment{
 
 
 
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic_Edit);
         DataService dataServiceTopic = APIService.getService();
         UserInfo userInfo1 = new UserInfo(getContext());
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo1.token());
@@ -146,8 +143,8 @@ public class Add_Feedback extends Fragment{
         });
         //Xử lý Review
         btnReviewFeedback =(Button)view.findViewById(R.id.btn_ReviewFeedback);
-        feedbackName =(EditText)view.findViewById(R.id.edt_FeedbackTitleCreate);
-        btn_BackFeedbackCreate =(Button)view.findViewById(R.id.btn_BackFeedbackCreate);
+        feedbackName =(EditText)view.findViewById(R.id.edt_FeedbackTitleEdit);
+        btn_BackFeedbackCreate =(Button)view.findViewById(R.id.btn_BackFeedbackEdit);
         btnReviewFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

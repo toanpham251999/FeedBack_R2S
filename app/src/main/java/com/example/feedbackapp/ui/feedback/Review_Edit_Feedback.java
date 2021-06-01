@@ -19,6 +19,7 @@ import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
+import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewEditAdapter;
 import com.example.feedbackapp.ui.feedback.Model.AddFeedback;
 import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
@@ -34,29 +35,28 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Review_NewFeedbackFragment#newInstance} factory method to
+ * Use the {@link Review_Edit_Feedback#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Review_NewFeedbackFragment extends Fragment  {
+public class Review_Edit_Feedback extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Button btnReview;
-    ArrayList<Question>listQuestions;
+    ArrayList<Question> listQuestions;
     private String idTypeFeedback;
-
+    private String edt_feedbacktitle="";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Button btn_Save_Review;
     private Button btn_back_review;
-    public String edt_feedbacktitle = "";
     ArrayList<Question>questions=new ArrayList<>();
 
 
-    public Review_NewFeedbackFragment() {
+    public Review_Edit_Feedback() {
         // Required empty public constructor
     }
 
@@ -91,7 +91,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_review__new_feedback, container, false);
+        View view = inflater.inflate(R.layout.fragment_review__edit__feedback, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail_edit);
         DataService dataServiceTopic = APIService.getService();
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
@@ -101,7 +101,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
                 TopicModel topicModel = (TopicModel)response.body();
-                TopicReviewAdapter topicAdapter = new TopicReviewAdapter(topicModel.getTopic());
+                TopicReviewEditAdapter topicAdapter = new TopicReviewEditAdapter(topicModel.getTopic());
 
                 recyclerView.setAdapter(topicAdapter);
                 RecyclerView.LayoutManager layoutManagerTopic = new LinearLayoutManager(getActivity());
@@ -117,11 +117,13 @@ public class Review_NewFeedbackFragment extends Fragment  {
         Bundle bundle = getArguments();
         TextView txt_adminId;
         btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review_edit);
+        TextView txt_feedbacktitle =(TextView)view.findViewById(R.id.txt_Edit_feedbacktitle);
         txt_adminId =(TextView)view.findViewById(R.id.txt_edit_adminid);
         if(bundle !=null) {
             edt_feedbacktitle = bundle.getString("feedbackName");
             txt_adminId.setText(bundle.getString("AdminId"));
             idTypeFeedback = bundle.getString("typeFeedbackId");
+            txt_feedbacktitle.setText(edt_feedbacktitle);
         }
         else
             Toast.makeText(this.getContext(),"Lỗi",Toast.LENGTH_LONG).show();
@@ -135,7 +137,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
 
                 //Gọi API thêm Feedback
                 dataService.PostData("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
-                        idTypeFeedback, SystemConstant.id_question)).enqueue(new Callback<ResponseBody>() {
+                        idTypeFeedback, SystemConstant.save_state_edit)).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
@@ -155,10 +157,9 @@ public class Review_NewFeedbackFragment extends Fragment  {
         btn_back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.nav_add_feedback);
+                Navigation.findNavController(view).navigate(R.id.nav_edit_feedback);
             }
         });
         return view;
     }
-
 }

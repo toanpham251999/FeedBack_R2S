@@ -1,11 +1,13 @@
 package com.example.feedbackapp.ui.feedback.Adapter;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +16,22 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.FeedBackFragment;
 import com.example.feedbackapp.ui.feedback.Fragment_Edit_Feedback;
+import com.example.feedbackapp.ui.feedback.Model.FeedbackEditFeedbackList2;
+import com.example.feedbackapp.ui.feedback.Model.FeedbackEditFilterId1;
+import com.example.feedbackapp.ui.feedback.Model.FeedbackEditTopic3;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedback;
+import com.example.feedbackapp.ui.feedback.Service.APIService;
+import com.example.feedbackapp.ui.feedback.Service.DataService;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHolder> {
     List<ListFeedback> listFeedback;
@@ -46,6 +59,26 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         holder.imgEditFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DataService dataServiceFilter = APIService.getService();
+                Call<FeedbackEditFilterId1> callFeedbackFilter = dataServiceFilter.GetDataFilterIdFeedback("Bearer eyJhbGciOiJI" +
+                        "UzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFk" +
+                        "bWluIiwiaWF0IjoxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0","60aa2adfc2188327980f86d3");
+                callFeedbackFilter.enqueue(new Callback<FeedbackEditFilterId1>() {
+                    @Override
+                    public void onResponse(Call<FeedbackEditFilterId1> call, Response<FeedbackEditFilterId1> response) {
+
+                        FeedbackEditFilterId1 feedbackEditFilterId1 = (FeedbackEditFilterId1) response.body();
+                        FeedbackEditFeedbackList2 feedbackEditFeedbackList2 =feedbackEditFilterId1.getFeedback();
+                         SystemConstant.feedbackEditTopic3 = feedbackEditFeedbackList2.getListTopic();
+
+                        Log.i("TEST GET FEEDBACK OK","OK");
+                    }
+
+                    @Override
+                    public void onFailure(Call<FeedbackEditFilterId1> call, Throwable t) {
+
+                    }
+                });
                 Navigation.findNavController(v).navigate(R.id.nav_edit_feedback);
             }
         });

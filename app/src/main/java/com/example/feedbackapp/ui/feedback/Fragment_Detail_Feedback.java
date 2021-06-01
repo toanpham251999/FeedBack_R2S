@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.ui.feedback.Adapter.TopicDetailAdapter;
-import com.example.feedbackapp.ui.feedback.Adapter.TopicReviewAdapter;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
@@ -76,7 +75,7 @@ public class Fragment_Detail_Feedback extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment__detail__feedback, container, false);
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail_edit);
         DataService dataServiceTopic = APIService.getService();
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo.token());
         callbackListTopic.enqueue(new Callback<TopicModel>() {

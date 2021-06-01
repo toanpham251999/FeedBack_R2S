@@ -169,5 +169,10 @@
         android:id="@+id/nav_detail_feedback"
         android:name="com.example.feedbackapp.ui.feedback.Fragment_Detail_Feedback"
         tools:layout="@layout/fragment__detail__feedback"/>
+    <fragment
+        android:id="@+id/nav_review_edit_feedback"
+        android:name="com.example.feedbackapp.ui.feedback.Review_Edit_Feedback"
+        tools:layout="@layout/fragment_review__edit__feedback"/>
+
 
 </navigation>
