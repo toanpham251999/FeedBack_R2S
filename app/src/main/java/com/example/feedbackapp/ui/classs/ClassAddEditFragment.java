@@ -86,12 +86,6 @@ public class ClassAddEditFragment extends Fragment {
                 ShowCalendarDialog(root, txtClassEndDate);
             }
         });
-        btnSaveClass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnValidateClass(root);
-            }
-        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +116,12 @@ public class ClassAddEditFragment extends Fragment {
         catch(Exception ex) {
 
         }
-
+        btnSaveClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnValidateClass(root);
+            }
+        });
         return root;
     }
 
@@ -137,11 +136,22 @@ public class ClassAddEditFragment extends Fragment {
         });
         txtClassStartDate.setEnabled(false);
         txtClassStartDate.setBackgroundColor(Color.parseColor("#EAEAEA"));
+        selectStartDate.setBackgroundColor(Color.parseColor("#EAEAEA"));
         classs = classInfo.getClass_res();
         txtClassName.setText(classs.getClassName());
         txtCapacity.setText(classs.getCapacity().toString());
-        txtClassStartDate.setText(classs.getStartTime());
-        txtClassEndDate.setText(classs.getEndTime());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate = Calendar.getInstance().getTime();
+        Date endDate = Calendar.getInstance().getTime();
+        try {
+            startDate = formatter.parse(classs.getStartTime());
+            endDate = formatter.parse(classs.getEndTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        formatter = new SimpleDateFormat("MM/dd/yyyy");
+        txtClassStartDate.setText(formatter.format(startDate));
+        txtClassEndDate.setText(formatter.format(endDate));
     }
 
     void ShowCalendarDialog(View root, EditText value){
@@ -194,9 +204,9 @@ public class ClassAddEditFragment extends Fragment {
             txtErrCapacity.setText("");
         }
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        Date curentDate = Calendar.getInstance().getTime();;
-        Date startDate = Calendar.getInstance().getTime();;
-        Date endDate = Calendar.getInstance().getTime();;
+        Date curentDate = Calendar.getInstance().getTime();
+        Date startDate = Calendar.getInstance().getTime();
+        Date endDate = Calendar.getInstance().getTime();
         try {
             curentDate = formatter.parse(Calendar.getInstance().getTime().toString());
         } catch (ParseException e) {
@@ -218,6 +228,9 @@ public class ClassAddEditFragment extends Fragment {
                 txtErrClassStartDate.setText("Please choose date or fill full dd/mm/yyyy");
                 isValidated = false;
             }
+        }
+        else{
+
         }
         try {
             endDate = formatter.parse(txtClassEndDate.getText().toString());
@@ -245,13 +258,40 @@ public class ClassAddEditFragment extends Fragment {
                 doAddClass(root);
             }
             else{
+                Toast.makeText(root.getContext(),"vào edit class",Toast.LENGTH_LONG).show();
                 doEditClass(root);
             }
+        }
+        else{
+
         }
     }
 
     void doEditClass(View root){
-        //chưa làm
+        String className = txtClassName.getText().toString();
+        String capacity = txtCapacity.getText().toString();
+        String startDate = convertDatetoSubmit(txtClassStartDate.getText().toString());
+        String endDate = convertDatetoSubmit(txtClassEndDate.getText().toString());
+        Classs editclass = new Classs(classID,className,Integer.valueOf(capacity),startDate,endDate,false,null);
+        ClassAPIService.classAPIService.editClass("Bearer "+ new UserInfo(root.getContext()).token(), classID, editclass).enqueue(new Callback<ClassInfo>() {
+            @Override
+            public void onResponse(Call<ClassInfo> call, Response<ClassInfo> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(root.getContext(),"được",Toast.LENGTH_LONG).show();
+                    showSuccessDialog(root);
+                }
+                else {
+                    Toast.makeText(root.getContext(),"sai cú pháp",Toast.LENGTH_LONG).show();
+                    showFailDialog(root);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ClassInfo> call, Throwable t) {
+                Toast.makeText(root.getContext(),"có lỗi gì đó",Toast.LENGTH_LONG).show();
+                showFailDialog(root);
+            }
+        });
     }
 
     void doAddClass(View root){
@@ -298,7 +338,13 @@ public class ClassAddEditFragment extends Fragment {
         View alertLayout = inflater.inflate(R.layout.success_dialog_layout, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
         TextView txtMessage = alertLayout.findViewById(R.id.txt_SingleMessage);
-        txtMessage.setText("Add success!");
+        if(classID.equals("")){
+            txtMessage.setText("Add success!");
+        }
+        else{
+            txtMessage.setText("Update success!");
+        }
+
         alert.setView(alertLayout);
         //alert.setCancelable(false);
         AlertDialog dialog = alert.create();
@@ -307,10 +353,11 @@ public class ClassAddEditFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                FragmentManager fragmentManager = getFragmentManager();
-                if(fragmentManager.getBackStackEntryCount()>0){
-                    fragmentManager.popBackStack();
-                }
+//                FragmentManager fragmentManager = getFragmentManager();
+//                if(fragmentManager.getBackStackEntryCount()>0){
+//                    fragmentManager.popBackStack();
+//                }
+                Navigation.findNavController(root).navigate(R.id.add_edit_back_to_class);
             }
         });
         dialog.show();
@@ -320,7 +367,13 @@ public class ClassAddEditFragment extends Fragment {
         View alertLayout = inflater.inflate(R.layout.failure_dialog_layout, null);
         AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
         TextView txtMessage = alertLayout.findViewById(R.id.txt_SingleErrorMessage);
-        txtMessage.setText("Add fail!");
+        if(classID.equals("")){
+            txtMessage.setText("Add fail!");
+        }
+        else{
+            txtMessage.setText("Update fail!");
+        }
+
         alert.setView(alertLayout);
         //alert.setCancelable(false);
         AlertDialog dialog = alert.create();
