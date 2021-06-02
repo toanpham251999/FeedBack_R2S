@@ -143,6 +143,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
                         Navigation.findNavController(view).navigate(R.id.nav_feedback);
+                        SystemConstant.id_question=new ArrayList<>();
                     }
 
                     @Override

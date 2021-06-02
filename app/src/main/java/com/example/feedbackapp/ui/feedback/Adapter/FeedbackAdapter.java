@@ -71,15 +71,10 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             public void onClick(View v) {
                 DataService dataServiceFilter = APIService.getService();
                 Bundle bundle = new Bundle();
-//                SystemConstant.feedbackTitle=list.getTitle();
-//                SystemConstant.feedbackId=list.getId();
                 bundle.putString("feedbackId",list.getId());
                 bundle.putString("feedbackTitle",list.getTitle());
                 UserInfo userInfo = new UserInfo(v.getContext());
-                Call<FeedbackEditFilterId1> callFeedbackFilter = dataServiceFilter.GetDataFilterIdFeedback("Bearer eyJhbGciOiJIUzI1" +
-                        "NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ" +
-                        "0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxOTU0NDg5fQ.i4JExKXlcmHIi" +
-                        "-m3E6O46YEKoj1pV6R0Wi9ezN77GG0",list.getId());
+                Call<FeedbackEditFilterId1> callFeedbackFilter = dataServiceFilter.GetDataFilterIdFeedback("Bearer "+userInfo.token(),list.getId());
                 callFeedbackFilter.enqueue(new Callback<FeedbackEditFilterId1>() {
                     @Override
                     public void onResponse(Call<FeedbackEditFilterId1> call, Response<FeedbackEditFilterId1> response) {
@@ -98,12 +93,12 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
                 Navigation.findNavController(v).navigate(R.id.nav_edit_feedback,bundle);
             }
         });
-        holder.imgDetailFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_detail_feedback);
-            }
-        });
+//        holder.imgDetailFeedback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(v).navigate(R.id.nav_detail_feedback);
+//            }
+//        });
         holder.imgDeleditFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
