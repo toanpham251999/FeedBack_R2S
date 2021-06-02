@@ -94,10 +94,10 @@
         android:id="@+id/nav_feedback"
         android:name="com.example.feedbackapp.ui.feedback.FeedBackFragment"
         tools:layout="@layout/feedback_fragment" />
-    <fragment
+   <!--<fragment
         android:id="@+id/nav_result"
-        android:name="com.example.feedbackapp.ui.result.ResultFragment"
-        tools:layout="@layout/result_fragment" />
+       android:name="com.example.feedbackapp.ui.statisticfeedback.StatisticFeedBackFragment"
+       tools:layout="@layout/statistic_feedback_fragment" />-->
     <fragment
         android:id="@+id/nav_question"
         android:name="com.example.feedbackapp.ui.question.QuestionFragment"

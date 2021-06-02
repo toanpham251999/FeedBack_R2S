@@ -18,6 +18,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.model.HeaderRecycleView;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
 
@@ -45,7 +46,9 @@ public class DoFeedbackFragment extends Fragment {
                 String moduleId = getArguments().getString("ModuleId");
                 String moduleName = getArguments().getString("ModuleName");
                 // get headerRecycleView
-                headerRecycleView = new HeaderRecycleView("Pham Duc Huy", moduleName, className);
+                UserInfo userInfo = new UserInfo(getActivity());
+                String userName = userInfo.username();
+                headerRecycleView = new HeaderRecycleView(userName, moduleName, className);
                 headerRecycleView.setClassId(classId);
                 headerRecycleView.setModuleId(moduleId);
                 //RecycleView

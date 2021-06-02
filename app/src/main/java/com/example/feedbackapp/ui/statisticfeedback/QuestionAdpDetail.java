@@ -86,6 +86,7 @@ public class QuestionAdpDetail extends RecyclerView.Adapter<QuestionAdpDetail.Vi
                     sum = indexCount0 + indexCount1 + indexCount2 + indexCount3 +indexCount4;
                     ArrayList <Float> percentQuestion = new ArrayList<Float>();
                     for(int i=0;i<count.size();i++){
+                        if(sum == 0) sum = 1;
                         percentQuestion.add((float)count.get(i)/sum*100);
                     }
                     holder.stronglyDisagree.setText(String.valueOf(percentQuestion.get(0)) +"%");
