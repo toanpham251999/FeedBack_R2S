@@ -76,7 +76,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
             android:layout_marginTop="10dp"
-            android:text="Review" />
+            android:text="Review"
+            android:background="@drawable/btn_blue_radius"
+            android:minHeight="0dp"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btn_BackFeedbackEdit"
