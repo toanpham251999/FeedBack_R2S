@@ -44,7 +44,7 @@ public interface ClassAPIService {
 
     //service edit class
     @PUT("/api/class/{id}")
-    Call<ClassInfo> editClass(@Header("Authorization") String token, @Body Classs classs, @Path("id") String id);
+    Call<ClassInfo> editClass(@Header("Authorization") String token, @Path("id") String id, @Body Classs classs);
 
     //service add class
     @POST("api/class")
