@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -72,9 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
                 R.id.nav_edit_feedback,R.id.nav_detail_feedback,R.id.nav_review_edit_feedback,
 
-                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback
+                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback, R.id.nav_assignment1
 
-              //  ,R.id.nav_add_module,R.id.nav_joinmodule
         )
 
                 .setDrawerLayout(drawer)
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     //hàm dùng để ẩn bớt chức năng tùy theo role user
     void ConfigNavigationView(NavController navController){
         UserInfo userInfo = new UserInfo(getApplicationContext());
@@ -160,36 +159,40 @@ public class MainActivity extends AppCompatActivity {
         Menu nav_Menu = navigationView.getMenu();
         if(role.equals("admin")){
             NavGraph navGraph = navController.getGraph();
-            navGraph.setStartDestination(R.id.nav_assignment);
+            navGraph.setStartDestination(R.id.nav_assignment1);
             navController.setGraph(navGraph);
+            nav_Menu.findItem(R.id.nav_join).setVisible(false);
+            nav_Menu.findItem(R.id.nav_trainee_dashboard).setVisible(false);
+
             //không ẩn đi gì cả, sau này sẽ ẩn Join đi
-
-//            nav_Menu.findItem(R.id.nav_join).setVisible(false);
-
         }
         else if(role.equals("trainer")){
             nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
-
-            nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
+            nav_Menu.findItem(R.id.nav_join).setVisible(false);
+            nav_Menu.findItem(R.id.nav_trainee_dashboard).setVisible(false);
+           // nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             NavGraph navGraph = navController.getGraph();
-            navGraph.setStartDestination(R.id.nav_assignment);
+            navGraph.setStartDestination(R.id.nav_assignment1);
             navController.setGraph(navGraph);
+
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
 
         }
         else{
+            nav_Menu.findItem(R.id.nav_trainee_dashboard).setVisible(false);
             nav_Menu.findItem(R.id.nav_assignment).setVisible(false);
             nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
-
-            NavGraph navGraph = navController.getGraph();
-            navGraph.setStartDestination(R.id.nav_trainee_dashboard);
-            navController.setGraph(navGraph);
+            nav_Menu.findItem(R.id.nav_join).setVisible(false);
+            nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
+            NavGraph navGraph1 = navController.getGraph();
+            navGraph1.setStartDestination(R.id.nav_trainee_dashboard);
+            navController.setGraph(navGraph1);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
         }
     }
