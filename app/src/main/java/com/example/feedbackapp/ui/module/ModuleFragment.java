@@ -59,6 +59,12 @@ public class ModuleFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        LoadAllModule(getView());
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
@@ -71,27 +77,28 @@ public class ModuleFragment extends Fragment {
         imageButton = root.findViewById(R.id.btn_AddModule);
         imageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_module);
             }
         });
 
-        btnAddModule = root.findViewById(R.id.btn_AddModule);
-        btnAddModule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("key","abc"); // Put anything what you want
-                AddEditModuleFragment addEditModuleFragment = new AddEditModuleFragment();
-                addEditModuleFragment.setArguments(bundle);
-                Navigation.findNavController(root).navigate(R.id.module_to_add_module, bundle);
-                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
-            }
-        });
+//        btnAddModule = root.findViewById(R.id.btn_AddModule);
+//        btnAddModule.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("key","abc"); // Put anything what you want
+//                AddEditModuleFragment addEditModuleFragment = new AddEditModuleFragment();
+//                addEditModuleFragment.setArguments(bundle);
+//                Navigation.findNavController(root).navigate(R.id.module_to_add_module, bundle);
+//                Toast.makeText(root.getContext(),"nhấn Add Module",Toast.LENGTH_LONG).show();
+//            }
+//        });
+      
         //nếu không phải admin, ẩn quyền thêm xóa sửa
         UserInfo userInfo = new UserInfo(root.getContext());
         if(!userInfo.role().equals("admin")){
-            btnAddModule.setVisibility(View.GONE);
+            //btnAddModule.setVisibility(View.GONE);
+            imageButton.setVisibility(View.GONE);
         }
 
         return root;
@@ -122,7 +129,6 @@ public class ModuleFragment extends Fragment {
         moduleAdapter =new ModuleAdapter(root.getContext(), moduleList);
         Toast.makeText(root.getContext(),"thêm vào adapter thành công "+moduleList.size(),Toast.LENGTH_LONG).show();
         moduleListRecycler.setAdapter(moduleAdapter);
-
     }
 
     @Override

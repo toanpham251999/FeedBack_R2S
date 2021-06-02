@@ -1,27 +1,38 @@
 package com.example.feedbackapp.ModelClassToSendAPI.Answer;
 
 public class Answer {
+    private String Id;
     private String ClassId;
     private String ModuleId;
     private String QuestionId;
-    int Value;
-
-    public Answer(String classId, String moduleId, String questionId, int value) {
-        ClassId = classId;
-        ModuleId = moduleId;
-        QuestionId = questionId;
-        Value = value;
+    private  int Value;
+    private String TopicId;
+    private String TopicName;
+    public String getTopicId() {
+        return TopicId;
     }
 
-       @Override
-    public String toString() {
-            return "AnswerValue{" +
-                    "ClassId='" + ClassId + '\'' +
-                    ", ModuleId='" + ModuleId + '\'' +
-                    ", QuestionId='" + QuestionId + '\'' +
-                    ", Value=" + Value  +
-                    '}';
-        }
+    public void setTopicId(String topicId) {
+        TopicId = topicId;
+    }
+
+    public String getTopicName() {
+        return TopicName;
+    }
+
+    public void setTopicName(String topicName) {
+        TopicName = topicName;
+    }
+
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
     public String getClassId() {
         return ClassId;
     }
@@ -53,5 +64,23 @@ public class Answer {
     public void setValue(int value) {
         Value = value;
     }
+
+    public Answer(String id, String classId, String moduleId, String questionId, int value) {
+        Id = id;
+        ClassId = classId;
+        ModuleId = moduleId;
+        QuestionId = questionId;
+        Value = value;
+    }
+
+
+
+    public Answer(String classId, String moduleId, String questionId, int value) {
+        ClassId = classId;
+        ModuleId = moduleId;
+        QuestionId = questionId;
+        Value = value;
+    }
+
 
 }
