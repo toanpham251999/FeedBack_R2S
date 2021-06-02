@@ -71,7 +71,12 @@
     <fragment
         android:id="@+id/nav_add_edit_class"
         android:name="com.example.feedbackapp.ui.classs.ClassAddEditFragment"
-        tools:layout="@layout/class_add_edit_fragment" />
+        tools:layout="@layout/class_add_edit_fragment" >
+
+        <action
+            android:id="@+id/add_edit_back_to_class"
+            app:destination="@+id/nav_classs"/>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_module"
