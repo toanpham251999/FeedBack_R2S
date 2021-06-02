@@ -3,9 +3,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ListFeedback {
-    @SerializedName("_id")
+    @SerializedName("Id")
     @Expose
-    private String id;
+    private String Id;
     @SerializedName("isDeleted")
     @Expose
     private Boolean isDeleted;
@@ -26,11 +26,11 @@ public class ListFeedback {
     private String adminName;
 
     public String getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String Id) {
+        this.Id = Id;
     }
 
     public Boolean getIsDeleted() {

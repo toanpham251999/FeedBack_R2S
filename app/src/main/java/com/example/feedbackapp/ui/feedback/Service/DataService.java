@@ -15,6 +15,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -42,4 +43,8 @@ public interface DataService {
 
     @PUT("api/feedback/{id}")
     Call<ResponseBody>PutDataFeedback(@Header("Authorization") String token, @Body AddFeedback addFeedback,@Path("id") String id);
+
+    //service xóa 1 assignment theo id
+    @DELETE("api/feedback/{id}")
+    Call<ResponseBody> DeleteFeedback(@Header("Authorization") String token, @Path("id") String id);
 }
