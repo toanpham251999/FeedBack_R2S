@@ -93,13 +93,9 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         txtMessage = alertLayout.findViewById(R.id.txt_LogoutMessage);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date curentDate = Calendar.getInstance().getTime();
-        try {
-            curentDate = formatter.parse(Calendar.getInstance().getTime().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         Date startDate = Calendar.getInstance().getTime();  //gán tạm để không null
         try {
+            curentDate = formatter.parse(Calendar.getInstance().getTime().toString());
             startDate = formatter.parse(module.getStartTime());
         } catch (ParseException e) {
             e.printStackTrace();

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.Adapter.ClassDataUtils;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
@@ -21,11 +23,16 @@ public class TopicAdpDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // Initial activity and array list
     private Activity activity;
     ArrayList<Topic> arrayListTopic;
+    private Classs classChoosed;
+    private Module moduleChoosed;
     private ArrayList<Question> arrayListQuestion;
+
     //Create contructor
-    TopicAdpDetail(Activity activity, ArrayList<Topic> arrayListTopic){
+    TopicAdpDetail(Activity activity, ArrayList<Topic> arrayListTopic, Classs classChoosed, Module moduleChoosed){
         this.activity =activity;
         this.arrayListTopic = arrayListTopic;
+        this.classChoosed = classChoosed;
+        this.moduleChoosed = moduleChoosed;
         //this.arrayListQuestion = arrayListQuestion;
     }
     @NonNull
@@ -60,7 +67,7 @@ public class TopicAdpDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder
             arrayListQuestion = arrayListTopic.get(position).getListQuestion();
 
             //Initialize member adapter
-            QuestionAdpDetail adapterQuestion = new QuestionAdpDetail(arrayListQuestion);
+            QuestionAdpDetail adapterQuestion = new QuestionAdpDetail(arrayListQuestion, classChoosed, moduleChoosed);
 
             //Initialize layout manager
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);

@@ -53,7 +53,10 @@
             android:id="@+id/nav_trainee_dashboard"
             android:icon="@drawable/ic_outline_logout_24"
             android:title="Trainee dashboard" />
-
+       <!-- <item
+            android:id="@+id/nav_joinmodule"
+            android:icon="@drawable/ic_outline_draw_24"
+            android:title="JOIN" />-->
 
     </group>
 </menu>
