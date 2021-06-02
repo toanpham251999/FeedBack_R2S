@@ -223,5 +223,10 @@
         android:name="com.example.feedbackapp.ui.module.AddEditModuleFragment"
         tools:layout="@layout/add_edit_module_fragment">
     </fragment>
+    <fragment
+        android:id="@+id/nav_join"
+        android:name="com.example.feedbackapp.ui.dashboard.TraineeDashboardFragment"
+        tools:layout="@layout/fragment_trainee_dashboard">
+    </fragment>
 
 </navigation>
