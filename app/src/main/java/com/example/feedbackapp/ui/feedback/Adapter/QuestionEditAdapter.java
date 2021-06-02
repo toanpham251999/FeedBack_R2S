@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Model.Question;
 
@@ -21,6 +22,7 @@ public class QuestionEditAdapter extends RecyclerView.Adapter<QuestionEditAdapte
     private List<Question> listQuestions;
     public ArrayList<Question>arrayList_id =  new ArrayList<>();
     public ArrayList<String>id_typeFeedback = new ArrayList<>();
+
 
     public QuestionEditAdapter() {
         this.listQuestions = new ArrayList<>();

@@ -56,7 +56,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 {
                     //arrayList_id.add(listQuestions.get(position));
                     Log.i(" LIST QUESTION VALUES", "123"+listQuestions.get(position).toString());
-                    SystemConstant.arrayList_id.add(listQuestions.get(position));
+                    //SystemConstant.arrayList_id.add(listQuestions.get(position));
                     SystemConstant.id_question.add(listQuestions.get(position).getId());
                     Log.i("ARRAY LIST VALUES", "123"+arrayList_id.toString());
                     Log.i("ARRAY LIST VALUES ID", "123"+id_typeFeedback.toString());
@@ -64,7 +64,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
                 }
                 else
                 {
-                    SystemConstant.arrayList_id.remove(listQuestions.get(position));
+                    //SystemConstant.arrayList_id.remove(listQuestions.get(position));
                     SystemConstant.id_question.remove(listQuestions.get(position).getId());
                 }
 

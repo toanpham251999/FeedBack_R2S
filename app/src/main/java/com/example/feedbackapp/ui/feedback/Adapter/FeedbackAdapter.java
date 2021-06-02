@@ -1,11 +1,13 @@
 package com.example.feedbackapp.ui.feedback.Adapter;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +18,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.RetrofitAPISetvice.AssignmentAPIServices;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.FeedBackFragment;
@@ -27,9 +31,12 @@ import com.example.feedbackapp.ui.feedback.Model.FeedbackEditTopic3;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedback;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,13 +71,10 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             public void onClick(View v) {
                 DataService dataServiceFilter = APIService.getService();
                 Bundle bundle = new Bundle();
-//                SystemConstant.feedbackTitle=list.getTitle();
-//                SystemConstant.feedbackId=list.getId();
-                bundle.putString("feedbackId","60aa2adfc2188327980f86d3");
+                bundle.putString("feedbackId",list.getId());
                 bundle.putString("feedbackTitle",list.getTitle());
-                Call<FeedbackEditFilterId1> callFeedbackFilter = dataServiceFilter.GetDataFilterIdFeedback("Bearer eyJhbGciOiJI" +
-                        "UzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFk" +
-                        "bWluIiwiaWF0IjoxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0","60aa2adfc2188327980f86d3");
+                UserInfo userInfo = new UserInfo(v.getContext());
+                Call<FeedbackEditFilterId1> callFeedbackFilter = dataServiceFilter.GetDataFilterIdFeedback("Bearer "+userInfo.token(),list.getId());
                 callFeedbackFilter.enqueue(new Callback<FeedbackEditFilterId1>() {
                     @Override
                     public void onResponse(Call<FeedbackEditFilterId1> call, Response<FeedbackEditFilterId1> response) {
@@ -89,12 +93,29 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
                 Navigation.findNavController(v).navigate(R.id.nav_edit_feedback,bundle);
             }
         });
+        
+        holder.imgDeleditFeedback.setOnClickListener(new View.OnClickListener() {
 
-        holder.imgDetailFeedback.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_detail_feedback);
+                DataService dataService = APIService.getService();
+                UserInfo userInfo = new UserInfo(v.getContext());
+                dataService.DeleteFeedback("Bearer "+userInfo.token(),list.getId()).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Toast.makeText(v.getContext(),"DELETE was successfull",Toast.LENGTH_LONG).show();
+                        Navigation.findNavController(v).navigate(R.id.nav_feedback);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+
             }
+
         });
     }
     public int getItemCount()
@@ -102,12 +123,14 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         return listFeedback.size();
     }
 
+
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView txtFeedbackId;
         TextView txtFeedbackTitle;
         TextView txtAdminId;
         ImageView imgDetailFeedback;
         ImageView imgEditFeedback;
+        ImageView imgDeleditFeedback;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
@@ -117,6 +140,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             txtAdminId=itemView.findViewById(R.id.txtFeedbackAdminID);
             imgEditFeedback=itemView.findViewById(R.id.btn_Edit);
             imgDetailFeedback=itemView.findViewById(R.id.btnView);
+            imgDeleditFeedback =itemView.findViewById(R.id.btnDelete);
         }
     }
 }
