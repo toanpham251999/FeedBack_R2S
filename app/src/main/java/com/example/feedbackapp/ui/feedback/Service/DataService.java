@@ -15,11 +15,13 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -39,6 +41,10 @@ public interface DataService {
     @GET("api/feedback/{id}")
     Call<FeedbackEditFilterId1>GetDataFilterIdFeedback(@Header("Authorization") String token, @Path("id") String id);
 
-    @POST("api/feedback")
+    @PUT("api/feedback/{id}")
     Call<ResponseBody>PutDataFeedback(@Header("Authorization") String token, @Body AddFeedback addFeedback,@Path("id") String id);
+
+    //service xóa 1 assignment theo id
+    @DELETE("api/feedback/{id}")
+    Call<ResponseBody> DeleteFeedback(@Header("Authorization") String token, @Path("id") String id);
 }

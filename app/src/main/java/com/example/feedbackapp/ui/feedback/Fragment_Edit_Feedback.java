@@ -150,7 +150,6 @@ public class Fragment_Edit_Feedback extends Fragment {
             @Override
             public void onClick(View v) {
                 //arr id question choose
-
                 //questionAdapter = topicEditAdapter.GetQuestionAdapter();
                 //List<Question> arrQuestion = topicAdapter.topic.getListQuestion();
                 Log.i("QUESTION ADAPTER REPONSE", "123" + questionAdapter.onclicked().toString());
@@ -166,12 +165,12 @@ public class Fragment_Edit_Feedback extends Fragment {
                     Toast.makeText(getContext(),"You must fill feedback name",Toast.LENGTH_LONG).show();
                     return;
                 }
-                else if(SystemConstant.feedbackEditTopic3.isEmpty())
+                else if(SystemConstant.save_state_edit.isEmpty())
                 {
                     Toast.makeText(getContext(),"You must check every topic 1 question",Toast.LENGTH_LONG).show();
                     return;
                 }
-                else if(SystemConstant.feedbackEditTopic3.size()<4)
+                else if(SystemConstant.save_state_edit.size()<4)
                 {
                     Toast.makeText(getContext(),"You must check every topic 1 question",Toast.LENGTH_LONG).show();
                     return;

@@ -136,25 +136,12 @@ public class Review_Edit_Feedback extends Fragment {
                 //Toast.makeText(getContext(),SystemConstant.id_question.toString(),Toast.LENGTH_LONG);
                 DataService dataService = APIService.getService();
                 UserInfo userInfo = new UserInfo(getContext());
-
-                //Gọi API thêm Feedback
-//                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
-//                        idTypeFeedback, SystemConstant.save_state_edit)).enqueue(new Callback<ResponseBody>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                        Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
-//                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
-//                    }
-//                });
                 dataService.PutDataFeedback("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
                         idTypeFeedback,SystemConstant.save_state_edit),feedbackId).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Toast.makeText(getContext(),"Edit was successfull",Toast.LENGTH_LONG).show();
+                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
                         Log.i("PUT","PUT OK");
                     }
 
@@ -171,7 +158,7 @@ public class Review_Edit_Feedback extends Fragment {
         btn_back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_edit_feedback);
+                Navigation.findNavController(view).navigate(R.id.nav_feedback);
             }
         });
         return view;

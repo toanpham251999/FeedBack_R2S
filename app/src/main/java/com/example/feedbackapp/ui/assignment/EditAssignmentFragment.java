@@ -189,7 +189,8 @@ public class EditAssignmentFragment extends Fragment {
                             public void onClick(View v)
                             {
                                 dialog.dismiss();
-                                Navigation.findNavController(root).navigate(R.id.edit_assignment_to_assignment, bundle);
+                                if(isSuccess == true)
+                                    Navigation.findNavController(root).navigate(R.id.edit_assignment_to_assignment, bundle);
                             }
                         });
                         dialog.show();

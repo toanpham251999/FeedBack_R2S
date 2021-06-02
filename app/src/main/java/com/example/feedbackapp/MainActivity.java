@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             navGraph.setStartDestination(R.id.nav_assignment);
             navController.setGraph(navGraph);
             //không ẩn đi gì cả, sau này sẽ ẩn Join đi
+
 //            nav_Menu.findItem(R.id.nav_join).setVisible(false);
 
         }
@@ -170,11 +171,13 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
+
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             NavGraph navGraph = navController.getGraph();
             navGraph.setStartDestination(R.id.nav_assignment);
             navController.setGraph(navGraph);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
+
         }
         else{
             nav_Menu.findItem(R.id.nav_assignment).setVisible(false);
