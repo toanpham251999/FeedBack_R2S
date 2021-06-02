@@ -29,6 +29,21 @@
             app:destination="@+id/nav_search_assignment"/>
     </fragment>
     <fragment
+        android:id="@+id/nav_assignment1"
+        android:name="com.example.feedbackapp.ui.assignment.AssignmentFragment"
+        tools:layout="@layout/fragment_assignment">
+
+        <action
+            android:id="@+id/assignment_to_add_assignment"
+            app:destination="@+id/nav_add_assignment"/>
+        <action
+            android:id="@+id/assignment_to_edit_assignment"
+            app:destination="@+id/nav_edit_assignment"/>
+        <action
+            android:id="@+id/assignment_to_search_assignment"
+            app:destination="@+id/nav_search_assignment"/>
+    </fragment>
+    <fragment
         android:id="@+id/nav_search_assignment"
         android:name="com.example.feedbackapp.ui.assignment.SearchAssignmentFragment"
         tools:layout="@layout/fragment_search_assignment">

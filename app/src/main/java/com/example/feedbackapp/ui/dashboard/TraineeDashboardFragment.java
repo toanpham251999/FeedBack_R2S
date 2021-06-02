@@ -58,7 +58,7 @@ public class TraineeDashboardFragment extends Fragment {
         listFeedback = new ArrayList<Feedback>();
         feedbackListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ShowJoinDialog(root);
+       ShowJoinDialog(root);
 
         actGetListFeedback(root);
         // Test get list answer
