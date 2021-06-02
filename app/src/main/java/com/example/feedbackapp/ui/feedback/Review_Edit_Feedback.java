@@ -155,6 +155,8 @@ public class Review_Edit_Feedback extends Fragment {
                         idTypeFeedback,SystemConstant.save_state_edit),feedbackId).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Toast.makeText(getContext(),"Edit was successfull",Toast.LENGTH_LONG).show();
+                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
                         Log.i("PUT","PUT OK");
                     }
 
@@ -171,7 +173,7 @@ public class Review_Edit_Feedback extends Fragment {
         btn_back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_edit_feedback);
+                Navigation.findNavController(view).navigate(R.id.nav_feedback);
             }
         });
         return view;
