@@ -96,9 +96,8 @@ public class Review_Edit_Feedback extends Fragment {
         View view = inflater.inflate(R.layout.fragment_review__edit__feedback, container, false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail_edit);
         DataService dataServiceTopic = APIService.getService();
-        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
-                "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
-                "oxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0");
+        UserInfo userInfo = new UserInfo(getContext());
+        Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo.token());
         callbackListTopic.enqueue(new Callback<TopicModel>() {
             @Override
             public void onResponse(Call<TopicModel> call, Response<TopicModel> response) {
