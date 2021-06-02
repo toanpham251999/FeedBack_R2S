@@ -138,7 +138,7 @@ public class FeedbackRightFragment extends Fragment {
         // Code for spinner class
         // Data:
 
-        this.spinner = (Spinner) v.findViewById(R.id.spinner_class);
+        this.spinner = (Spinner) v.findViewById(R.id.txt_className);
         mviewModel.getClas(accessToken);
         this.spinnerModule = (Spinner) v.findViewById(R.id.spinner_module);
         mviewModel.getModule(accessToken);

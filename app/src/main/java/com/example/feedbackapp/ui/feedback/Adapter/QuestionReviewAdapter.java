@@ -60,7 +60,7 @@ public class QuestionReviewAdapter extends RecyclerView.Adapter<QuestionReviewAd
         ViewHolder(View itemView)
         {
             super(itemView);
-            txt_question_review = itemView.findViewById(R.id.txt_detail_question);
+            txt_question_review = itemView.findViewById(R.id.txt_edit_question);
         }
 
     }

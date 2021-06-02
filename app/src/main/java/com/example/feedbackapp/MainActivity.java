@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_homepage, R.id.nav_assignment, R.id.nav_classs, R.id.nav_module,R.id.nav_enrrollment, R.id.nav_feedback,
 
-                R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
+                R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
                 R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright,
                 R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
-                R.id.nav_edit_feedback,R.id.nav_detail_feedback,
+                R.id.nav_edit_feedback,R.id.nav_detail_feedback,R.id.nav_review_edit_feedback,
 
                 R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback
 
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_assignment).setVisible(false);
             nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
-            nav_Menu.findItem(R.id.nav_result).setVisible(false);
+           // nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);

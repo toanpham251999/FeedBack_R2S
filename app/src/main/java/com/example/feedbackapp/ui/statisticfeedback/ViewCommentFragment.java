@@ -17,7 +17,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.feedbackapp.Adapter.CommentAdapter;
 import com.example.feedbackapp.Adapter.CustomAdapter;
@@ -35,7 +34,6 @@ import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.CommentService;
 import com.example.feedbackapp.RetrofitAPISetvice.FeedbackAPIServices;
 import com.example.feedbackapp.model.Class;
-import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +120,7 @@ public class ViewCommentFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_view_comment, container, false);
         // Code for spinner c
 
-        this.spinner = (Spinner) v.findViewById(R.id.spinner_class);
+        this.spinner = (Spinner) v.findViewById(R.id.txt_className);
         mviewModel.getClas(accessToken);
         this.spinnerModule = (Spinner) v.findViewById(R.id.spinner_module);
         mviewModel.getModule(accessToken);

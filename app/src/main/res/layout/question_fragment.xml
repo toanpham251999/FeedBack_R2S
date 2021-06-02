@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_Topic"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_Trainer"
         tools:listitem="@layout/question_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_question" />
 
     <Spinner
-        android:id="@+id/spinner_Topic"
+        android:id="@+id/spinner_Trainer"
         style="@style/SpinnerTheme"
         android:layout_width="342dp"
         android:layout_height="40dp"

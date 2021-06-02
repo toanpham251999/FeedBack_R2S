@@ -7,13 +7,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,11 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
 import com.example.feedbackapp.ModelClassToSendAPI.Question.AddQuestionInfo;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.QuestionAPIServices;
 import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.model.Trainee;
+import com.example.feedbackapp.ui.assignment.AssignmentFragment;
+import com.example.feedbackapp.ui.assignment.AssignmentViewModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -36,29 +35,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddQuestionFragment extends Fragment {
+public class EditQuestionFragment extends Fragment {
 
     private QuestionViewModel questionViewModel;
 
     // TODO: Control Varible
-    Spinner spinner_Topic;
-    EditText editText_questionContent;
-    TextView textView_note;
+    TextView txt_topicName, editText_questionContent, textView_note;
     Button btn_Save, btn_Back;
 
-    //TODO: topicList
-    ArrayList<Topic> topicList;
+    //TODO: AccessToken Varible
+    String accessToken = "";
 
-    //todo: accessToken, bien dau vao
-    String accessToken, topicId, questionContent;
+    //TODO: Biến thông tin Question
+    String questionId, topicId, topicName, questionContent;
 
-    public AddQuestionFragment() {
+    public EditQuestionFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static AddQuestionFragment newInstance(String param1, String param2) {
-        AddQuestionFragment fragment = new AddQuestionFragment();
+    public static EditQuestionFragment newInstance(String param1, String param2) {
+        EditQuestionFragment fragment = new EditQuestionFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -74,29 +71,26 @@ public class AddQuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         questionViewModel =
                 new ViewModelProvider(this).get(QuestionViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_add_question, container, false);
+        View root = inflater.inflate(R.layout.fragment_edit_question, container, false);
         addEvents(root);
         accessToken = "Bearer "+ new UserInfo(root.getContext()).token();
-        // Lấy listTopic từ QuestionFragment
+        // Inflate the layout for this fragment
         Bundle bundle = getArguments();
         if(bundle != null){
-            // handle your code here.
-            topicList = (ArrayList<Topic>) bundle.getSerializable("topicList");
+            //Lấy questionId, topicId, topicName, questionContent
+            questionId = bundle.getString("questionId");
+            topicId = bundle.getString("topicId");
+            topicName = bundle.getString("topicName");
+            questionContent = bundle.getString("questionContent");
+
+            //Đổ dữ liệu
+            txt_topicName.setText(topicName);
+            editText_questionContent.setText(questionContent);
         }
-
-        // Lấy danh sách topic đổ lên spinner
-        setTopicSpinner(root);
         return root;
-    }
-
-    //Đổ topic list vào spinner
-    private void setTopicSpinner(View root){
-        ArrayAdapter<Topic> adapter =
-                new ArrayAdapter<Topic>(root.getContext(),  android.R.layout.simple_spinner_dropdown_item, topicList);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-        spinner_Topic.setAdapter(adapter);
     }
 
     private void addEvents(View root) {
@@ -105,18 +99,20 @@ public class AddQuestionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                AddQuestionFragment addQuestionFragment = new AddQuestionFragment();
-                addQuestionFragment.setArguments(bundle);
+                bundle.putString("key","abc"); // Put anything what you want
+
+                QuestionFragment questionFragment = new QuestionFragment();
+                questionFragment.setArguments(bundle);
 
                 //Lấy dl đầu vào và xác thực
                 questionContent = editText_questionContent.getText().toString();
                 if(questionContent.equals(""))
                     textView_note.setText("Please enter the question");
-                else{
+                else {
                     textView_note.setText("");
-                    //Gọi API thêm Question
-                    QuestionAPIServices.QUESTION_API_SERVICES.addNewQuestion(accessToken,new AddQuestionInfo(questionContent,topicId))
-                            .enqueue(new Callback<ResponseBody>() {
+                    QuestionAPIServices.QUESTION_API_SERVICES
+                            .editQuestion(accessToken,questionId,new AddQuestionInfo(questionContent,topicId))
+                            .enqueue(new Callback<ResponseBody>(){
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                     if(response.body() != null){
@@ -139,53 +135,30 @@ public class AddQuestionFragment extends Fragment {
                                 @Override
                                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                                     ShowSuccessDialog(root, null);
-                                    Log.e("TAG", "onFailure: ", t);
                                 }
                             });
                 }
             }
         });
-
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("key","abc"); // Put anything what you want
 
-                AddQuestionFragment addQuestionFragment = new AddQuestionFragment();
-                addQuestionFragment.setArguments(bundle);
+                QuestionFragment questionFragment = new QuestionFragment();
+                questionFragment.setArguments(bundle);
 
-                Navigation.findNavController(root).navigate(R.id.add_question_to_question, bundle);
+                Navigation.findNavController(root).navigate(R.id.edit_question_to_question, bundle);
             }
         });
-
-        //Events khi chọn item trên Spinner
-        // When user select a List-Item.
-        this.spinner_Topic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                onItemSelectedHandler(parent, view, position, id);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
-        Adapter adapter = adapterView.getAdapter();
-        Topic topic = (Topic) adapter.getItem(position);
-        topicId = topic.getId();
-        Toast.makeText(view.getContext(), "Selected Topic: " + topic.getTopicName() ,Toast.LENGTH_SHORT).show();
     }
 
     private void addControls(View root) {
-        editText_questionContent = root.findViewById(R.id.editText_questionContent);
-        textView_note = root.findViewById(R.id.textView_note);
-        spinner_Topic = root.findViewById(R.id.spinner_Trainer);
+        txt_topicName = (TextView) root.findViewById(R.id.txt_topicName);
+        textView_note = (TextView) root.findViewById(R.id.textView_note);
+        editText_questionContent = (EditText) root.findViewById(R.id.editText_questionContent);
+
         btn_Save = (Button) root.findViewById(R.id.btn_Save);
         btn_Back = (Button) root.findViewById(R.id.btn_Back);
     }
@@ -196,7 +169,7 @@ public class AddQuestionFragment extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.success_dialog_layout, null);
         TextView note = (TextView) alertLayout.findViewById(R.id.txt_SingleMessage);
-        note.setText("Add Successfully!");
+        note.setText("Edit Successfully!");
         if(bundle == null){
             alertLayout = inflater.inflate(R.layout.failure_dialog_layout, null);
             note = (TextView) alertLayout.findViewById(R.id.txt_SingleErrorMessage);
@@ -214,7 +187,7 @@ public class AddQuestionFragment extends Fragment {
             {
                 dialog.dismiss();
                 if(bundle != null)
-                    Navigation.findNavController(root).navigate(R.id.add_question_to_question, bundle);
+                    Navigation.findNavController(root).navigate(R.id.edit_question_to_question, bundle);
             }
         });
         dialog.show();
