@@ -39,7 +39,7 @@
             android:textColor="@color/black" />
 
         <Spinner
-            android:id="@+id/spinner_Topic"
+            android:id="@+id/spinner_Trainer"
             style="@style/SpinnerTheme"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -47,7 +47,7 @@
             android:spinnerMode="dropdown" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txt_classNamelb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -55,7 +55,7 @@
             android:textColor="@color/black" />
 
         <Spinner
-            android:id="@+id/spinner_class"
+            android:id="@+id/txt_className"
             style="@style/SpinnerTheme"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -71,7 +71,7 @@
             android:textColor="@color/black" />
 
         <Spinner
-            android:id="@+id/spinner_trainer"
+            android:id="@+id/txt_moduleId"
             style="@style/SpinnerTheme"
             android:layout_width="match_parent"
             android:layout_height="40dp"

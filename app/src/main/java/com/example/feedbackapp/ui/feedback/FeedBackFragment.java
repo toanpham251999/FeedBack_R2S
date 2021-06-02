@@ -20,11 +20,18 @@ import android.widget.ImageView;
 
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
+import com.example.feedbackapp.constant.SystemConstant;
 import com.example.feedbackapp.ui.feedback.Adapter.FeedbackAdapter;
 import com.example.feedbackapp.ui.feedback.Model.FeedackViewModel;
+import com.example.feedbackapp.ui.feedback.Model.FeedbackEditFeedbackList2;
+import com.example.feedbackapp.ui.feedback.Model.FeedbackEditFilterId1;
+import com.example.feedbackapp.ui.feedback.Model.FeedbackEditTopic3;
 import com.example.feedbackapp.ui.feedback.Model.ListFeedbackModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +43,7 @@ public class FeedBackFragment extends Fragment {
     Button btnView,btnEdit,btnDelete;
     ImageView btnAddFeedback;
     ImageView btn_Edit;
+    FeedbackEditFilterId1 feedbackEditFilterId1;
 
 
     public static FeedBackFragment newInstance() {
@@ -47,9 +55,13 @@ public class FeedBackFragment extends Fragment {
         View view = inflater.inflate(R.layout.feedback_fragment,container,false);
 
         GetData();
+
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcvFeedback);
         DataService dataService = APIService.getService();
         UserInfo userInfo = new UserInfo(getContext());
+        SystemConstant.admin_token=userInfo.token();
+
+
         Call<ListFeedbackModel> callback = dataService.GetDataListFeedback("Bearer "+userInfo.token());
         callback.enqueue(new Callback<ListFeedbackModel>()
         {

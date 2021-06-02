@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/add_edit_class_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -133,7 +134,7 @@
                         android:layout_weight="9"
                         android:background="@drawable/bg_transparent"
                         android:ems="10"
-                        android:hint="dd/mm/yyyy"
+                        android:hint="mm/dd/yyyy"
                         android:inputType="date"
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
@@ -187,7 +188,7 @@
                         android:layout_weight="9"
                         android:background="@drawable/bg_transparent"
                         android:ems="10"
-                        android:hint="dd/mm/yyyy"
+                        android:hint="mm/dd/yyyy"
                         android:inputType="date"
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
@@ -222,13 +223,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
-                    android:text="Save" />
+                    android:text="Save"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/btn_blue_radius"
+                    android:minHeight="0dp"/>
 
                 <Button
                     android:id="@+id/btn_BackAddClass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Back" />
+                    android:text="Back"
+                    android:background="@drawable/btn_red_radius"
+                    android:minHeight="0dp"
+                    app:backgroundTint="@null"/>
 
             </LinearLayout>
         </LinearLayout>

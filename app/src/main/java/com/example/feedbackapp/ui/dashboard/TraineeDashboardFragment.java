@@ -58,7 +58,7 @@ public class TraineeDashboardFragment extends Fragment {
         listFeedback = new ArrayList<Feedback>();
         feedbackListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ShowSuccessDialog(root);
+       ShowJoinDialog(root);
 
         actGetListFeedback(root);
         // Test get list answer
@@ -91,7 +91,7 @@ public class TraineeDashboardFragment extends Fragment {
         feedbackListRecycler.setAdapter(feedbackAdapter);
     }
 
-    void ShowSuccessDialog(View root){
+    void ShowJoinDialog(View root){
         //hiện dialog login failed
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.join_module_dialog, null);

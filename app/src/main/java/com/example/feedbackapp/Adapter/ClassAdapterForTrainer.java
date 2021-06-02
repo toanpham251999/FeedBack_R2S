@@ -1,6 +1,7 @@
 package com.example.feedbackapp.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,9 +54,12 @@ public class ClassAdapterForTrainer extends RecyclerView.Adapter<ClassAdapterFor
         holder.btnReadClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                ShowTraineeOfClassFragment showTraineeOfClassFragment = new ShowTraineeOfClassFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,showTraineeOfClassFragment).addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putString("ClassId",classs.getId());
+                Navigation.findNavController(v).navigate(R.id.class_to_list_trainee, bundle);
+//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                ShowTraineeOfClassFragment showTraineeOfClassFragment = new ShowTraineeOfClassFragment();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,showTraineeOfClassFragment).addToBackStack(null).commit();
             }
         });
     }

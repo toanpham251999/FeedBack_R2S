@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Question.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
-import com.example.feedbackapp.ModelClassToSendAPI.Assignment.AddAssignmentInfo;
 import com.example.feedbackapp.ModelClassToSendAPI.Question.AddQuestionInfo;
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.RetrofitAPISetvice.AssignmentAPIServices;
 import com.example.feedbackapp.RetrofitAPISetvice.QuestionAPIServices;
 import com.example.feedbackapp.UserInfo.UserInfo;
-import com.example.feedbackapp.ui.question.AddQuestionFragment;
-import com.example.feedbackapp.ui.question.QuestionViewModel;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -117,7 +111,7 @@ public class AddQuestionFragment extends Fragment {
                 //Lấy dl đầu vào và xác thực
                 questionContent = editText_questionContent.getText().toString();
                 if(questionContent.equals(""))
-                    textView_note.setText("Please enter th question");
+                    textView_note.setText("Please enter the question");
                 else{
                     textView_note.setText("");
                     //Gọi API thêm Question
@@ -144,6 +138,7 @@ public class AddQuestionFragment extends Fragment {
                                 }
                                 @Override
                                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    ShowSuccessDialog(root, null);
                                     Log.e("TAG", "onFailure: ", t);
                                 }
                             });
@@ -190,7 +185,7 @@ public class AddQuestionFragment extends Fragment {
     private void addControls(View root) {
         editText_questionContent = root.findViewById(R.id.editText_questionContent);
         textView_note = root.findViewById(R.id.textView_note);
-        spinner_Topic = root.findViewById(R.id.spinner_Topic);
+        spinner_Topic = root.findViewById(R.id.spinner_Trainer);
         btn_Save = (Button) root.findViewById(R.id.btn_Save);
         btn_Back = (Button) root.findViewById(R.id.btn_Back);
     }

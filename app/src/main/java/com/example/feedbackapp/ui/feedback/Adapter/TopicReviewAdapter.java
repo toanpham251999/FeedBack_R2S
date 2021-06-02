@@ -10,12 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.constant.SystemConstant;
-import com.example.feedbackapp.ui.feedback.Add_Feedback;
-import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.Topic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.ViewHolder> {
@@ -65,8 +61,8 @@ public class TopicReviewAdapter extends RecyclerView.Adapter<TopicReviewAdapter.
         {
             super(itemView);
             //Ánh xạ view
-            txt_Topic = itemView.findViewById(R.id.txt_detail_topic);
-            rcv_review_subItem = itemView.findViewById(R.id.rcv_detail_sub);
+            txt_Topic = itemView.findViewById(R.id.txt_edit_topic);
+            rcv_review_subItem = itemView.findViewById(R.id.rcv_edit_sub);
         }
     }
 }

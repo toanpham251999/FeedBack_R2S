@@ -18,6 +18,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.ListTopic;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.model.HeaderRecycleView;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
 
@@ -46,7 +47,9 @@ public class DoFeedbackFragment extends Fragment {
                 String moduleId = getArguments().getString("ModuleId");
                 String moduleName = getArguments().getString("ModuleName");
                 // get headerRecycleView
-                headerRecycleView = new HeaderRecycleView("Pham Duc Huy", moduleName, className);
+                UserInfo userInfo = new UserInfo(getActivity());
+                String userName = userInfo.username();
+                headerRecycleView = new HeaderRecycleView(userName, moduleName, className);
                 headerRecycleView.setClassId(classId);
                 headerRecycleView.setModuleId(moduleId);
                 //RecycleView
@@ -69,9 +72,11 @@ public class DoFeedbackFragment extends Fragment {
         });
     }
 // My declare parameter
-    // Fore rcv
+  //Get access token
+private String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8";
+
+   // Fore rcv
     private StatisticFeedBackViewModel mviewModel;
-    private String accessToken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0IjoxNjIxODU5NDMwfQ.-GljSrlUF4b3nl8ojzpk1xK1O-_MX5B6a31g8u5eTp8";
     private ArrayList<Topic> topics;
 
     // Initialize variable

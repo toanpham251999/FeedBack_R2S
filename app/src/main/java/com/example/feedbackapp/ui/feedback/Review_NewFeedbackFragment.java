@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,11 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.constant.SystemConstant;
@@ -26,9 +25,7 @@ import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.TopicModel;
 import com.example.feedbackapp.ui.feedback.Service.APIService;
 import com.example.feedbackapp.ui.feedback.Service.DataService;
-import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -96,7 +93,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review__new_feedback, container, false);
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_detail_edit);
         DataService dataServiceTopic = APIService.getService();
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer eyJhbGciOiJIUzI1NiIsInR5c" +
                 "CI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFkbWluIiwiaWF0Ij" +
@@ -120,8 +117,10 @@ public class Review_NewFeedbackFragment extends Fragment  {
         });
         Bundle bundle = getArguments();
         TextView txt_adminId;
-        btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review);
-        txt_adminId =(TextView)view.findViewById(R.id.txt_detail_admin);
+        btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review_edit);
+        TextView feedbacktitle=(TextView)view.findViewById(R.id.txt_create_feedbacktitle);
+        feedbacktitle.setText(bundle.getString("feedbackName"));
+        txt_adminId =(TextView)view.findViewById(R.id.txt_edit_adminid);
         if(bundle !=null) {
             edt_feedbacktitle = bundle.getString("feedbackName");
             txt_adminId.setText(bundle.getString("AdminId"));
@@ -144,6 +143,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
                         Navigation.findNavController(view).navigate(R.id.nav_feedback);
+                        SystemConstant.id_question=new ArrayList<>();
                     }
 
                     @Override
@@ -155,11 +155,11 @@ public class Review_NewFeedbackFragment extends Fragment  {
 
             }
         });
-        btn_back_review = (Button)view.findViewById(R.id.btn_back_review);
+        btn_back_review = (Button)view.findViewById(R.id.btn_back_review_edit);
         btn_back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.nav_add_feedback);
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_feedback);
             }
         });
         return view;

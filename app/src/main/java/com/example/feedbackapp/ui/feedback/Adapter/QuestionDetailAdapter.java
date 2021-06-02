@@ -52,7 +52,7 @@ public class QuestionDetailAdapter extends RecyclerView.Adapter<QuestionDetailAd
         ViewHolder(View itemView)
         {
             super(itemView);
-            txt_detail_question = itemView.findViewById(R.id.txt_detail_question);
+            txt_detail_question = itemView.findViewById(R.id.txt_edit_question);
         }
 
     }

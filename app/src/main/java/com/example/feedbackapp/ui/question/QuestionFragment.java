@@ -117,7 +117,7 @@ public class QuestionFragment extends Fragment {
 
     private void addControls(View root) {
         btn_Add_Question = root.findViewById(R.id.btn_add_question);
-        spinner_Topic = root.findViewById(R.id.spinner_Topic);
+        spinner_Topic = root.findViewById(R.id.spinner_Trainer);
         questionListRecycler = root.findViewById(R.id.questionList);
     }
 

@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.R;
-import com.example.feedbackapp.ui.feedback.Model.Question;
 import com.example.feedbackapp.ui.feedback.Model.Topic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> {
@@ -78,8 +76,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         {
             super(itemView);
             //Ánh xạ view
-            txt_Topic = itemView.findViewById(R.id.txt_topic);
-            rcv_subItem = itemView.findViewById(R.id.rcv_question);
+            txt_Topic = itemView.findViewById(R.id.txt_topic_edit);
+            rcv_subItem = itemView.findViewById(R.id.rcv_question_edit);
         }
     }
 }
