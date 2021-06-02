@@ -6,128 +6,91 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="304dp"
-        android:layout_height="142dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        app:cardBackgroundColor="#FFEACA"
-        app:cardCornerRadius="50dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="189dp"
-                android:layout_height="92dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/average"
-                android:text="Feedback ID:"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="60dp"
-                android:fontFamily="@font/average"
-                android:text="Title: "
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="96dp"
-                android:fontFamily="@font/average"
-                android:text="Admin ID:"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/constraintLayout2"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/txtFeedbackID"
-                android:layout_width="wrap_content"
+                android:layout_width="288dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="192dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/average"
-                android:text="1"
-                android:textSize="24sp"
+                android:fontFamily="sans-serif"
+                android:text="Feedback ID:"
+                android:textColor="@color/black"
+                android:textSize="19dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtFeedbackTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="288dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="116dp"
-                android:layout_marginTop="60dp"
-                android:fontFamily="@font/average"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
                 android:text="Feedback 1"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/black"
+                android:textSize="19dp"
+                app:layout_constraintStart_toStartOf="@+id/txtFeedbackID"
+                app:layout_constraintTop_toBottomOf="@+id/txtFeedbackID" />
 
             <TextView
                 android:id="@+id/txtFeedbackAdminID"
-                android:layout_width="wrap_content"
+                android:layout_width="287dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="164dp"
-                android:layout_marginTop="96dp"
-                android:fontFamily="@font/average"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="10dp"
                 android:text="Test"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/black"
+                android:textSize="19dp"
+                app:layout_constraintStart_toStartOf="@+id/txtFeedbackTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txtFeedbackTitle" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/btnView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="330dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Edit"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+            app:srcCompat="@drawable/eye3_40x40" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="330dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Edit"
+            app:srcCompat="@drawable/delete40x40" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent">
+        <ImageView
+            android:id="@+id/btn_Edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="330dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout2"
+            app:srcCompat="@drawable/edit40x40" />
 
-            <ImageView
-                android:id="@+id/btnView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/eye3_40x40" />
-
-            <ImageView
-                android:id="@+id/btnEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/edit40x40" />
-
-            <ImageView
-                android:id="@+id/btnDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/delete40x40" />
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

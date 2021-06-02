@@ -97,7 +97,8 @@ public class ModuleFragment extends Fragment {
         //nếu không phải admin, ẩn quyền thêm xóa sửa
         UserInfo userInfo = new UserInfo(root.getContext());
         if(!userInfo.role().equals("admin")){
-            btnAddModule.setVisibility(View.GONE);
+            //btnAddModule.setVisibility(View.GONE);
+            imageButton.setVisibility(View.GONE);
         }
 
         return root;
@@ -128,6 +129,7 @@ public class ModuleFragment extends Fragment {
         moduleAdapter =new ModuleAdapter(root.getContext(), moduleList);
         Toast.makeText(root.getContext(),"thêm vào adapter thành công "+moduleList.size(),Toast.LENGTH_LONG).show();
         moduleListRecycler.setAdapter(moduleAdapter);
+
     }
 
     @Override

@@ -64,18 +64,21 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
                 R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright,
                 R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
+                R.id.nav_edit_feedback,R.id.nav_detail_feedback,
 
-                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback,
+                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback
 
-                R.id.nav_add_module
-
+              //  ,R.id.nav_add_module,R.id.nav_joinmodule
         )
 
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);// điều hướng đến  fragment nav_host_fragment trong layout content_main
+        //navController.navigate(R.id.nav_joinmodule);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+       
+
 
 //Code to zoom
         gestureDetector = new GestureDetector(this, new GestureListener());
@@ -111,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    // support show dialog join
+
     // Code for zoom in/out scroll view
     //Link ferer:  https://www.youtube.com/watch?v=TRqysuYnDlU
     @Override
@@ -209,4 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(),toastValue,Toast.LENGTH_LONG).show();
     }
+
+
 }

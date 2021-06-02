@@ -1,7 +1,9 @@
 package com.example.feedbackapp.Adapter;
 
 import android.app.AlertDialog;
+import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +82,17 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
                 DeleteModule(module);
             }
         });
+
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ModuleId", module.getId());
+                Navigation.findNavController(v).navigate(R.id.module_to_edit_module, bundle);
+            }
+        });
+
+
     }
 
     //hàm hiển thị xác nhận xóa module
@@ -92,13 +105,9 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         txtMessage = alertLayout.findViewById(R.id.txt_LogoutMessage);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date curentDate = Calendar.getInstance().getTime();
-        try {
-            curentDate = formatter.parse(Calendar.getInstance().getTime().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         Date startDate = Calendar.getInstance().getTime();  //gán tạm để không null
         try {
+            curentDate = formatter.parse(Calendar.getInstance().getTime().toString());
             startDate = formatter.parse(module.getStartTime());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -111,6 +120,7 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
             //nếu module đang chạy
             txtMessage.setText("This Module has been started. You really want to delete this Module?");
         }
+
         final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
         final Button btnCancel = (Button) alertLayout.findViewById(R.id.btn_Cancel);
         AlertDialog.Builder alert = new AlertDialog.Builder(context);

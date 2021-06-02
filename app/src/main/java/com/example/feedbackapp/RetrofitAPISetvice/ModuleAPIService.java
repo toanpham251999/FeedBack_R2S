@@ -21,6 +21,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -52,6 +53,18 @@ public interface ModuleAPIService {
             @Header("Authorization") String token,
             @Body Module module
     );
+
+    //service thêm mới module
+    @PUT("api/module/{id}")
+    Call<ModuleInfo> editModule(
+            @Header("Authorization") String token,
+            @Path("id") String id,
+            @Body Module module
+    );
+
+    //service xóa 1 module theo id
+    @GET("/api/module/{id}")
+    Call<ModuleInfo> getModule(@Header("Authorization") String token, @Path("id") String id);
 
     //service xóa 1 module theo id
     @DELETE("/api/module/{id}")

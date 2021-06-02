@@ -9,11 +9,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.TraineeForClass;
 import com.example.feedbackapp.R;
+import com.example.feedbackapp.ui.classs.ClassAddEditFragment;
+import com.example.feedbackapp.ui.classs.ShowTraineeOfClassFragment;
 
 import java.util.ArrayList;
 
@@ -49,6 +53,9 @@ public class ClassAdapterForTrainer extends RecyclerView.Adapter<ClassAdapterFor
         holder.btnReadClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                ShowTraineeOfClassFragment showTraineeOfClassFragment = new ShowTraineeOfClassFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,showTraineeOfClassFragment).addToBackStack(null).commit();
             }
         });
     }

@@ -54,8 +54,8 @@
         <EditText
             android:id="@+id/edt_FeedbackTitleCreate"
             android:layout_width="70dp"
-            android:layout_height="23dp"
-            android:layout_marginTop="3dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/border"
             android:ems="5"
             android:inputType="textPersonName"
