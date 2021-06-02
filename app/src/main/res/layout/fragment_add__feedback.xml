@@ -36,7 +36,7 @@
             android:text="Feedback Type:" />
 
         <Spinner
-            android:id="@+id/spn_Type_Feedback_edit"
+            android:id="@+id/spn_Type_Feedback_Create"
             style="@style/SpinnerTheme"
             android:layout_width="100dp"
             android:layout_height="30dp"
@@ -52,7 +52,7 @@
             android:text="Feedback Title:" />
 
         <EditText
-            android:id="@+id/edt_FeedbackTitleEdit"
+            android:id="@+id/edt_FeedbackTitleCreate"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginTop="0dp"
@@ -70,7 +70,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_ReviewFeedback"
+            android:id="@+id/btn_ReviewFeedbackCreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
@@ -78,7 +78,7 @@
             android:text="Review" />
 
         <Button
-            android:id="@+id/btn_BackFeedbackEdit"
+            android:id="@+id/btn_BackFeedbackCreate"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
@@ -89,7 +89,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_Topic_Edit"
+        android:id="@+id/rcv_Topic_Create"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/fragment_create_feedback_item" />

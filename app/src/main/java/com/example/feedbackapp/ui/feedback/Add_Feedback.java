@@ -79,7 +79,7 @@ public class Add_Feedback extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add__feedback, container, false);
         DataService dataServiceFeedback = APIService.getService();
-        spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback_edit);
+        spinner = (Spinner) view.findViewById(R.id.spn_Type_Feedback_Create);
         UserInfo userInfo = new UserInfo(getContext());
         Call<TypeOfFeedbackModel> callbackFeedback = dataServiceFeedback.GetDataTypeFeedback("Bearer "+userInfo.token());
         callbackFeedback.enqueue(new Callback<TypeOfFeedbackModel>()
@@ -120,7 +120,7 @@ public class Add_Feedback extends Fragment{
 
 
 
-        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic_Edit);
+        RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.rcv_Topic_Create);
         DataService dataServiceTopic = APIService.getService();
         UserInfo userInfo1 = new UserInfo(getContext());
         Call<TopicModel> callbackListTopic = dataServiceTopic.GetDataTopic("Bearer "+userInfo1.token());
@@ -142,9 +142,9 @@ public class Add_Feedback extends Fragment{
             }
         });
         //Xử lý Review
-        btnReviewFeedback =(Button)view.findViewById(R.id.btn_ReviewFeedback);
-        feedbackName =(EditText)view.findViewById(R.id.edt_FeedbackTitleEdit);
-        btn_BackFeedbackCreate =(Button)view.findViewById(R.id.btn_BackFeedbackEdit);
+        btnReviewFeedback =(Button)view.findViewById(R.id.btn_ReviewFeedbackCreate);
+        feedbackName =(EditText)view.findViewById(R.id.edt_FeedbackTitleCreate);
+        btn_BackFeedbackCreate =(Button)view.findViewById(R.id.btn_BackFeedbackCreate);
         btnReviewFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -117,6 +118,8 @@ public class Review_NewFeedbackFragment extends Fragment  {
         Bundle bundle = getArguments();
         TextView txt_adminId;
         btn_Save_Review =(Button)view.findViewById(R.id.btn_Save_Review_edit);
+        TextView feedbacktitle=(TextView)view.findViewById(R.id.txt_create_feedbacktitle);
+        feedbacktitle.setText(bundle.getString("feedbackName"));
         txt_adminId =(TextView)view.findViewById(R.id.txt_edit_adminid);
         if(bundle !=null) {
             edt_feedbacktitle = bundle.getString("feedbackName");
@@ -155,7 +158,7 @@ public class Review_NewFeedbackFragment extends Fragment  {
         btn_back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.nav_add_feedback);
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_add_feedback);
             }
         });
         return view;

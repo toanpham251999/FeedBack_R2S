@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -171,7 +172,7 @@ public class Review_Edit_Feedback extends Fragment {
         btn_back_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.nav_edit_feedback);
+                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_edit_feedback);
             }
         });
         return view;
