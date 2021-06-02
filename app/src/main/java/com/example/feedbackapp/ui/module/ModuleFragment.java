@@ -129,6 +129,7 @@ public class ModuleFragment extends Fragment {
         moduleAdapter =new ModuleAdapter(root.getContext(), moduleList);
         Toast.makeText(root.getContext(),"thêm vào adapter thành công "+moduleList.size(),Toast.LENGTH_LONG).show();
         moduleListRecycler.setAdapter(moduleAdapter);
+
     }
 
     @Override
