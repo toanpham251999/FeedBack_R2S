@@ -15,29 +15,29 @@ import com.example.feedbackapp.ui.feedback.Model.Topic;
 
 import java.util.List;
 
-public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> {
+public class TopicEditAdapter extends RecyclerView.Adapter<TopicEditAdapter.ViewHolder> {
     private RecyclerView.RecycledViewPool viewPool =new RecyclerView.RecycledViewPool();
     List<Topic> topics;
-    QuestionAdapter questionAdapter;
+    QuestionEditAdapter questionEditAdapter;
 
-    public TopicAdapter() {
+    public TopicEditAdapter() {
     }
 
     public Topic topic;
-    public TopicAdapter (List<Topic> topics)
+    public TopicEditAdapter (List<Topic> topics)
     {
         this.topics = topics;
     }
 
     @NonNull
     @Override
-    public TopicAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_create_feedback_item,parent,false);
+    public TopicEditAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_edit_feedback_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopicAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopicEditAdapter.ViewHolder holder, int position) {
         topic = topics.get(position);
         holder.txt_Topic.setText(topic.getTopicName());
 
@@ -50,17 +50,17 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
         );
         layoutManager.setInitialPrefetchItemCount(topic.getListQuestion().size());
         //Create subItem view adapter
-        questionAdapter = new QuestionAdapter(topic.getListQuestion());
+        questionEditAdapter = new QuestionEditAdapter(topic.getListQuestion());
         holder.rcv_subItem.setLayoutManager(layoutManager);
-        holder.rcv_subItem.setAdapter(questionAdapter);
+        holder.rcv_subItem.setAdapter(questionEditAdapter);
         holder.rcv_subItem.setRecycledViewPool(viewPool);
 
     }
-    public QuestionAdapter GetQuestionAdapter()
+    public QuestionEditAdapter QuestionEditAdapter()
     {
         Log.i("TOPIC VALUES RESPONSE", "topic.getListQuestion().toString()");
-        questionAdapter = new QuestionAdapter(topic.getListQuestion());
-        return this.questionAdapter;
+        questionEditAdapter = new QuestionEditAdapter(topic.getListQuestion());
+        return this.questionEditAdapter;
     }
 
 

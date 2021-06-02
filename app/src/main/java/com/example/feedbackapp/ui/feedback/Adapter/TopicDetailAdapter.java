@@ -60,8 +60,8 @@ public class TopicDetailAdapter extends RecyclerView.Adapter<TopicDetailAdapter.
         {
             super(itemView);
             //Ánh xạ view
-            txt_Detail_Topic = itemView.findViewById(R.id.txt_detail_topic);
-            rcv_Detail_subItem = itemView.findViewById(R.id.rcv_detail_sub);
+            txt_Detail_Topic = itemView.findViewById(R.id.txt_edit_topic);
+            rcv_Detail_subItem = itemView.findViewById(R.id.rcv_edit_sub);
         }
     }
 }
