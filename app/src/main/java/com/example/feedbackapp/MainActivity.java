@@ -2,12 +2,10 @@ package com.example.feedbackapp;
 
 
 import android.app.AlertDialog;
-import android.content.Intent;
 
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -17,23 +15,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.Assignment;
-import com.example.feedbackapp.ui.assignment.AssignmentFragment;
-
-import com.example.feedbackapp.ui.feedback.FeedBackFragment;
-import com.example.feedbackapp.ui.feedback.FeedbackAdapter;
-import com.example.feedbackapp.ui.feedback.FeedbackModel;
-
 import com.example.feedbackapp.UserInfo.UserInfo;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -41,11 +27,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     //Test and delete
@@ -82,18 +64,21 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_result, R.id.nav_question, R.id.nav_contact, R.id.nav_logout,
                 R.id.nav_add_feedback,R.id.nav_review_new_feedback,R.id.nav_feedbackright,
                 R.id.nav_feedbackdetail,R.id.nav_statisticdofeedback,R.id.nav_dofeedback,
+                R.id.nav_edit_feedback,R.id.nav_detail_feedback,
 
-                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback,
+                R.id.nav_trainee_dashboard, R.id.nav_viewcommentfeedback
 
-                R.id.nav_add_module
-
+              //  ,R.id.nav_add_module,R.id.nav_joinmodule
         )
 
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);// điều hướng đến  fragment nav_host_fragment trong layout content_main
+        //navController.navigate(R.id.nav_joinmodule);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+       
+
 
 //Code to zoom
         gestureDetector = new GestureDetector(this, new GestureListener());
@@ -129,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    // support show dialog join
+
     // Code for zoom in/out scroll view
     //Link ferer:  https://www.youtube.com/watch?v=TRqysuYnDlU
     @Override
@@ -227,4 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(),toastValue,Toast.LENGTH_LONG).show();
     }
+
+
 }

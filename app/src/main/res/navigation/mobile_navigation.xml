@@ -56,11 +56,22 @@
         <action
             android:id="@+id/class_to_list_trainee"
             app:destination="@+id/nav_show_trainee_of_class"/>
+        <action
+            android:id="@+id/class_to_add_edit_class"
+            app:destination="@+id/nav_add_edit_class"/>
     </fragment>
     <fragment
         android:id="@+id/nav_show_trainee_of_class"
         android:name="com.example.feedbackapp.ui.classs.ShowTraineeOfClassFragment"
-        tools:layout="@layout/show_trainee_of_class_fragment" />
+        tools:layout="@layout/show_trainee_of_class_fragment">
+        <action
+            android:id="@+id/show_trainee_back_to_class"
+            app:destination="@+id/nav_classs"/>
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_edit_class"
+        android:name="com.example.feedbackapp.ui.classs.ClassAddEditFragment"
+        tools:layout="@layout/class_add_edit_fragment" />
 
     <fragment
         android:id="@+id/nav_module"
@@ -155,7 +166,11 @@
     <fragment
         android:id="@+id/nav_dofeedback"
         android:name="com.example.feedbackapp.ui.statisticfeedback.DoFeedbackFragment"
-        tools:layout="@layout/fragment_do_feedback" />
+        tools:layout="@layout/fragment_do_feedback" >
+        <action
+            android:id="@+id/action_dofeedback_to_listfeedback"
+            app:destination="@id/nav_trainee_dashboard" />
+    </fragment>
     <fragment
         android:id="@+id/nav_statisticdofeedback"
         android:name="com.example.feedbackapp.ui.statisticfeedback.StatisticFeedBackFragment"
@@ -178,5 +193,14 @@
         android:id="@+id/nav_add_module"
         android:name="com.example.feedbackapp.ui.module.AddModuleFragment"
         tools:layout="@layout/add_module_layout"/>
+
+    <fragment
+        android:id="@+id/nav_edit_feedback"
+        android:name="com.example.feedbackapp.ui.feedback.Fragment_Edit_Feedback"
+        tools:layout="@layout/fragment__edit__feedback"/>
+    <fragment
+        android:id="@+id/nav_detail_feedback"
+        android:name="com.example.feedbackapp.ui.feedback.Fragment_Detail_Feedback"
+        tools:layout="@layout/fragment__detail__feedback"/>
 
 </navigation>
