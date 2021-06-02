@@ -100,7 +100,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="20dp"
-            android:text="Save" />
+            android:text="Save"
+            android:background="@drawable/btn_blue_radius"
+            android:minHeight="0dp"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/btn_back_review_edit"

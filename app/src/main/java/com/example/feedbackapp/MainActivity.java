@@ -3,6 +3,9 @@ package com.example.feedbackapp;
 
 import android.app.AlertDialog;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -17,12 +20,14 @@ import android.widget.Toast;
 
 import com.example.feedbackapp.UserInfo.UserInfo;
 
+import com.example.feedbackapp.ui.dashboard.TraineeDashboardFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -109,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
         //hiện thông tin người dùng sau khi đăng nhập, dùng để test
         ShowUserData();
 
+
+
+
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -162,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
+            nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
         }
         else{
@@ -170,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
+            nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
         }
     }

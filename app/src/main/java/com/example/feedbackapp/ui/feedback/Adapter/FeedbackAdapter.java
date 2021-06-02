@@ -89,6 +89,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
                 Navigation.findNavController(v).navigate(R.id.nav_edit_feedback,bundle);
             }
         });
+
         holder.imgDetailFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

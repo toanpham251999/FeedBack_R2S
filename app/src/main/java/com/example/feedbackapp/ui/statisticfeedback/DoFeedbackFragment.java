@@ -32,6 +32,7 @@ public class DoFeedbackFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         mviewModel = ViewModelProviders.of(this).get(StatisticFeedBackViewModel.class);
         mviewModel.init();
@@ -41,7 +42,7 @@ public class DoFeedbackFragment extends Fragment {
                 //link: https://viblo.asia/p/android-architecture-components-viewmodel-xu-ly-configuration-changes-chua-bao-gio-don-gian-den-the-ByEZk3A4ZQ0
 
                 // get data from bundle
-               String classId = getArguments().getString("ClassId");
+                String classId = getArguments().getString("ClassId");
                 String className = getArguments().getString("ClassName");
                 String moduleId = getArguments().getString("ModuleId");
                 String moduleName = getArguments().getString("ModuleName");

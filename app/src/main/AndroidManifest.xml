@@ -34,6 +34,11 @@
             android:theme="@style/Theme.FeedBackApp.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.FeedBackApp.NoActionBar">
+            
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -56,17 +56,18 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
         holder.txtModuleId.setText(Html.fromHtml("<b>Module Id: </b>" + feedback.getModuleId()));
         holder.txtModuleName.setText(Html.fromHtml("<b>Module Name: </b>" + feedback.getModuleName()));
         holder.txtEndTime.setText(Html.fromHtml("<b>End Time: </b>" + feedback.getEndTime()));
+
         //if(feedback.getIsCompleted() == true)
         holder.btn_do_feedback.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+        @Override public void onClick(View v) {
             Bundle bundle = new Bundle();
             // pass class, module,name
             bundle.putString("ClassId",feedback.getClassId());
-          bundle.putString("ClassName",feedback.getClassName());
-          bundle.putString("ModuleId",feedback.getModuleId());
-          bundle.putString("ModuleName",feedback.getModuleName());
-           Navigation.findNavController(v).navigate(R.id.action_listFeedback_to_doFeedback, bundle);
-      }
+            bundle.putString("ClassName",feedback.getClassName());
+            bundle.putString("ModuleId",feedback.getModuleId());
+            bundle.putString("ModuleName",feedback.getModuleName());
+            Navigation.findNavController(v).navigate(R.id.action_listFeedback_to_doFeedback, bundle);
+        }
         });
         // check is completed
         if(feedback.getIsCompleted() == false){

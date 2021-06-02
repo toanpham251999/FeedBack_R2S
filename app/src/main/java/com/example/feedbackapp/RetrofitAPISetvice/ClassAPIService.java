@@ -1,5 +1,6 @@
 package com.example.feedbackapp.RetrofitAPISetvice;
 
+import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassInfo;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
@@ -17,6 +18,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ClassAPIService {
@@ -35,6 +37,14 @@ public interface ClassAPIService {
     //service lấy tất cả class
     @GET("/api/class")
     Call<ListClass> getAllClass(@Header("Authorization") String token);
+
+    //service lấy 1 class để edit
+    @GET("/api/class/{id}")
+    Call<ClassInfo> getClass(@Header("Authorization") String token, @Path("id") String id);
+
+    //service edit class
+    @PUT("/api/class/{id}")
+    Call<ClassInfo> editClass(@Header("Authorization") String token, @Path("id") String id, @Body Classs classs);
 
     //service add class
     @POST("api/class")
