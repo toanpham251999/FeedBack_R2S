@@ -50,6 +50,7 @@ public class Fragment_Edit_Feedback extends Fragment {
     private EditText feedbackName;
     private ImageView btn_Edit;
     private Button btn_BackFeedbackCreate;
+    private String feedbackId="";
 
     //
     String feedbackTypeId;
@@ -142,6 +143,9 @@ public class Fragment_Edit_Feedback extends Fragment {
         btnReviewFeedback =(Button)view.findViewById(R.id.btn_ReviewEditFeedback);
         feedbackName =(EditText)view.findViewById(R.id.edt_FeedbackTitleEdit);
         btn_BackFeedbackCreate =(Button)view.findViewById(R.id.btn_BackFeedbackEdit);
+        Bundle bundlefeedback=getArguments();
+        feedbackId = bundlefeedback.getString("feedbackId");
+        feedbackName.setText(bundlefeedback.getString("feedbackTitle"));
         btnReviewFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +157,7 @@ public class Fragment_Edit_Feedback extends Fragment {
                 questionList = questionAdapter.onclicked();
                 Log.i("CHECK SPINNER",spinner.getSelectedItem().toString());
                 Bundle bundle = new Bundle();
+                bundle.putString("feedbackID",feedbackId);
                 bundle.putString("typeFeedbackId",feedbackTypeId);
                 bundle.putString("feedbackName", feedbackName.getText().toString().trim());
                 bundle.putString("AdminId","60a8f233a86b7c42384e8bf9");

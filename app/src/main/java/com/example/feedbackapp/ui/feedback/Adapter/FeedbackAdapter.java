@@ -1,5 +1,6 @@
 package com.example.feedbackapp.ui.feedback.Adapter;
 
+import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,8 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
     }
     FeedBackFragment feedBackFragment = new FeedBackFragment();
 
+
+
     @NonNull
     @Override
     public FeedbackAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,13 +63,17 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 DataService dataServiceFilter = APIService.getService();
+                Bundle bundle = new Bundle();
+//                SystemConstant.feedbackTitle=list.getTitle();
+//                SystemConstant.feedbackId=list.getId();
+                bundle.putString("feedbackId","60aa2adfc2188327980f86d3");
+                bundle.putString("feedbackTitle",list.getTitle());
                 Call<FeedbackEditFilterId1> callFeedbackFilter = dataServiceFilter.GetDataFilterIdFeedback("Bearer eyJhbGciOiJI" +
                         "UzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRiYTk1N2FhNjBjN2M3YzNlYTEiLCJ0eXBlVXNlciI6ImFk" +
                         "bWluIiwiaWF0IjoxNjIxOTU0NDg5fQ.i4JExKXlcmHIi-m3E6O46YEKoj1pV6R0Wi9ezN77GG0","60aa2adfc2188327980f86d3");
                 callFeedbackFilter.enqueue(new Callback<FeedbackEditFilterId1>() {
                     @Override
                     public void onResponse(Call<FeedbackEditFilterId1> call, Response<FeedbackEditFilterId1> response) {
-
                         FeedbackEditFilterId1 feedbackEditFilterId1 = (FeedbackEditFilterId1) response.body();
                         FeedbackEditFeedbackList2 feedbackEditFeedbackList2 =feedbackEditFilterId1.getFeedback();
                          SystemConstant.feedbackEditTopic3 = feedbackEditFeedbackList2.getListTopic();
@@ -79,7 +86,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
 
                     }
                 });
-                Navigation.findNavController(v).navigate(R.id.nav_edit_feedback);
+                Navigation.findNavController(v).navigate(R.id.nav_edit_feedback,bundle);
             }
         });
         holder.imgDetailFeedback.setOnClickListener(new View.OnClickListener() {

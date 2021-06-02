@@ -12,4 +12,6 @@ public class SystemConstant {
     public static String admin_token="";
     public static List<FeedbackEditTopic3> feedbackEditTopic3= new ArrayList<FeedbackEditTopic3>();
     public static List<String> save_state_edit = new ArrayList<>();
+    public static String feedbackTitle="";
+    public static String feedbackId="";
 }

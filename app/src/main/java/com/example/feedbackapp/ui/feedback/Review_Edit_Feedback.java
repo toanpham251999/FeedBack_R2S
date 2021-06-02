@@ -53,6 +53,7 @@ public class Review_Edit_Feedback extends Fragment {
     private String mParam2;
     private Button btn_Save_Review;
     private Button btn_back_review;
+    private String feedbackId;
     ArrayList<Question>questions=new ArrayList<>();
 
 
@@ -120,6 +121,7 @@ public class Review_Edit_Feedback extends Fragment {
         TextView txt_feedbacktitle =(TextView)view.findViewById(R.id.txt_Edit_feedbacktitle);
         txt_adminId =(TextView)view.findViewById(R.id.txt_edit_adminid);
         if(bundle !=null) {
+            feedbackId=bundle.getString("feedbackID");
             edt_feedbacktitle = bundle.getString("feedbackName");
             txt_adminId.setText(bundle.getString("AdminId"));
             idTypeFeedback = bundle.getString("typeFeedbackId");
@@ -136,17 +138,29 @@ public class Review_Edit_Feedback extends Fragment {
                 UserInfo userInfo = new UserInfo(getContext());
 
                 //Gọi API thêm Feedback
-                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
-                        idTypeFeedback, SystemConstant.save_state_edit)).enqueue(new Callback<ResponseBody>() {
+//                dataService.PostData("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
+//                        idTypeFeedback, SystemConstant.save_state_edit)).enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
+//                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
+//                    }
+//                });
+                dataService.PutDataFeedback("Bearer "+userInfo.token(),new AddFeedback(edt_feedbacktitle.trim(),
+                        idTypeFeedback,SystemConstant.save_state_edit),feedbackId).enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Toast.makeText(getContext(),  "Create feedback successfull",Toast.LENGTH_LONG).show();
-                        Navigation.findNavController(view).navigate(R.id.nav_feedback);
+                        Log.i("PUT","PUT OK");
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Toast.makeText(getContext(),"POST NOT OK",Toast.LENGTH_LONG).show();
+                        Log.i("PUT","PUT NOT OK");
                     }
                 });
 

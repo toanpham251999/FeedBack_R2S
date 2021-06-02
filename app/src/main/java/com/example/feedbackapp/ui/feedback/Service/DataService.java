@@ -38,4 +38,7 @@ public interface DataService {
 
     @GET("api/feedback/{id}")
     Call<FeedbackEditFilterId1>GetDataFilterIdFeedback(@Header("Authorization") String token, @Path("id") String id);
+
+    @POST("api/feedback")
+    Call<ResponseBody>PutDataFeedback(@Header("Authorization") String token, @Body AddFeedback addFeedback,@Path("id") String id);
 }
