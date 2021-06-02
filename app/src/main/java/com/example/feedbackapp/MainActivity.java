@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             NavGraph navGraph = navController.getGraph();
             navGraph.setStartDestination(R.id.nav_assignment1);
             navController.setGraph(navGraph);
-           // nav_Menu.findItem(R.id.nav_join).setVisible(false);
+            nav_Menu.findItem(R.id.nav_join).setVisible(false);
             nav_Menu.findItem(R.id.nav_trainee_dashboard).setVisible(false);
 
             //không ẩn đi gì cả, sau này sẽ ẩn Join đi
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
-            nav_Menu.findItem(R.id.nav_join).setVisible(false);
+            //nav_Menu.findItem(R.id.nav_join).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             NavGraph navGraph1 = navController.getGraph();
             navGraph1.setStartDestination(R.id.nav_trainee_dashboard);

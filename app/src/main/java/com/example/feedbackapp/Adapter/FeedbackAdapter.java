@@ -74,7 +74,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.ViewHo
             holder.txtStatus.setText(Html.fromHtml("<b>Status: </b>" + "InComplete"));
         }else {
             holder.txtStatus.setText(Html.fromHtml("<b>Status: </b>" + "Complete"));
-            //holder.btn_do_feedback.hide();
+            holder.btn_do_feedback.hide();
         }
 
     }
