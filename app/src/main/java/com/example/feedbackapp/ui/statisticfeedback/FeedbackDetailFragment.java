@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,7 +18,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.feedbackapp.Adapter.ClassDataUtils;
 import com.example.feedbackapp.Adapter.CustomAdapter;
 import com.example.feedbackapp.Adapter.CustomApdapterModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ClassList;
@@ -31,7 +29,6 @@ import com.example.feedbackapp.ModelClassToSendAPI.Answer.Answer;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.model.Class;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
-import com.example.feedbackapp.repositories.TopicRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +128,7 @@ public class FeedbackDetailFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_feedback_detail, container, false);
 // Code for spinner c
 
-        this.spinner = (Spinner) v.findViewById(R.id.spinner_class);
+        this.spinner = (Spinner) v.findViewById(R.id.txt_className);
         mviewModel.getClas(accessToken);
         this.spinnerModule = (Spinner) v.findViewById(R.id.spinner_module);
         mviewModel.getModule(accessToken);

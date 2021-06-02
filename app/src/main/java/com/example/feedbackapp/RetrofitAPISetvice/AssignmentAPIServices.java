@@ -3,6 +3,7 @@ package com.example.feedbackapp.RetrofitAPISetvice;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.AssignmentInfo;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.NewAssignment;
 import com.example.feedbackapp.ModelClassToSendAPI.Assignment.AddAssignmentInfo;
+import com.example.feedbackapp.ModelClassToSendAPI.Assignment.EditAssignmentInfo;
 import com.example.feedbackapp.UserInfo.BaseUrl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,11 +13,14 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface AssignmentAPIServices {
     //tạo 1 biến gson dùng cho service bên dưới
@@ -40,10 +44,14 @@ public interface AssignmentAPIServices {
     Call<ResponseBody> addNewAssignment(@Header("Authorization") String authHeader,
                                         @Body AddAssignmentInfo addAssignmentInfo);
 
-//    @FormUrlEncoded
-//    Call<ResponseBody> addNewAssignment(@Header("Authorization") String authHeader,
-//                                        @Field("ModuleId") String moduleId,
-//                                        @Field("ClassId") String classId,
-//                                        @Field("TrainerId") String trainerId);
+    //service sửa 1 assignment theo id
+    @PUT("/api/assignment/{id}")
+    Call<ResponseBody> editAssignment(@Header("Authorization") String token,
+                                      @Path("id") String id,
+                                      @Body EditAssignmentInfo editAssignmentInfo);
 
+    //service xóa 1 assignment theo id
+    @DELETE("/api/assignment/{id}")
+    Call<ResponseBody> deleteAssignment(@Header("Authorization") String token,
+                                        @Path("id") String id);
 }

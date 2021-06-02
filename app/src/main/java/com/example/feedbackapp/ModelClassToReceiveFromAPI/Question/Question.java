@@ -6,13 +6,16 @@ public class Question {
     private String TopicName;
     private String QuestionContent;
     private Boolean isDeleted;
+    private Boolean isUse;
 
-    public Question(String id, String topicId, String topicName, String questionContent, Boolean isDeleted) {
+
+    public Question(String id, String topicId, String topicName, String questionContent, Boolean isDeleted, Boolean isUse) {
         Id = id;
         TopicId = topicId;
         TopicName = topicName;
         QuestionContent = questionContent;
         this.isDeleted = isDeleted;
+        this.isUse = isUse;
     }
 
     public String getId() {
@@ -53,5 +56,13 @@ public class Question {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Boolean getUse() {
+        return isUse;
+    }
+
+    public void setUse(Boolean use) {
+        isUse = use;
     }
 }

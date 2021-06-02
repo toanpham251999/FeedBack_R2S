@@ -20,10 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.ErrorResponse;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.NewAssignment;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.Classs;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Class.ListClass;
-import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.Account;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Login.ListAccount;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.ListModule;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Module.Module;
@@ -36,8 +34,6 @@ import com.example.feedbackapp.RetrofitAPISetvice.ModuleAPIService;
 import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.model.Trainee;
 import com.google.gson.Gson;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -211,6 +207,7 @@ public class AddAssignmentFragment extends Fragment {
                             }
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                ShowSuccessDialog(root, null);
                                 Log.e("TAG", "onFailure: ", t);
                             }
                         });
@@ -278,9 +275,9 @@ public class AddAssignmentFragment extends Fragment {
 
     //Hàm thêm điều khiển
     private void addControls(View root) {
-        spinner_module = (Spinner) root.findViewById(R.id.spinner_Topic);
-        spinner_class = (Spinner) root.findViewById(R.id.spinner_class);
-        spinner_trainer = (Spinner) root.findViewById(R.id.spinner_trainer);
+        spinner_module = (Spinner) root.findViewById(R.id.spinner_Trainer);
+        spinner_class = (Spinner) root.findViewById(R.id.txt_className);
+        spinner_trainer = (Spinner) root.findViewById(R.id.txt_moduleId);
         btn_Save = (Button) root.findViewById(R.id.btn_Save);
         btn_Back = (Button) root.findViewById(R.id.btn_Back);
     }
