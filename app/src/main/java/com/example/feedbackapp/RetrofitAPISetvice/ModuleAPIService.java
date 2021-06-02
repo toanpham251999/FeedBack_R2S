@@ -54,7 +54,7 @@ public interface ModuleAPIService {
             @Body Module module
     );
 
-    //service thêm mới module
+    //service update
     @PUT("api/module/{id}")
     Call<ModuleInfo> editModule(
             @Header("Authorization") String token,
