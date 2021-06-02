@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_enrrollment).setVisible(false);
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
+            nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
         }
         else{
@@ -164,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_feedback).setVisible(false);
            // nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
+            nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             //nav_Menu.findItem(R.id.nav_join).setVisible(false);
         }
     }

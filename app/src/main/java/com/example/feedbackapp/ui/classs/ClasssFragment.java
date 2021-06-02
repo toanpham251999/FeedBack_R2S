@@ -116,13 +116,13 @@ public class ClasssFragment extends Fragment {
             Toast.makeText(root.getContext(),"thêm vào adapter thành công "+listClass.size(),Toast.LENGTH_LONG).show();
             classListRecycler.setAdapter(classAdapterForTrainer);
         }
-        classListRecycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View v, int position) {
-                        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        );
+//        classListRecycler.addOnItemTouchListener(
+//                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View v, int position) {
+//                        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//        );
     }
 }

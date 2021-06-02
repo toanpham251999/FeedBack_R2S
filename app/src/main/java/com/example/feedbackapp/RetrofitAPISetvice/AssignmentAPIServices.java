@@ -4,6 +4,7 @@ import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.AssignmentI
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.NewAssignment;
 import com.example.feedbackapp.ModelClassToSendAPI.Assignment.AddAssignmentInfo;
 import com.example.feedbackapp.ModelClassToSendAPI.Assignment.EditAssignmentInfo;
+import com.example.feedbackapp.ModelClassToSendAPI.Assignment.SearchAssignmentInfo;
 import com.example.feedbackapp.UserInfo.BaseUrl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,4 +55,9 @@ public interface AssignmentAPIServices {
     @DELETE("/api/assignment/{id}")
     Call<ResponseBody> deleteAssignment(@Header("Authorization") String token,
                                         @Path("id") String id);
+
+    //Tìm kiếm assignment
+    @POST("api/assignment/filter")
+    Call<AssignmentInfo> searchAssignment(@Header("Authorization") String authHeader,
+                                        @Body SearchAssignmentInfo searchAssignmentInfo);
 }

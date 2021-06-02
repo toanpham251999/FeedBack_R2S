@@ -1,6 +1,7 @@
 package com.example.feedbackapp.Adapter;
 
 import android.app.AlertDialog;
+import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,13 +79,24 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteModule(module);
+                DeleteModule(module,position);
             }
         });
+
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ModuleId", module.getId());
+                Navigation.findNavController(v).navigate(R.id.module_to_edit_module, bundle);
+            }
+        });
+
+
     }
 
     //hàm hiển thị xác nhận xóa module
-    void DeleteModule(Module module){
+    void DeleteModule(Module module,int position){
         //hiện dialog xác nhận xóa
         LayoutInflater inflater = LayoutInflater.from(context);
         View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
@@ -108,6 +120,7 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
             //nếu module đang chạy
             txtMessage.setText("This Module has been started. You really want to delete this Module?");
         }
+
         final Button btnYes = (Button) alertLayout.findViewById(R.id.btn_Yes);
         final Button btnCancel = (Button) alertLayout.findViewById(R.id.btn_Cancel);
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
@@ -123,6 +136,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
                 Toast.makeText(context,"delete confirmed!",Toast.LENGTH_LONG).show();
                 doDelete(module);
                 dialog.dismiss();
+                listModule.remove(position);
+                notifyDataSetChanged();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener()

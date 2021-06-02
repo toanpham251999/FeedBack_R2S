@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.feedbackapp.Adapter.AssignmentAdapter;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.Assignment;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Assignment.AssignmentInfo;
+import com.example.feedbackapp.ModelClassToSendAPI.Assignment.SearchAssignmentInfo;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.AssignmentAPIServices;
 import com.example.feedbackapp.UserInfo.UserInfo;
@@ -48,9 +49,9 @@ public class AssignmentFragment extends Fragment {
     Button btn_Search;
     EditText editText_Search;
 
-
     //TODO: AccessToken Varible
     String accessToken = "";
+    String keySearch = "";
 
     //TODO: assignmentsList
     ArrayList<Assignment> assignmentsList;
@@ -95,9 +96,9 @@ public class AssignmentFragment extends Fragment {
     }
 
     private void addControls(View root){
-        btn_Add_Assignment = root.findViewById(R.id.btn_add_question);
-        btn_Search = root.findViewById(R.id.btn_Search);
-        editText_Search = root.findViewById(R.id.editText_Search);
+        btn_Add_Assignment = (FloatingActionButton)root.findViewById(R.id.btn_add_question);
+        btn_Search = (Button) root.findViewById(R.id.btn_Search);
+        editText_Search = (EditText) root.findViewById(R.id.editText_Search);
 
         assignmentListRecycler = root.findViewById(R.id.assignmentList);
 
@@ -120,13 +121,23 @@ public class AssignmentFragment extends Fragment {
         btn_Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("key","abc"); // Put anything what you want
-
-                AddAssignmentFragment addAssignmentFragment = new AddAssignmentFragment();
-                addAssignmentFragment.setArguments(bundle);
-
-                Navigation.findNavController(root).navigate(R.id.assignment_to_search_assignment, bundle);
+                keySearch = editText_Search.getText().toString();
+                AssignmentAPIServices.ASSIGNMENT_API_SERVICES
+                        .searchAssignment(accessToken, new SearchAssignmentInfo(keySearch))
+                        .enqueue(new Callback<AssignmentInfo>() {
+                    @Override
+                    public void onResponse(Call<AssignmentInfo> call, Response<AssignmentInfo> response) {
+                        assignmentsList = response.body().getAssignment();
+                        LoadAssignmentList(root);
+                        Log.d("AAAAAAAAAAAAAAAA", "onResponse()");
+                        Toast.makeText(getActivity(),"Tìm kiếm thành công!",Toast.LENGTH_LONG).show();
+                    }
+                    @Override
+                    public void onFailure(Call<AssignmentInfo> call, Throwable t) {
+                        Toast.makeText(getActivity(),"Có lỗi xảy ra!",Toast.LENGTH_LONG).show();
+                        Log.d("TAG", "onFailure()");
+                    }
+                });
             }
         });
     }

@@ -150,7 +150,6 @@ public class Fragment_Edit_Feedback extends Fragment {
             @Override
             public void onClick(View v) {
                 //arr id question choose
-
                 //questionAdapter = topicEditAdapter.GetQuestionAdapter();
                 //List<Question> arrQuestion = topicAdapter.topic.getListQuestion();
                 Log.i("QUESTION ADAPTER REPONSE", "123" + questionAdapter.onclicked().toString());
