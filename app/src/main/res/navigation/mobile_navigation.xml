@@ -69,6 +69,10 @@
         <action
             android:id="@+id/module_to_add_module"
             app:destination="@+id/nav_add_edit_module"/>
+
+        <action
+            android:id="@+id/module_to_edit_module"
+            app:destination="@+id/nav_edit_module"/>
     </fragment>
     <fragment
         android:id="@+id/nav_add_edit_module"
@@ -160,6 +164,7 @@
             android:id="@+id/action_listFeedback_to_doFeedback"
             app:destination="@+id/nav_dofeedback"/>
     </fragment>
+
     <fragment
         android:id="@+id/nav_viewcommentfeedback"
         android:name="com.example.feedbackapp.ui.statisticfeedback.ViewCommentFragment"
@@ -178,5 +183,11 @@
         android:id="@+id/nav_detail_feedback"
         android:name="com.example.feedbackapp.ui.feedback.Fragment_Detail_Feedback"
         tools:layout="@layout/fragment__detail__feedback"/>
+
+    <fragment
+        android:id="@+id/nav_edit_module"
+        android:name="com.example.feedbackapp.ui.module.AddEditModuleFragment"
+        tools:layout="@layout/add_edit_module_fragment">
+    </fragment>
 
 </navigation>

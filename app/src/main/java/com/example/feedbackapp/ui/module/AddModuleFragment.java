@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.feedbackapp.Adapter.CustomAdapter;
@@ -100,6 +101,16 @@ public class AddModuleFragment extends Fragment {
                 boolean isAccept = OnSaveModuleValidate(root);
             }
         });
+
+        //save data
+        btnBack = root.findViewById(R.id.btn_BackAddModule);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_module);
+            }
+        });
+
+
 
 
         // spinner listener
