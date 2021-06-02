@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             nav_Menu.findItem(R.id.nav_question).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
-            nav_Menu.findItem(R.id.nav_join).setVisible(false);
+            //nav_Menu.findItem(R.id.nav_join).setVisible(false);
             nav_Menu.findItem(R.id.nav_statisticdofeedback).setVisible(false);
             NavGraph navGraph1 = navController.getGraph();
             navGraph1.setStartDestination(R.id.nav_trainee_dashboard);
