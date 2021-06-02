@@ -78,13 +78,13 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteModule(module);
+                DeleteModule(module,position);
             }
         });
     }
 
     //hàm hiển thị xác nhận xóa module
-    void DeleteModule(Module module){
+    void DeleteModule(Module module,int position){
         //hiện dialog xác nhận xóa
         LayoutInflater inflater = LayoutInflater.from(context);
         View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
@@ -123,6 +123,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
                 Toast.makeText(context,"delete confirmed!",Toast.LENGTH_LONG).show();
                 doDelete(module);
                 dialog.dismiss();
+                listModule.remove(position);
+                notifyDataSetChanged();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener()

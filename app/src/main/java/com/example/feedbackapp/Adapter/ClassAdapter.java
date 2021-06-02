@@ -2,6 +2,7 @@ package com.example.feedbackapp.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,28 +66,31 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         holder.btnEditClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                ClassAddEditFragment editClassFragment = new ClassAddEditFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,editClassFragment).addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putString("ClassId",classs.getId());
+                Navigation.findNavController(v).navigate(R.id.class_to_add_edit_class, bundle);
+//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+//                ClassAddEditFragment editClassFragment = new ClassAddEditFragment();
+//                activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,editClassFragment).addToBackStack(null).commit();
             }
         });
         holder.btnDeleteClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteClass(classs);
+                DeleteClass(classs,position);
             }
         });
     }
 
     void goToEditClass(View view, Classs classs){
-        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-        ClassAddEditFragment editClassFragment = new ClassAddEditFragment();
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,editClassFragment).addToBackStack(null).commit();
-
+//        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//        ClassAddEditFragment editClassFragment = new ClassAddEditFragment();
+//        activity.getSupportFragmentManager().beginTransaction().replace(R.id.class_fragment_frame_layout,editClassFragment).addToBackStack(null).commit();
+        Navigation.findNavController(view).navigate(R.id.class_to_add_edit_class);
     }
 
     //hàm hiển thị xác nhận xóa class
-    void DeleteClass(Classs classs){
+    void DeleteClass(Classs classs, int position){
         //hiện dialog xác nhận xóa
         LayoutInflater inflater = LayoutInflater.from(context);
         View alertLayout = inflater.inflate(R.layout.logout_confirm_dialog, null);
@@ -126,6 +131,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
                 Toast.makeText(context,"delete confirmed!",Toast.LENGTH_LONG).show();
                 doDelete(classs);
                 dialog.dismiss();
+                listClass.remove(position);
+                notifyDataSetChanged();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener()
