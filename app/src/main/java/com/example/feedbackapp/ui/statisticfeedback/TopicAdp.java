@@ -28,6 +28,7 @@ import com.example.feedbackapp.ModelClassToSendAPI.Comment;
 import com.example.feedbackapp.R;
 import com.example.feedbackapp.RetrofitAPISetvice.AnswerService;
 import com.example.feedbackapp.RetrofitAPISetvice.CommentService;
+import com.example.feedbackapp.UserInfo.UserInfo;
 import com.example.feedbackapp.model.HeaderRecycleView;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Question;
 import com.example.feedbackapp.ModelClassToReceiveFromAPI.Toppic.Topic;
@@ -297,7 +298,7 @@ TopicAdp(Activity activity, ArrayList<Topic> arrayListTopic, HeaderRecycleView h
                 ListAnswer listAnswer1 = new ListAnswer(listAnswer);
                 // do API post comment
                CommentService.commentService.postComment(
-                        "Bearer "+ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MGE3MjRjMTk1N2FhNjBjN2M3YzNlYTIiLCJ0eXBlVXNlciI6InRyYWluZWUiLCJpYXQiOjE2MjE4NjAwNjB9.2fpi3Fs7bYl233OHKppcDVZwmcVz3aG1TubOh_ZWj9E",
+                       "Bear " + new UserInfo(v.getContext()).token(),
                         comment1
 
                 ).enqueue(new Callback<CommentInfo>() {

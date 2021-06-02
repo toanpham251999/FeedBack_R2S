@@ -42,7 +42,7 @@
         android:contentDescription="add_assignment"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="@+id/text_question"
-        app:layout_constraintStart_toEndOf="@+id/text_question" />
+        app:layout_constraintStart_toEndOf="@+id/text_question"/>
 
     <EditText
         android:id="@+id/editText_Search"
