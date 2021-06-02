@@ -40,17 +40,23 @@
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_outline_call_24"
             android:title="CONTACT" />
+        <!--
+        <item
+            android:id="@+id/nav_trainee_dashboard"
+            android:icon="@drawable/ic_outline_logout_24"
+            android:title="Trainee dashboard" />
+        -->
+        <item
+            android:id="@+id/nav_join"
+            android:icon="@drawable/ic_join"
+            android:title="JOIN" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_outline_logout_24"
             android:title="LOG OUT" />
 
 
-        <item
-            android:id="@+id/nav_trainee_dashboard"
-            android:icon="@drawable/ic_outline_logout_24"
-            android:title="Trainee dashboard" />
-       <!-- <item
+        <!-- <item
             android:id="@+id/nav_joinmodule"
             android:icon="@drawable/ic_outline_draw_24"
             android:title="JOIN" />-->
